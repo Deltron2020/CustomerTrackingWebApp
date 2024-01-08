@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title> MCPAO Customer Tracking </title>
+    {% include 'bootstrap.html' %}
+
+  </head>
+  <body class = "bg-info-subtle">
+    {% include 'nav.html' %}
+
+    <div class = "container">
+
+          <h1 class = "p-3 bg-body-secondary border border-info border-start-10 rounded-start rounded-end text-center mt-5 fw-bold mx-auto"> {{company_name}} Customer Tracking </h1>
+
+          <div class="row" style="margin-bottom:42px;margin-top:42px;">
+
+            <div class="col-12">
+              <p class = "lead">
+                Welcome to the test Customer Tracking Application! Below are the home navigation buttons. Please try out all buttons, links, & features to get an idea of how the application functions. The top button will navigate you to a form to create a ticket to enter into the customer tracking database. The second button will allow you to search for tickets in the customer tracking database. The bottom button will allow you to send us an email if notice any issues or come across any bugs in the application. Please include a screenshot and description of the issue. Thank you for testing the new Customer Tracking Application!
+              </p>
+            </div>
+
+            <div class="d-grid gap-5 col-6 mx-auto mt-5">
+
+              <a class="btn btn-primary btn-lg fw-bold" href="/create" type="button" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 50px;">
+                Create Ticket</a>
+
+              <a class="btn btn-primary btn-lg fw-bold" href="/search" type="button" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 50px;">
+                Ticket Search</a>
+
+              <a href="mailto:PA_IT@pa.martin.fl.us?subject=Customer Tracking App Support" class="btn btn-primary btn-lg fw-bold" type="button" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 50px;">
+                Email IT</a>
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+    {% include 'footer.html' %}
+  </body>
+</html>

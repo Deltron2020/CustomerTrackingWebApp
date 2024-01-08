@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title> Account Search </title>
+    {% include 'bootstrap.html' %}
+
+  </head>
+  <body class = "bg-info-subtle">
+    {% include 'nav.html' %}
+
+    <div class = "container">
+
+      <h1 class = "p-3 bg-body-secondary border border-info border-start-10 rounded-start rounded-end text-center mt-5 fw-bold mx-auto"> Account Search </h1>
+
+      <form autocomplete="off">
+
+        <div class="row text-center" style="margin-top:40px; margin-bottom:42px;">
+
+          <div class="col-md-3">
+            <label for="AccountNumber" class="form-label mb-3" style="font-size:20px; font-weight:500;">Account Number</label>
+            <input type="number" class="form-control text-center" placeholder="Ex. 777" id="AccountNumber" name = "AccountNumber" aria-label="AccountSearch" aria-describedby="basic-addon1">
+          </div>
+
+          <div class="col-md-3">
+            <label for="ParcelID" class="form-label mb-3" style="font-size:20px; font-weight:500;">PCN (Parcel ID)</label>
+            <input type="text" class="form-control text-center" placeholder="Ex. 15-37-41-009-000-00030-9" id="ParcelID" name = "PCN" aria-label="ParcelSearch" aria-describedby="basic-addon1">
+          </div>
+
+          <div class="col-md-3">
+            <label for="SitusAddress" class="form-label mb-3" style="font-size:20px; font-weight:500;">Situs Address</label>
+            <input type="text" class="form-control text-center" placeholder="Ex. 4096 NE HYLINE DR" id="SitusAddress" name = "SitusAddress" aria-label="AddressSearch" aria-describedby="basic-addon1">
+          </div>
+
+          <div class="col-md-3">
+            <label for="OwnerName" class="form-label mb-3" style="font-size:20px; font-weight:500;">Owner Name</label>
+            <input type="text" class="form-control text-center" placeholder="Ex. ANDERSSON" id="OwnerName" name = "OwnerName" aria-label="NameSearch" aria-describedby="basic-addon1">
+          </div>
+
+          <div class="d-grid gap-5 col-4 mx-auto mt-5">
+                <input class="btn btn-primary btn-lg fw-bold" type="submit" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 50px;">
+                </input>
+          </div>
+
+        </div>
+      </form>
+
+      <div class="col-12 mx-auto mt-5">
+        <table class="table table-default table-striped-columns table-hover" id="account_table">
+          <thead>
+          <tr>
+            <th onclick="sortTable(0)" scope="col" style="cursor:pointer;">Account</th>
+            <th onclick="sortTable(1)" scope="col" style="cursor:pointer;">PCN</th>
+            <th onclick="sortTable(2)" scope="col" style="cursor:pointer;">Situs</th>
+            <th onclick="sortTable(3)" scope="col" style="cursor:pointer;">Owner Name</th>
+          </tr>
+          </thead>
+
+          {% for account in account_data %}
+            {% include 'CT_CreateTable.html' %}
+          {% endfor %}
+
+        </table>
+      </div>
+
+      <div class="d-grid gap-5 col-4 mx-auto mt-5">
+        <a class="btn btn-primary btn-lg fw-bold" href="/ticket" type="button" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 50px;">
+          Use Blank Ticket</a>
+      </div>
+
+    </div>
+
+    {% include 'footer.html' %}
+
+
+    <script>
+      /* https://stackoverflow.com/questions/175739/how-can-i-check-if-a-string-is-a-valid-number */
+      function isNumeric(value) {
+        return /^\d+$/.test(value);
+      }
+
+      /* https://www.w3schools.com/howto/howto_js_sort_table.asp
+      https://www.w3schools.com/jsref/prop_html_innerhtml.asp */
+      function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("account_table");
+        switching = true;
+        // Set the sorting direction to ascending:
+        dir = "asc";
+        /* Make a loop that will continue until
+        no switching has been done: */
+        while (switching) {
+          // Start by saying: no switching is done:
+          switching = false;
+          rows = table.rows;
+          /* Loop through all table rows (except the
+          first, which contains table headers): */
+          for (i = 1; i < (rows.length - 1); i++) {
+            // Start by saying there should be no switching:
+            shouldSwitch = false;
+            /* Get the two elements you want to compare,
+            one from current row and one from the next: */
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            /* Check if the two rows should switch place,
+            based on the direction, asc or desc: */
+            if (dir == "asc" && isNumeric(x.innerText) == true) {
+              // If so, mark as a switch and break the loop:
+              if (Number(x.innerText) > Number(y.innerText)) {
+                shouldSwitch = true;
+                break;
+              }
+            } else if (dir == "desc" && isNumeric(x.innerText) == true) {
+              if (Number(x.innerText) < Number(y.innerText)) {
+                // If so, mark as a switch and break the loop:
+                shouldSwitch = true;
+                break;
+              }
+            } else if (dir == "asc") {
+              if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                // If so, mark as a switch and break the loop:
+                shouldSwitch = true;
+                break;
+              }
+            } else if (dir == "desc") {
+              if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                // If so, mark as a switch and break the loop:
+                shouldSwitch = true;
+                break;
+              }
+            }
+          }
+          if (shouldSwitch) {
+            /* If a switch has been marked, make the switch
+            and mark that a switch has been done: */
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            // Each time a switch is done, increase this count by 1:
+            switchcount ++;
+          } else {
+            /* If no switching has been done AND the direction is "asc",
+            set the direction to "desc" and run the while loop again. */
+            if (switchcount == 0 && dir == "asc") {
+              dir = "desc";
+              switching = true;
+            }
+          }
+        }
+      }
+    </script>
+
+  </body>
+</html>

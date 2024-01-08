@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title> Ticket Search </title>
+    {% include 'bootstrap.html' %}
+
+  </head>
+  <body class = "bg-info-subtle">
+    {% include 'nav.html' %}
+
+    <div class = "container">
+
+      <h1 class = "p-3 bg-body-secondary border border-info border-start-10 rounded-start rounded-end text-center mt-5 fw-bold mx-auto"> View Tickets </h1>
+
+      <form autocomplete="off">
+        <div class="row text-center">
+
+          <div class="d-grid gap-1 col-4 mt-4 mb-3">
+            <label for="TicketStatusSearch" class="form-label" style="font-size:25px;"><b>Ticket Status</b></label>
+            <input class="form-control" list="TicketStatusOptions" id="TicketStatusSearch" name ="Status" type="text" placeholder="">
+            <datalist id="TicketStatusOptions">
+              <option value="Open">
+              <option value="Closed">
+            </datalist>
+          </div>
+
+          <div class="d-grid gap-1 col-4 mt-4 mb-3">
+            <label for="AccountNumberSearch" class="form-label" style="font-size:25px;"><b>Account Number</b></label>
+            <input class="form-control text-center" id="AccountNumberSearch" name="AccountNumber" type="number" aria-describedby="basic-addon1">
+          </div>
+
+          <div class="d-grid gap-1 col-4 mt-4 mb-3">
+            <label for="ContactDateSearch" class="form-label" style="font-size:25px;"><b>Contacted On</b></label>
+            <input class="form-control text-center" id="ContactDateSearch" name="ContactDate" type="date" aria-describedby="basic-addon1">
+          </div>
+
+          <div class="d-grid gap-5 col-4 mx-auto mt-4">
+            <input class="btn btn-primary btn-lg fw-bold" type="submit" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 50px;">
+            </input>
+          </div>
+
+        </div>
+      </form>
+
+      <div class="col-12 mx-auto mt-5">
+        <table class="table table-default table-striped-columns table-hover">
+          <thead>
+          <tr>
+            <th scope="col">Ticket Number</th>
+            <th scope="col">Contact Date</th>
+            <th scope="col">AIN</th>
+            <th scope="col">Owner Name</th>
+            <th scope="col">Return Operator</th>
+            <th scope="col">Got It Operator</th>
+            <th scope="col">Status</th>
+          </tr>
+          </thead>
+
+          {% for ticket in ticket_data %}
+            {% include 'CT_SearchTable.html' %}
+          {% endfor %}
+
+        </table>
+      </div>
+
+    </div>
+
+
+    {% include 'footer.html' %}
+  </body>
+</html>

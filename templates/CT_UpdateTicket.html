@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title> Update Ticket </title>
+    {% include 'bootstrap.html' %}
+
+  </head>
+  <body class = "bg-info-subtle">
+    {% include 'nav.html' %}
+
+    <div class = "container">
+
+      <h1 class = "p-3 bg-body-secondary border border-info border-start-10 rounded-start rounded-end text-center mt-5 fw-bold mx-auto"> View/Update Ticket </h1>
+
+     <form action="/ticket/update_submitted" method="post" autocomplete="off">
+
+         <div class="row text-center border-bottom" style="margin-top:42px; margin-bottom:21px;">
+
+          <div class="col-md-3">
+              <label for="TicketNumber" class="form-label mb-3" style="font-size:20px; font-weight:500;">Ticket Number</label>
+              <input type="number" readonly class="form-control text-center mb-4" id="TicketNumber" value="{{ticket_data[0]['TicketNumber']}}" name="TicketNumber" aria-label="TicketNumber" aria-describedby="basic-addon1">
+          </div>
+
+          <div class="col-md-5">
+              <label for="CreatedBy" class="form-label mb-3" style="font-size:20px; font-weight:500;">Created By</label>
+              <input type="text" readonly class="form-control text-center mb-4" id="CreatedBy" value="" name="CreatedBy" aria-label="CreatedBy" aria-describedby="basic-addon1">
+          </div>
+
+          <div class="col-md-4">
+              <label for="TimeCreated" class="form-label mb-3" style="font-size:20px; font-weight:500;">Time Created</label>
+              <input type="text" readonly class="form-control text-center mb-4" id="TimeCreated" value="{{ticket_data[0]['CreateDateTime']}}" name="TimeCreated" aria-label="TimeCreated" aria-describedby="basic-addon1">
+          </div>
+
+        </div>
+
+
+        <div class="row text-center" style="margin-top:0px; margin-bottom:21px;">
+
+          <div class="col-md-3">
+              <label for="AccountNumber" class="form-label mb-3" style="font-size:20px; font-weight:500;">Account Number</label>
+              <input type="number" class="form-control text-center mb-4" id="AccountNumber" value="{{ticket_data[0]['AccountNumber']}}" name="Account" aria-label="Account" aria-describedby="basic-addon1">
+          </div>
+
+          <div class="col-md-5">
+              <label for="OwnerName" class="form-label mb-3" style="font-size:20px; font-weight:500;">Owner Name</label>
+              <input type="text" class="form-control text-center mb-4" id="OwnerName" value="{{ticket_data[0]['OwnerName']}}" name="Owner" aria-label="Owner" aria-describedby="basic-addon1">
+          </div>
+
+          <div class="col-md-4">
+              <label for="SitusAddress" class="form-label mb-3" style="font-size:20px; font-weight:500;">Situs Address</label>
+              <input type="text" class="form-control text-center mb-4" id="SitusAddress" value="{{ticket_data[0]['SitusAddress']}}" name="Address" aria-label="Address" aria-describedby="basic-addon1">
+          </div>
+
+        </div>
+
+
+       <div class="row text-center" style="margin-top:0px; margin-bottom:42px;">
+
+           <div class="col-md-4">
+                <label for="ContactType" class="form-label mb-3" style="font-size:20px; font-weight:500;">Type of Contact:</label>
+                <input type="text" class="form-control text-center" list="ContactTypeOptions" id="ContactType" value="{{ticket_data[0]['ContactType']}}" name="ContactType" aria-label="Type" aria-describedby="basic-addon1" required>
+                <datalist id="ContactTypeOptions">
+                    <option value="Phone Call">
+                    <option value="Walk In">
+                </datalist>
+          </div>
+
+           <div class="col-md-2">
+               <label for="ContactDate" class="form-label mb-3" style="font-size:20px; font-weight:500;">Contact Date:</label>
+               <input type="date" class="form-control text-center" id ="ContactDate" value="{{ticket_data[0]['ContactDate']}}" name="ContactDate" aria-label="Date" aria-describedby="basic-addon1" required>
+          </div>
+
+           <div class="col-md-2">
+               <label for="ContactTime" class="form-label mb-3" style="font-size:20px; font-weight:500;">Contact Time:</label>
+               <input type="time" class="form-control text-center" id="ContactTime" value="{{ticket_data[0]['ContactTime']}}" name="ContactTime" aria-label="Time" aria-describedby="basic-addon1" required>
+          </div>
+
+           <div class="col-md-4">
+               <label for="ReturnOperator" class="form-label mb-3" style="font-size:20px; font-weight:500;">Return Operator:</label>
+               <input type="text" class="form-control text-center" id="ReturnOperator" value="{{ticket_data[0]['ReturnOperator']}}" name="ReturnOperator" aria-label="ReturnOperator" aria-describedby="basic-addon1" required>
+            </div>
+
+       </div>
+
+
+         <div class="row text-center" style="margin-top:0px; margin-bottom:42px;">
+
+           <div class="col-md-4">
+               <label for="CallerVisitor" class="form-label mb-3" style="font-size:20px; font-weight:500;">Caller/Visitor:</label>
+               <input type="text" class="form-control text-center" id="CallerVisitor" value="{{ticket_data[0]['CallerOrVisitor']}}" name="CallerVisitor" aria-label="CallerVisitor" aria-describedby="basic-addon1" required>
+          </div>
+
+           <div class="col-md-4">
+               <label for="PhoneNumber" class="form-label mb-3" style="font-size:20px; font-weight:500;">Phone Number:</label>
+               <input type="tel" class="form-control text-center" id="PhoneNumber" value="{{ticket_data[0]['PhoneNumber']}}" name="Telephone" aria-label="Telephone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" aria-describedby="basic-addon1" required>
+          </div>
+
+           <div class="col-md-4">
+               <label for="EmailAddress" class="form-label mb-3" style="font-size:20px; font-weight:500;">Email Address:</label>
+               <input type="email" class="form-control text-center" id="EmailAddress" value="{{ticket_data[0]['EmailAddress']}}" name="Email" aria-label="Email" aria-describedby="basic-addon1">
+          </div>
+       </div>
+
+
+         <div class="row text-center" style="margin-top:0px; margin-bottom:42px;">
+
+           <div class="col-md-4">
+               <label for="Status" class="form-label mb-3" style="font-size:20px; font-weight:500;">Ticket Status:</label>
+               <input type="text" class="form-control text-center" list="TicketStatusOptions" id="Status" value="{{ticket_data[0]['Status']}}" name="Status" aria-label="TicketStatus" aria-describedby="basic-addon1">
+               <datalist id="TicketStatusOptions">
+                <option value="Open">
+                <option value="Closed">
+               </datalist>
+           </div>
+
+           <div class="col-md-4 mt-4">
+               <h5><a href="https://www.pa.martin.fl.us/app/search/view/{{ticket_data[0]['AccountNumber']}}" target="_blank">Real Property Card</a></h5>
+            </div>
+
+           <div class="col-md-4 mt-4">
+               <h5><a href="https://mcpaofiles.com/trim_notices/{{ticket_data[0]['AccountNumber']}}.pdf" target="_blank">TRIM Notice</a></h5>
+            </div>
+       </div>
+
+
+         <div class="row text-center" style="margin-top:42px; margin-bottom:42px;">
+           <div class="col-md-12">
+               <label for="ReasonForCall" class="form-label mb-3" style="font-size:20px; font-weight:500;">Reason For Call:</label>
+               <textarea class="form-control text-center" id="ReasonForCall" name="CallReason" aria-label="CallReason" rows="5" aria-describedby="basic-addon1">
+                   {{ticket_data[0]['ReasonForCall']}}
+               </textarea>
+
+          </div>
+         </div>
+
+        <div class ="row text-center">
+             <div class="d-grid gap-5 col-4 mx-auto mt-2">
+                 <button class="btn btn-primary btn-lg fw-bold" type="submit" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 50px;">
+                    Save Ticket</button>
+             </div>
+        </div>
+
+     </form>
+
+    </div>
+
+    {% include 'footer.html' %}
+
+  </body>
+</html>
