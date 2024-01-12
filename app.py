@@ -8,7 +8,7 @@ app = Flask(__name__)
 ### home ###
 @app.route("/")
 def customer_tracking():
-    return render_template('CT_Home.html',
+    return render_template('/app/templates/CT_Home.html',
                            company_name='Property Appraiser')
 
 
