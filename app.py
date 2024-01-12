@@ -13,7 +13,7 @@ def customer_tracking():
 
 
 ### ticket search ###
-@app.route("/search")
+@app.route("/search", methods=['GET'])
 def customer_tracking_search():
     data = request.args
     ticket = {}
@@ -32,7 +32,7 @@ def customer_tracking_search():
                            ticket_data=results)
 
 
-### populate ticket to be updated ###
+### populate existing ticket to be updated ###
 @app.route("/search/<ticketNumber>")
 def view_searched_ticket(ticketNumber):
     ticket = load_tickets_from_db('TicketNumber', ticketNumber)
@@ -42,8 +42,8 @@ def view_searched_ticket(ticketNumber):
                            ticket_data=ticket)
 
 
-### update existing ticket ###
-@app.route("/ticket/update_submitted", methods=['post'])
+### submit update existing ticket ###
+@app.route("/ticket/update_submitted", methods=['POST'])
 def update_ticket():
     data = request.form
     update_ticket_in_db(data)
@@ -51,7 +51,7 @@ def update_ticket():
 
 
 ### locate account & create ticket ###
-@app.route("/create")
+@app.route("/create", methods=['GET'])
 def customer_tracking_create():
     data = request.args     # data returned from inputs (4 possible fields)
     account = {}    # dictionary to hold entered data
@@ -89,8 +89,8 @@ def create_ticket():
                            account=[])
 
 
-### insert ticket data into table ###
-@app.route("/ticket/submitted", methods=['post'])
+### submit new ticket data into table ###
+@app.route("/ticket/submitted", methods=['POST'])
 def submit_ticket():
     data = request.form
     add_ticket_to_db(data)
