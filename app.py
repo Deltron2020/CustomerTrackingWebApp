@@ -2,7 +2,7 @@ from flask import Flask, render_template, jsonify, request
 from DBinteraction import (load_accounts_from_db, populate_ticket_account_data, add_ticket_to_db,
                            load_tickets_from_db, update_ticket_in_db)
 
-app = Flask(__name__)
+#app = Flask(__name__)
 
 
 ### home ###
