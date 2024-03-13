@@ -20,3 +20,10 @@ def customer_tracking_login():
                            error='Invalid username or password!')
     else:
         return render_template('CT_Login.html')
+
+
+### logoff ###
+@app.route("/logout")
+def customer_tracking_logout():
+    session.pop('username', None)
+    return redirect(url_for('customer_tracking_login')) #render_template('CT_Login.html')
