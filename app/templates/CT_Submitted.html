@@ -11,14 +11,15 @@
 
     <div class = "container">
 
-      <h1 class = "p-3 bg-body-secondary border border-info border-start-10 rounded-start rounded-end text-center mt-5 fw-bold mx-auto"> Ticket Submitted! </h1>
-
-
-
+      {% if newUser %}
+        <h1 class = "p-3 bg-body-secondary border border-info border-start-10 rounded-start rounded-end text-center mt-5 fw-bold mx-auto"> User {{ newUser }} Created! </h1>
+      {% else %}
+        <h1 class = "p-3 bg-body-secondary border border-info border-start-10 rounded-start rounded-end text-center mt-5 fw-bold mx-auto"> Ticket Submitted! </h1>
+      {% endif %}
 
     </div>
 
-
     {% include 'footer.html' %}
+
   </body>
 </html>

@@ -1,5 +1,5 @@
 from flask import render_template, request, session, redirect, url_for
-from app.ct_login.sql import (user_login_search)
+from app.ct_login.sql import (user_login_search, user_dept_check)
 from app import app
 
 
@@ -14,6 +14,7 @@ def customer_tracking_login():
 
         if userExists == 1:
             session['username'] = username
+            session['admin'] = user_dept_check(username,'IT')
             return redirect('/')
         else:
             return render_template('CT_Login.html',

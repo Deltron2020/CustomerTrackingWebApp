@@ -32,6 +32,11 @@
               <a href="mailto:PA_IT@pa.martin.fl.us?subject=Customer Tracking App Support" class="btn btn-primary btn-lg fw-bold" type="button" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 50px;">
                 Email IT</a>
 
+              {% if isAdmin == 1 %}
+              <a class="btn btn-primary btn-lg fw-bold" href="/adduser" type="button" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 50px;">
+                Add User</a>
+              {% endif %}
+
             </div>
 
 
