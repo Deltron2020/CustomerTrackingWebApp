@@ -6,7 +6,7 @@
     {% include 'bootstrap.html' %}
 
   </head>
-  <body class = "bg-info-subtle">
+  <body class = "bg-info-subtle" onunload="clearForms()">
     {% include 'nav.html' %}
 
     <div class = "container">
@@ -103,6 +103,17 @@
     </div>
 
     {% include 'footer.html' %}
+
+    <script>
+        /* https://stackoverflow.com/questions/36113900/how-to-clear-form-data-after-submit-but-after-data-passed */
+        function clearForms()
+        {
+          var i;
+          for (i = 0; (i < document.forms.length); i++) {
+            document.forms[i].reset();
+          }
+        }
+    </script>
 
   </body>
 </html>

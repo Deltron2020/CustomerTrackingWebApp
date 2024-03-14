@@ -20,8 +20,10 @@ def customer_tracking_search():
         for i in ticket:
             results = load_tickets_from_db(i, ticket[i])
 
+
         return render_template('CT_Search.html',
-                               ticket_data=results)
+                               ticket_data=results,
+                               current_user=session['username'])
     else:
         return redirect(url_for('customer_tracking_login'))
 

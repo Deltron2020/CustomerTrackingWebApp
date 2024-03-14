@@ -5,6 +5,10 @@
     <title> Account Search </title>
     {% include 'bootstrap.html' %}
 
+    <style type="text/css">
+    .table_outer { height: 20em; overflow: auto; }
+    </style>
+
   </head>
   <body class = "bg-info-subtle">
     {% include 'nav.html' %}
@@ -45,7 +49,7 @@
         </div>
       </form>
 
-      <div class="col-12 mx-auto mt-5">
+      <div class="col-12 mx-auto mt-5 table_outer">
         <table class="table table-default table-striped-columns table-hover" id="account_table">
           <thead>
           <tr>

@@ -58,7 +58,7 @@ def create_ticket():
 def submit_ticket():
     if 'username' in session:
         data = request.form
-        add_ticket_to_db(data)
+        add_ticket_to_db(data, session['username'])
         return render_template('CT_Submitted.html')
     else:
         return redirect(url_for('customer_tracking_login'))

@@ -30,11 +30,11 @@ def populate_ticket_account_data(account_number):
 
 
 ### insert ticket information into database table ###
-def add_ticket_to_db(data):
+def add_ticket_to_db(data, user):
     with coxn.connect() as connection:
-        query = text("INSERT INTO dbo.CT_Tickets (TicketNumber, AccountNumber, OwnerName, SitusAddress, ContactType, ContactDate, ContactTime, ReturnOperator, CallerOrVisitor, PhoneNumber, EmailAddress, ReasonForCall, Status) VALUES ((SELECT ID_Value FROM dbo.CT_NextTicketNumber WHERE ID_FieldName = 'TicketNumber'), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+        query = text("INSERT INTO dbo.CT_Tickets (TicketNumber, AccountNumber, OwnerName, SitusAddress, ContactType, ContactDate, ContactTime, ReturnOperator, CallerOrVisitor, PhoneNumber, EmailAddress, ReasonForCall, Status, CreateUser) VALUES ((SELECT ID_Value FROM dbo.CT_NextTicketNumber WHERE ID_FieldName = 'TicketNumber'), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
                      % ( data['Account'], "'" + str(data['Owner']) + "'", "'" + str(data['Address']) + "'", "'" + str(data['ContactType']) + "'", "'" + str(data['ContactDate']) + "'", "'" + str(data['ContactTime']) + "'", "'" + str(data['ReturnOperator']) + "'", "'" + str(data['CallerVisitor']) + "'",
-                         "'" + str(data['Telephone']) + "'", "'" + str(data['Email']) + "'", "'" + str(data['CallReason']) + "'", "'" + str('Open') + "'")
+                         "'" + str(data['Telephone']) + "'", "'" + str(data['Email']) + "'", "'" + str(data['CallReason']) + "'", "'" + str('Open') + "'", "'" + str(user) + "'")
                      )
         #print(query)
         connection.execute(query)

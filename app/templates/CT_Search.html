@@ -5,6 +5,10 @@
     <title> Ticket Search </title>
     {% include 'bootstrap.html' %}
 
+    <style type="text/css">
+    .table_outer { height: 20em; overflow: auto; }
+    </style>
+
   </head>
   <body class = "bg-info-subtle">
     {% include 'nav.html' %}
@@ -35,6 +39,22 @@
             <input class="form-control text-center" id="ContactDateSearch" name="ContactDate" type="date" aria-describedby="basic-addon1">
           </div>
 
+        </div>
+
+        <div class="row text-center">
+
+          <div class="d-grid gap-1 col-4 mt-4 mb-3">
+            <label for="CreateUserSearch" class="form-label" style="font-size:25px;"><b>Created By</b></label>
+            <input class="form-control text-center" list="CreateUserOptions" id="CreateUserSearch" name="CreateUser" type="text" aria-describedby="basic-addon1">
+            <datalist id="CreateUserOptions">
+              <option value="{{ current_user }}">
+            </datalist>
+          </div>
+
+        </div>
+
+        <div class="row text-center">
+
           <div class="d-grid gap-5 col-4 mx-auto mt-4">
             <input class="btn btn-primary btn-lg fw-bold" type="submit" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 50px;">
             </input>
@@ -43,7 +63,7 @@
         </div>
       </form>
 
-      <div class="col-12 mx-auto mt-5">
+      <div class="col-12 mx-auto mt-5 table_outer">
         <table class="table table-default table-striped-columns table-hover">
           <thead>
           <tr>
