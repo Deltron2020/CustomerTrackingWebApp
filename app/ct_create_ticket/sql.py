@@ -3,16 +3,14 @@ from sqlalchemy import text
 
 
 ### account search for new ticket ###
-def load_accounts_from_db(field, value):
+def load_accounts_from_db(filter_string):
     with coxn.connect() as connection:
         result = connection.execute(
-            text("select TOP 25 AccountNumber, PCN, SitusAddress, OwnerName from dbo.accounts where %s LIKE %s ORDER BY AccountNumber;"
-                % (field, "'%" + str(value) + "%'"))
+            text(f"SELECT TOP 50 AccountNumber, PCN, SitusAddress, OwnerName FROM dbo.accounts {filter_string} ORDER BY AccountNumber ASC;")
         )
         accounts = []
         for row in result.all():
             accounts.append(dict(row._mapping))
-        #print(accounts)
         return accounts
 
 
@@ -20,8 +18,7 @@ def load_accounts_from_db(field, value):
 def populate_ticket_account_data(account_number):
     with coxn.connect() as connection:
         result = connection.execute(
-                                    text("select AccountNumber, PCN, SitusAddress, OwnerName from dbo.accounts where AccountNumber = %s;"
-                                        % account_number)
+                                    text(f"SELECT AccountNumber, PCN, SitusAddress, OwnerName FROM dbo.accounts where AccountNumber = {account_number};")
                                         )
         account = {}
         for row in result.all():

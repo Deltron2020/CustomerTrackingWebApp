@@ -13,15 +13,23 @@ def customer_tracking_create():
             if (len(data[i])) > 0:
                 value = {i: data[i]}
                 account.update(value)
-                #print(account)
-                break
 
-        results = []
-        for v in account:
-            results = load_accounts_from_db(v, account[v])
+        query_filter = ''
+        for e, field in enumerate(account):
+            if e == 0:
+                query_filter += (f"WHERE {field} LIKE '%{account[field]}%'")
+            elif e >= 1:
+                query_filter += (f" AND {field} LIKE '%{account[field]}%'")
 
-        return render_template('CT_Create.html',
+        if not query_filter:
+            results = []
+            return render_template('CT_Create.html',
                                account_data=results)
+        else:
+            results = load_accounts_from_db(query_filter)
+            return render_template('CT_Create.html',
+                               account_data=results)
+
     else:
         return redirect(url_for('customer_tracking_login'))
 

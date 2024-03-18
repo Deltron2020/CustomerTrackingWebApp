@@ -1,4 +1,4 @@
-# DBconnect.py
+# https://www.mssqltips.com/sqlservertip/7464/python-connect-to-sql-server/
 import sqlalchemy as sa
 from sqlalchemy import create_engine
 import urllib
