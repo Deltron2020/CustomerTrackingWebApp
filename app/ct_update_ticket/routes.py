@@ -46,7 +46,7 @@ def view_searched_ticket(ticketNumber):
 def update_ticket():
     if 'username' in session:
         data = request.form
-        update_ticket_in_db(data)
+        update_ticket_in_db(data, session['username'])
         return render_template('CT_Submitted.html')
     else:
         return redirect(url_for('customer_tracking_login'))

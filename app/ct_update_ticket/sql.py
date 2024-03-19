@@ -18,11 +18,9 @@ def load_tickets_from_db(field, value):
 
 
 ### insert ticket information into database table (but updating an existing ticket) ###
-def update_ticket_in_db(data):
+def update_ticket_in_db(data, user):
     with coxn.connect() as connection:
-        query = text("INSERT INTO dbo.CT_Tickets (TicketNumber, AccountNumber, OwnerName, SitusAddress, ContactType, ContactDate, ContactTime, ReturnOperator, CallerOrVisitor, PhoneNumber, EmailAddress, ReasonForCall, Status, CreateUser) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, LTRIM(%s), %s, %s);"
-                     % ( data['TicketNumber'], data['Account'], "'" + str(data['Owner']) + "'", "'" + str(data['Address']) + "'", "'" + str(data['ContactType']) + "'", "'" + str(data['ContactDate']) + "'", "'" + str(data['ContactTime']) + "'", "'" + str(data['ReturnOperator']) + "'", "'" + str(data['CallerVisitor']) + "'",
-                         "'" + str(data['Telephone']) + "'", "'" + str(data['Email']) + "'", "'" + str(data['CallReason']) + "'", "'" + str(data['Status']) + "'", "'" + str(data['CreateUser']) + "'")
+        query = text(f"INSERT INTO dbo.CT_Tickets (TicketNumber, AccountNumber, OwnerName, SitusAddress, ContactType, ContactDate, ContactTime, ReturnOperator, CallerOrVisitor, PhoneNumber, EmailAddress, ReasonForCall, Status, CreateUser) VALUES ({data['TicketNumber']}, {data['Account']}, '{data['Owner']}', '{data['Address']}', '{data['ContactType']}', '{data['ContactDate']}', '{data['ContactTime']}', '{data['ReturnOperator']}', '{data['CallerVisitor']}', '{data['Telephone']}', '{data['Email']}', RTRIM(LTRIM('{data['CallReason']}')) + ' - {user} - ' + CAST(GETDATE() AS VARCHAR), '{data['Status']}', '{data['CreateUser']}');"
                      )
         #print(query)
         connection.execute(query)
