@@ -13,17 +13,25 @@ def customer_tracking_search():
             if (len(data[i])) > 0:
                 search = {i: data[i]}
                 ticket.update(search)
-                #print(ticket)
-                break
 
-        results = []
-        for i in ticket:
-            results = load_tickets_from_db(i, ticket[i])
+        query_filter = ''
+        for e, field in enumerate(ticket):
+            if e == 0:
+                query_filter += (f"WHERE {field} LIKE '%{ticket[field]}%'")
+            elif e >= 1:
+                query_filter += (f" AND {field} LIKE '%{ticket[field]}%'")
 
+        if not query_filter:
+            results = []
+            return render_template('CT_Search.html',
+                                   ticket_data=results,
+                                   current_user=session['username'])
+        else:
+            results = load_tickets_from_db(query_filter)
+            return render_template('CT_Search.html',
+                                   ticket_data=results,
+                                   current_user=session['username'])
 
-        return render_template('CT_Search.html',
-                               ticket_data=results,
-                               current_user=session['username'])
     else:
         return redirect(url_for('customer_tracking_login'))
 
@@ -32,9 +40,9 @@ def customer_tracking_search():
 @app.route("/search/<ticketNumber>")
 def view_searched_ticket(ticketNumber):
     if 'username' in session:
-        ticket = load_tickets_from_db('TicketNumber', ticketNumber)
+        ticket_filter = f"WHERE t.TicketNumber = {ticketNumber}"
+        ticket = load_tickets_from_db(ticket_filter)
 
-        #print(ticket)
         return render_template('CT_UpdateTicket.Html',
                                ticket_data=ticket)
     else:
@@ -46,6 +54,18 @@ def view_searched_ticket(ticketNumber):
 def update_ticket():
     if 'username' in session:
         data = request.form
+
+        # new function - check_version_id(data['TicketNumber'])
+        # if data['id'] == check_version_id(data['TicketNumber']):
+            # update_ticket_in_db(data, session['username'])
+            # return render_template('CT_Submitted.html')
+        # else:
+            # ticket_filter = f"WHERE t.TicketNumber = {data['TicketNumber']}"
+            # ticket = load_tickets_from_db(ticket_filter)
+
+            # return render_template('CT_UpdateTicket.Html',ticket_data=ticket, reloaded_ticket=True)
+            # on CT_UpdateTicket > if reloaded_ticket then modal letting user know & to re submit
+
         update_ticket_in_db(data, session['username'])
         return render_template('CT_Submitted.html')
     else:

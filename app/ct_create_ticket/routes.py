@@ -3,7 +3,7 @@ from app.ct_create_ticket.sql import (load_accounts_from_db, populate_ticket_acc
 from app import app
 
 
-### locate account & create ticket ###
+### locate account (account search) ###
 @app.route("/create", methods=['GET'])
 def customer_tracking_create():
     if 'username' in session:
@@ -44,8 +44,7 @@ def create_ticket_for_account(account):
         #print(account_data)
         else:
             return render_template('CT_Ticket.html',
-                                   account=account_data,
-                                   create_user=session['username'])
+                                   account=account_data)
     else:
         return redirect(url_for('customer_tracking_login'))
 
@@ -55,8 +54,7 @@ def create_ticket_for_account(account):
 def create_ticket():
     if 'username' in session:
         return render_template('CT_Ticket.html',
-                               account=[],
-                               create_user=session['username'])
+                               account=[])
     else:
         return redirect(url_for('customer_tracking_login'))
 
