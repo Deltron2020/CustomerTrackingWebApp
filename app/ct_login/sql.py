@@ -5,7 +5,7 @@ from sqlalchemy import text
 def user_login_search(username, password):
     with coxn.connect() as connection:
         result = connection.execute(
-            text(f"SELECT COUNT(DISTINCT Username) AS DoesExist FROM dbo.CT_Users WHERE Username LIKE '{username}' AND Password LIKE '{password}';")
+            text(f"SELECT COUNT(DISTINCT Username) AS DoesExist FROM app.CT_Users WHERE Username LIKE '{username}' AND Password LIKE '{password}';")
         )
 
         login_results = result.all()[0]._mapping
@@ -17,7 +17,7 @@ def user_login_search(username, password):
 def user_dept_check(username, dept):
     with coxn.connect() as connection:
         result = connection.execute(
-            text(f"SELECT COUNT(DISTINCT Username) AS IsDept FROM dbo.CT_Users WHERE Username LIKE '{username}' AND Department LIKE '{dept}';")
+            text(f"SELECT COUNT(DISTINCT Username) AS IsDept FROM app.CT_Users WHERE Username LIKE '{username}' AND Department LIKE '{dept}';")
         )
 
         dept_results = result.all()[0]._mapping

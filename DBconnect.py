@@ -1,15 +1,17 @@
 # https://www.mssqltips.com/sqlservertip/7464/python-connect-to-sql-server/
-import sqlalchemy as sa
 from sqlalchemy import create_engine
 import urllib
-import pyodbc
+from app import app
+
 
 conn = urllib.parse.quote_plus(
-    'Data Source Name=WebAppDataSource;'
+    'Data Source Name=WebAppDataSource;' # name of odbc connection created on server
     'Driver={ODBC Driver 17 for SQL Server};'
-    'Server=APWT-PatriotSQL;'
-    'Database=MartinTraining;'
+    f"Server={app.config['DB_SERVER_NAME']};"
+    f"Database={app.config['DATABASE']};"
     'Trusted_connection=yes;'
+    f"Username={app.config['USERNAME']};"
+    f"Password={app.config['PASSWORD']};"
 )
 
 try:
@@ -18,4 +20,4 @@ try:
     print("Passed")
 
 except:
-    print("failed!")
+    print("Failed!")
