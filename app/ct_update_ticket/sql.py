@@ -7,7 +7,7 @@ def load_tickets_from_db(filter_string):
     with coxn.connect() as connection:
         result = connection.execute(
             text(
-                f"SELECT TOP 50 id, t.TicketNumber, AccountNumber, OwnerName, SitusAddress, ContactType, ContactDate, ContactTime, ReturnOperator, CallerOrVisitor, PhoneNumber, EmailAddress, ReasonForCall, Status, CONVERT(NVARCHAR, CreateDateTime, 0) AS CreateDateTime, CreateUser FROM app.CT_Tickets t JOIN (SELECT TicketNumber, MAX(id) AS VersionID FROM app.CT_Tickets GROUP BY TicketNumber) tm ON tm.VersionID = t.id AND tm.TicketNumber = t.TicketNumber {filter_string} ORDER BY t.TicketNumber ASC;")
+                f"SELECT TOP 50 * FROM app.view_CT_Tickets {filter_string} ORDER BY TicketNumber ASC;")
         )
         tickets = []
         for row in result.all():

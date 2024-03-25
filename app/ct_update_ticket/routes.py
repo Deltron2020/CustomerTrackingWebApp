@@ -40,7 +40,7 @@ def customer_tracking_search():
 @app.route("/search/<ticketNumber>")
 def view_searched_ticket(ticketNumber):
     if 'username' in session:
-        ticket_filter = f"WHERE t.TicketNumber = {ticketNumber}"
+        ticket_filter = f"WHERE TicketNumber = {ticketNumber}"
         ticket = load_tickets_from_db(ticket_filter)
 
         return render_template('CT_UpdateTicket.Html',
