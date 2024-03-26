@@ -5,10 +5,6 @@
     <title> Ticket Search </title>
     {% include 'bootstrap.html' %}
 
-    <style type="text/css">
-    .table_outer { height: 20em; overflow: auto; }
-    </style>
-
   </head>
   <body class = "bg-info-subtle">
     {% include 'nav.html' %}
@@ -64,7 +60,7 @@
       </form>
 
       <div class="col-12 mx-auto mt-5 table_outer">
-        <table class="table table-default table-striped-columns table-hover">
+        <table class="table table-default table-striped-columns table-hover" id="ticket_table">
           <thead>
           <tr>
             <th scope="col">Ticket Number</th>
@@ -77,16 +73,36 @@
           </tr>
           </thead>
 
+          <tbody>
           {% for ticket in ticket_data %}
-            {% include 'CT_SearchTable.html' %}
+              <tr>
+                  <td><a href="/search/{{ticket['TicketNumber']}}">{{ticket['TicketNumber']}}</a></td>
+                  <td>{{ticket['ContactDate']}}</td>
+                  <td>{{ticket['AccountNumber']}}</td>
+                  <td>{{ticket['OwnerName']}}</td>
+                  <td>{{ticket['ReturnOperator']}}</td>
+                  <td>{{ticket['CallerOrVisitor']}}</td>
+                  <td>{{ticket['Status']}}</td>
+              </tr>
           {% endfor %}
+          </tbody>
 
         </table>
       </div>
 
     </div>
 
-
     {% include 'footer.html' %}
+
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        $('#ticket_table').DataTable();
+      });
+    </script>
+
   </body>
 </html>

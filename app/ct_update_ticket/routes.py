@@ -1,5 +1,5 @@
 from flask import render_template, request, session, redirect, url_for
-from app.ct_update_ticket.sql import (load_tickets_from_db, update_ticket_in_db)
+from app.ct_update_ticket.sql import (load_tickets_from_db, update_ticket_in_db, version_id_check)
 from app import app
 
 
@@ -55,18 +55,16 @@ def update_ticket():
     if 'username' in session:
         data = request.form
 
-        # new function - check_version_id(data['TicketNumber'])
-        # if data['id'] == check_version_id(data['TicketNumber']):
-            # update_ticket_in_db(data, session['username'])
-            # return render_template('CT_Submitted.html')
-        # else:
-            # ticket_filter = f"WHERE t.TicketNumber = {data['TicketNumber']}"
-            # ticket = load_tickets_from_db(ticket_filter)
+        version_id = version_id_check(data)
 
-            # return render_template('CT_UpdateTicket.Html',ticket_data=ticket, reloaded_ticket=True)
-            # on CT_UpdateTicket > if reloaded_ticket then modal letting user know & to re submit
+        if int(version_id['id']) != int(data['id']):
+            ticket_filter = f"WHERE TicketNumber = {data['TicketNumber']}"
+            ticket = load_tickets_from_db(ticket_filter)
+            return render_template('CT_UpdateTicket.Html', ticket_data=ticket, reloaded_ticket=1)
 
-        update_ticket_in_db(data, session['username'])
-        return render_template('CT_Submitted.html')
+        else:
+            update_ticket_in_db(data, session['username'])
+            return render_template('CT_Submitted.html')
+
     else:
         return redirect(url_for('customer_tracking_login'))

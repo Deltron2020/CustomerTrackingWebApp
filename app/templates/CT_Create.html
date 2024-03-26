@@ -5,12 +5,9 @@
     <title> Account Search </title>
     {% include 'bootstrap.html' %}
 
-    <style type="text/css">
-    .table_outer { height: 20em; overflow: auto; }
-    </style>
-
   </head>
   <body class = "bg-info-subtle">
+
     {% include 'nav.html' %}
 
     <div class = "container">
@@ -50,7 +47,7 @@
       </form>
 
       <div class="col-12 mx-auto mt-5 table_outer">
-        <table class="table table-default table-striped-columns table-hover" id="account_table">
+        <table class="table table-default table-striped table-hover" id="account_table">
           <thead>
           <tr>
             <th onclick="sortTable(0)" scope="col" style="cursor:pointer;">Account</th>
@@ -60,9 +57,18 @@
           </tr>
           </thead>
 
+          <tbody>
           {% for account in account_data %}
-            {% include 'CT_CreateTable.html' %}
+
+              <tr>
+                  <td><a href="/ticket/{{account['AccountNumber']}}">{{account['AccountNumber']}}</a></td>
+                  <td>{{account['PCN']}}</td>
+                  <td>{{account['SitusAddress']}}</td>
+                  <td>{{account['OwnerName']}}</td>
+              </tr>
+
           {% endfor %}
+          </tbody>
 
         </table>
       </div>
@@ -76,81 +82,14 @@
 
     {% include 'footer.html' %}
 
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
 
     <script>
-      /* https://stackoverflow.com/questions/175739/how-can-i-check-if-a-string-is-a-valid-number */
-      function isNumeric(value) {
-        return /^\d+$/.test(value);
-      }
-
-      /* https://www.w3schools.com/howto/howto_js_sort_table.asp
-      https://www.w3schools.com/jsref/prop_html_innerhtml.asp */
-      function sortTable(n) {
-        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-        table = document.getElementById("account_table");
-        switching = true;
-        // Set the sorting direction to ascending:
-        dir = "asc";
-        /* Make a loop that will continue until
-        no switching has been done: */
-        while (switching) {
-          // Start by saying: no switching is done:
-          switching = false;
-          rows = table.rows;
-          /* Loop through all table rows (except the
-          first, which contains table headers): */
-          for (i = 1; i < (rows.length - 1); i++) {
-            // Start by saying there should be no switching:
-            shouldSwitch = false;
-            /* Get the two elements you want to compare,
-            one from current row and one from the next: */
-            x = rows[i].getElementsByTagName("TD")[n];
-            y = rows[i + 1].getElementsByTagName("TD")[n];
-            /* Check if the two rows should switch place,
-            based on the direction, asc or desc: */
-            if (dir == "asc" && isNumeric(x.innerText) == true) {
-              // If so, mark as a switch and break the loop:
-              if (Number(x.innerText) > Number(y.innerText)) {
-                shouldSwitch = true;
-                break;
-              }
-            } else if (dir == "desc" && isNumeric(x.innerText) == true) {
-              if (Number(x.innerText) < Number(y.innerText)) {
-                // If so, mark as a switch and break the loop:
-                shouldSwitch = true;
-                break;
-              }
-            } else if (dir == "asc") {
-              if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                // If so, mark as a switch and break the loop:
-                shouldSwitch = true;
-                break;
-              }
-            } else if (dir == "desc") {
-              if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                // If so, mark as a switch and break the loop:
-                shouldSwitch = true;
-                break;
-              }
-            }
-          }
-          if (shouldSwitch) {
-            /* If a switch has been marked, make the switch
-            and mark that a switch has been done: */
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            switching = true;
-            // Each time a switch is done, increase this count by 1:
-            switchcount ++;
-          } else {
-            /* If no switching has been done AND the direction is "asc",
-            set the direction to "desc" and run the while loop again. */
-            if (switchcount == 0 && dir == "asc") {
-              dir = "desc";
-              switching = true;
-            }
-          }
-        }
-      }
+      $(document).ready(function () {
+        $('#account_table').DataTable();
+      });
     </script>
 
   </body>
