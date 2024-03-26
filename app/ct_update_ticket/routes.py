@@ -55,9 +55,9 @@ def update_ticket():
     if 'username' in session:
         data = request.form
 
-        version_id = version_id_check(data)
+        version = version_id_check(data)
 
-        if int(version_id['id']) != int(data['id']):
+        if int(version['id']) != int(data['id']):
             ticket_filter = f"WHERE TicketNumber = {data['TicketNumber']}"
             ticket = load_tickets_from_db(ticket_filter)
             return render_template('CT_UpdateTicket.Html', ticket_data=ticket, reloaded_ticket=1)
