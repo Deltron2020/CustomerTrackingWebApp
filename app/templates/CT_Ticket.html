@@ -9,6 +9,37 @@
   <body class = "bg-info-subtle" onunload="clearForms()">
     {% include 'nav.html' %}
 
+        {% if existingTicket %}
+
+        <!-- Modal -->
+        <div class="modal fade" id="warningModal" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="false">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="warningModalLabel">Warning!</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                There is already an existing ticket for this account. Use the blue button below to view that ticket or close this warning to proceed.
+              </div>
+              <div class="modal-footer">
+                  <a type="button" class="btn btn-primary" href="/search/{{existingTicket[0]['TicketNumber']}}">View Ticket</a>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <script>
+            const myModal = new bootstrap.Modal('#warningModal');
+
+            window.addEventListener('DOMContentLoaded', () => {
+                myModal.show();
+            });
+        </script>
+
+    {% endif %}
+
     <div class = "container">
 
       <h1 class = "p-3 bg-body-secondary border border-info border-start-10 rounded-start rounded-end text-center mt-5 fw-bold mx-auto"> Create Ticket </h1>

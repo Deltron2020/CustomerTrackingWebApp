@@ -5,7 +5,7 @@ import urllib
 from app import app
 
 conn = urllib.parse.quote_plus(
-    'Data Source Name=WebAppDataSource;' # name of odbc connection created on server
+    'Data Source Name=WebAppDataSource;'  # name of odbc connection created on server
     'Driver={ODBC Driver 17 for SQL Server};'
     f"Server={app.config['DB_SERVER_NAME']};"
     f"Database={app.config['DATABASE']};"

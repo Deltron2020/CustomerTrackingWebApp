@@ -7,8 +7,8 @@ from app import app
 @app.route("/login", methods=['GET','POST'])
 def customer_tracking_login():
     if request.method == 'POST':
-        username = request.form.getlist('Username')[0]
-        password = request.form.getlist('Password')[0]
+        username = request.form.get('Username')
+        password = request.form.get('Password')
 
         userExists = user_login_search(username, password)
 

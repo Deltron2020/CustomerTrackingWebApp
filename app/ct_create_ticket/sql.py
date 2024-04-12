@@ -6,12 +6,25 @@ from sqlalchemy import text
 def load_accounts_from_db(filter_string):
     with coxn.connect() as connection:
         result = connection.execute(
-            text(f"SELECT TOP 50 AccountNumber, PCN, SitusAddress, OwnerName FROM app.CT_Accounts {filter_string} ORDER BY AccountNumber ASC;")
+            text(f"SELECT TOP 1000 AccountNumber, PCN, SitusAddress, OwnerName FROM app.CT_Accounts {filter_string} ORDER BY AccountNumber ASC;")
         )
         accounts = []
         for row in result.all():
             accounts.append(dict(row._mapping))
         return accounts
+
+
+### check to see if ticket for that account already exists ###
+def account_ticket_search(account_number):
+    with coxn.connect() as connection:
+        query = text("SELECT * FROM app.view_CT_Tickets WHERE AccountNumber = :account;")
+        result = connection.execute(query, {"account": account_number})
+
+        tickets = []
+        for row in result.all():
+            tickets.append(dict(row._mapping))
+        #print(tickets)
+        return tickets
 
 
 ### populate new ticket with account information ###
