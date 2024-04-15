@@ -37,3 +37,33 @@ def version_id_check(data):
             vid.update(dict(row._mapping))
 
         return vid
+
+
+### insert got it table record ###
+def got_it_db_insert(data, user):
+    with coxn.connect() as connection:
+        query = text("""
+                INSERT INTO [app].[CT_GotItTracking]
+                   ([TicketNumber]
+                   ,[GotItUser]
+                   ,[CreateDate])
+             VALUES
+                   (:ticketNumber
+                   ,:gotItUser
+                   ,GETDATE())
+                """)
+
+        connection.execute(query, {'ticketNumber': data, 'gotItUser': user})
+        connection.commit()
+
+
+## got it individual ticket tracking ###
+def got_it_ticket_tracking(data):
+    with coxn.connect() as connection:
+        query = text("SELECT GotItUser, CreateDate FROM [app].[CT_GotItTracking] WHERE TicketNumber = :ticketNumber ORDER BY id DESC")
+        results = connection.execute(query, {'ticketNumber': data})
+
+        history = []
+        for gotit in results.all():
+            history.append(dict(gotit._mapping))
+        return history

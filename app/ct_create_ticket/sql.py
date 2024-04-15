@@ -17,7 +17,7 @@ def load_accounts_from_db(filter_string):
 ### check to see if ticket for that account already exists ###
 def account_ticket_search(account_number):
     with coxn.connect() as connection:
-        query = text("SELECT * FROM app.view_CT_Tickets WHERE AccountNumber = :account;")
+        query = text("SELECT TicketNumber FROM app.view_CT_Tickets WHERE AccountNumber = :account ORDER BY id DESC;")
         result = connection.execute(query, {"account": account_number})
 
         tickets = []

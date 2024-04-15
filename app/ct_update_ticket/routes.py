@@ -1,5 +1,5 @@
-from flask import render_template, request, session, redirect, url_for
-from app.ct_update_ticket.sql import (load_tickets_from_db, update_ticket_in_db, version_id_check)
+from flask import render_template, request, session, redirect, url_for, jsonify
+from app.ct_update_ticket.sql import (load_tickets_from_db, update_ticket_in_db, version_id_check, got_it_db_insert, got_it_ticket_tracking)
 from app import app
 
 
@@ -42,9 +42,11 @@ def view_searched_ticket(ticketNumber):
     if 'username' in session:
         ticket_filter = f"WHERE TicketNumber = {ticketNumber}"
         ticket = load_tickets_from_db(ticket_filter)
+        tracking = got_it_ticket_tracking(ticketNumber)
 
         return render_template('CT_UpdateTicket.Html',
-                               ticket_data=ticket)
+                               ticket_data=ticket,
+                               tracking_data=tracking)
     else:
         return redirect(url_for('customer_tracking_login'))
 
@@ -66,5 +68,18 @@ def update_ticket():
             update_ticket_in_db(data, session['username'])
             return render_template('CT_Submitted.html')
 
+    else:
+        return redirect(url_for('customer_tracking_login'))
+
+
+#background process happening without any refreshing
+@app.route('/got_it_update/<ticketNumber>')
+def got_it_update(ticketNumber):
+    if 'username' in session:
+        got_it_db_insert(ticketNumber, session['username'])
+        tracking = got_it_ticket_tracking(ticketNumber)
+        #print(jsonify(tracking).data)
+        test = (jsonify(tracking).data)
+        return (test)
     else:
         return redirect(url_for('customer_tracking_login'))

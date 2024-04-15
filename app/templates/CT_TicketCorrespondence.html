@@ -1,0 +1,43 @@
+
+<script type=text/javascript>
+        $(function() {
+          $('a#test').on('click', function(e) {
+            e.preventDefault()
+              var i = document.getElementById("test").getAttribute("data-val");
+              var str = "/got_it_update".concat("/", i)
+              console.log(str)
+
+            $.getJSON(str,
+                function(data) {
+
+                document.getElementById("GotItTracking").innerText = JSON.stringify(data);
+
+            });
+            return false;
+          });
+        });
+</script>
+
+<div class="container border-top">
+    <div class="row mb-3 mt-3 text-center">
+        <div class="col">
+
+             <a id="test" type="button" class="btn btn-secondary" data-val="{{ticket_data[0]['TicketNumber']}}" href=#>Got it!</a>
+
+        </div>
+        <div class="col">
+
+            <label for="GotItTracking" class="form-label mb-3" style="font-size:20px; font-weight:500;">Got It Tracking:</label>
+            <textarea class="form-control text-center" id="GotItTracking" name="GotItTracking" aria-label="GotItTracking" rows="5" aria-describedby="basic-addon1">
+                {% for row in tracking_data %}
+                    {{ row }}
+                {% endfor %}
+            </textarea>
+
+        </div>
+
+
+    </div>
+
+
+</div>
