@@ -60,7 +60,7 @@ def got_it_db_insert(data, user):
 ## got it individual ticket tracking ###
 def got_it_ticket_tracking(data):
     with coxn.connect() as connection:
-        query = text("SELECT GotItUser, CreateDate FROM [app].[CT_GotItTracking] WHERE TicketNumber = :ticketNumber ORDER BY id DESC")
+        query = text("SELECT GotItUser, FORMAT(CreateDate,   'yyyy-MM-dd hh:mm:ss tt') AS CreateDate FROM [app].[CT_GotItTracking] WHERE TicketNumber = :ticketNumber ORDER BY id DESC")
         results = connection.execute(query, {'ticketNumber': data})
 
         history = []

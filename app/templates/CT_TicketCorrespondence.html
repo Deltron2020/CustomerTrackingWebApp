@@ -5,12 +5,14 @@
             e.preventDefault()
               var i = document.getElementById("test").getAttribute("data-val");
               var str = "/got_it_update".concat("/", i)
-              console.log(str)
+              var gotit = ""
 
             $.getJSON(str,
                 function(data) {
-
-                document.getElementById("GotItTracking").innerText = JSON.stringify(data);
+                for (let i = 0; i < data.length; i++) {
+                    gotit += (data[i]['GotItUser'] + ' GOT IT - ' + data[i]['CreateDate']) + '\r\n';
+                }
+                document.getElementById("GotItTracking").innerHTML= gotit; // JSON.stringify(data);
 
             });
             return false;
@@ -28,11 +30,8 @@
         <div class="col">
 
             <label for="GotItTracking" class="form-label mb-3" style="font-size:20px; font-weight:500;">Got It Tracking:</label>
-            <textarea class="form-control text-center" id="GotItTracking" name="GotItTracking" aria-label="GotItTracking" rows="5" aria-describedby="basic-addon1">
-                {% for row in tracking_data %}
-                    {{ row }}
-                {% endfor %}
-            </textarea>
+            <textarea class="form-control text-center" readonly id="GotItTracking" name="GotItTracking" aria-label="GotItTracking" rows="5" aria-describedby="basic-addon1" style="white-space: pre-line;">{% for row in tracking_data %}
+                {{ row['GotItUser'] + ' GOT IT - ' + row['CreateDate'] }}{% endfor %}</textarea>
 
         </div>
 
