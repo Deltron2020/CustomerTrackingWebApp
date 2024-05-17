@@ -1,9 +1,9 @@
 
 <script type=text/javascript>
         $(function() {
-          $('a#test').on('click', function(e) {
+          $('a#GotIt').on('click', function(e) {
             e.preventDefault()
-              var i = document.getElementById("test").getAttribute("data-val");
+              var i = document.getElementById("GotIt").getAttribute("data-val");
               var str = "/got_it_update".concat("/", i)
               var gotit = ""
 
@@ -24,10 +24,20 @@
     <div class="row mb-3 mt-3 text-center">
         <div class="col">
 
-             <a id="test" type="button" class="btn btn-secondary" data-val="{{ticket_data[0]['TicketNumber']}}" href=#>Got it!</a>
+             <a id="GotIt" type="button" class="btn btn-secondary btn-lg fw-bold mt-2" data-val="{{ticket_data[0]['TicketNumber']}}" href=# style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 30px;">Got it! </a>
+
+            <div class="mb-3 mt-3">
+              <label for="ForwardTo" class="form-label" style="font-size:20px; font-weight:500;">Forward To:</label>
+              <select id="ForwardTo" class="form-select">
+                  <option></option>
+                  <option>option1</option>
+                  <option>option2</option>
+                  <option>option3</option>
+              </select>
+            </div>
 
         </div>
-        <div class="col">
+        <div class="col mb-2">
 
             <label for="GotItTracking" class="form-label mb-3" style="font-size:20px; font-weight:500;">Got It Tracking:</label>
             <textarea class="form-control text-center" readonly id="GotItTracking" name="GotItTracking" aria-label="GotItTracking" rows="5" aria-describedby="basic-addon1" style="white-space: pre-line;">{% for row in tracking_data %}

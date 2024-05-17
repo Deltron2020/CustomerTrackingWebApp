@@ -1,5 +1,7 @@
 # import Flask
-from flask import Flask, session
+from flask import Flask, render_template
+import logging
+from logging.handlers import RotatingFileHandler
 import json
 
 # Inject Flask magic
@@ -12,6 +14,16 @@ app.config.update(
 )
 app.config.from_file('credentials.json', load=json.load)
 
+@app.errorhandler(500)
+def internal_error(exception):
+    app.logger.exception(exception)
+    file_handler = RotatingFileHandler('C:\inetpub\wwwroot\logs.log', 'a', 1 * 1024 * 1024, 10)
+    file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
+    app.logger.setLevel(logging.INFO)
+    file_handler.setLevel(logging.INFO)
+    app.logger.addHandler(file_handler)
+    app.logger.info('microblog startup')
+    return render_template('500.html'), 500
 
 # Import routing to render the pages
 from app.ct_create_ticket import routes
