@@ -40,30 +40,49 @@ def version_id_check(data):
 
 
 ### insert got it table record ###
-def got_it_db_insert(data, user):
+def got_it_db_insert(data, action, user, forward):
+    if action == 'GOT IT':
+        forward = None
+
     with coxn.connect() as connection:
         query = text("""
                 INSERT INTO [app].[CT_GotItTracking]
                    ([TicketNumber]
                    ,[GotItUser]
-                   ,[CreateDate])
+                   ,[CreateDate]
+                   ,[ActionType]
+                   ,[ForwardToUser])
              VALUES
                    (:ticketNumber
                    ,:gotItUser
-                   ,GETDATE())
+                   ,GETDATE()
+                   ,:actionType
+                   ,:forwardUser)
                 """)
 
-        connection.execute(query, {'ticketNumber': data, 'gotItUser': user})
+        connection.execute(query, {'ticketNumber': data, 'gotItUser': user, 'actionType': action, 'forwardUser': forward})
         connection.commit()
 
 
 ## got it individual ticket tracking ###
 def got_it_ticket_tracking(data):
     with coxn.connect() as connection:
-        query = text("SELECT GotItUser, FORMAT(CreateDate,   'yyyy-MM-dd hh:mm:ss tt') AS CreateDate FROM [app].[CT_GotItTracking] WHERE TicketNumber = :ticketNumber ORDER BY id DESC")
+        query = text("SELECT GotItUser, FORMAT(CreateDate,   'MM-dd-yyyy hh:mm:ss tt') AS CreateDate, ActionType, ForwardToUser FROM [app].[CT_GotItTracking] WHERE TicketNumber = :ticketNumber ORDER BY id DESC")
         results = connection.execute(query, {'ticketNumber': data})
 
         history = []
         for gotit in results.all():
             history.append(dict(gotit._mapping))
         return history
+
+def forward_to_options():
+    with coxn.connect() as connection:
+        query = text("SELECT [EmployeeDepartment] FROM [app].[view_CT_UserDepts]")
+        results = connection.execute(query)
+
+        forwards = []
+        for user in results.all():
+            forwards.append(user[0])
+
+        #print(forwards)
+        return forwards

@@ -49,7 +49,8 @@
 
      <form action="/ticket/update_submitted" method="post" autocomplete="off">
 
-         <div class="row text-center border-bottom" style="margin-top:42px; margin-bottom:21px;">
+         <fieldset disabled>
+            <div class="row text-center border-bottom" style="margin-top:42px; margin-bottom:21px;">
 
              <input type="hidden" readonly id="id" value="{{ticket_data[0]['id']}}" name="id">
              <input type="hidden" readonly id="TicketYear" value="{{ticket_data[0]['TicketYear']}}" name="TicketYear">
@@ -74,7 +75,8 @@
                   <input type="text" readonly class="form-control text-center mb-4" id="TimeCreated" value="{{ticket_data[0]['CreateDateTime']}}" name="TimeCreated" aria-label="TimeCreated" aria-describedby="basic-addon1">
               </div>
 
-        </div>
+            </div>
+         </fieldset>
 
 
         <div class="row text-center" style="margin-top:0px; margin-bottom:21px;">

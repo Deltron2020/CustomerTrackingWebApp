@@ -1,5 +1,5 @@
 from flask import render_template, request, session, redirect, url_for, jsonify
-from app.ct_update_ticket.sql import (load_tickets_from_db, update_ticket_in_db, version_id_check, got_it_db_insert, got_it_ticket_tracking)
+from app.ct_update_ticket.sql import (load_tickets_from_db, update_ticket_in_db, version_id_check, got_it_db_insert, got_it_ticket_tracking, forward_to_options)
 from app import app
 
 
@@ -43,10 +43,12 @@ def view_searched_ticket(ticketNumber):
         ticket_filter = f"WHERE TicketNumber = {ticketNumber}"
         ticket = load_tickets_from_db(ticket_filter)
         tracking = got_it_ticket_tracking(ticketNumber)
+        forwards = forward_to_options()
 
         return render_template('CT_UpdateTicket.Html',
                                ticket_data=ticket,
-                               tracking_data=tracking)
+                               tracking_data=tracking,
+                               forward_users=forwards)
     else:
         return redirect(url_for('customer_tracking_login'))
 
@@ -73,13 +75,13 @@ def update_ticket():
 
 
 #background process happening without any refreshing
-@app.route('/got_it_update/<ticketNumber>')
-def got_it_update(ticketNumber):
+@app.route('/got_it_update/<ticketNumber>/<action>/<forward>')
+def got_it_update(ticketNumber, action, forward):
     if 'username' in session:
-        got_it_db_insert(ticketNumber, session['username'])
+        got_it_db_insert(ticketNumber, action, session['username'], forward)
         tracking = got_it_ticket_tracking(ticketNumber)
-        #print(jsonify(tracking).data)
-        test = (jsonify(tracking).data)
-        return (test)
+        json = jsonify(tracking).data
+
+        return json
     else:
         return redirect(url_for('customer_tracking_login'))

@@ -5,6 +5,7 @@
     <title> Ticket Search </title>
     {% include 'bootstrap.html' %}
 
+
   </head>
   <body class = "bg-info-subtle">
     {% include 'nav.html' %}
@@ -45,6 +46,34 @@
             <datalist id="CreateUserOptions">
               <option value="{{ current_user }}">
             </datalist>
+          </div>
+
+          <div class="d-grid gap-1 col-4 mt-4 mb-3">
+            <label for="GotItSearch" class="form-label" style="font-size:25px;"><b>Got It Operator</b></label>
+            <input class="form-control text-center" list="GotItOptions" id="GotItSearch" name="GotIt" type="text" aria-describedby="basic-addon1">
+            <datalist id="GotItOptions">
+              <option value="{{ current_user }}">
+            </datalist>
+          </div>
+
+        </div>
+
+        <div class="row text-center">
+
+          <div class="d-grid gap-1 col-4 mt-4 mb-3 mx-auto" role="group">
+            <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btncheck1">Got It Operator</label>
+
+            <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btncheck2">My Tickets</label>
+          </div>
+
+          <div class="d-grid gap-1 col-4 mt-4 mb-3 mx-auto" role="group">
+            <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btncheck3">My Department</label>
+
+            <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off" checked>
+            <label class="btn btn-outline-primary" for="btncheck4">Open Tickets</label>
           </div>
 
         </div>

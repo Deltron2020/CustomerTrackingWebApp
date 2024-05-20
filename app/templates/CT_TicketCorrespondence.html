@@ -3,14 +3,39 @@
         $(function() {
           $('a#GotIt').on('click', function(e) {
             e.preventDefault()
-              var i = document.getElementById("GotIt").getAttribute("data-val");
-              var str = "/got_it_update".concat("/", i)
-              var gotit = ""
+              var ticketNum = document.getElementById("GotIt").getAttribute("data-val");
+              var action = document.getElementById("GotIt").getAttribute("data-action");
+              var str = "/got_it_update".concat("/", ticketNum).concat("/", action).concat("/", null);
+              var gotit = "";
 
             $.getJSON(str,
                 function(data) {
                 for (let i = 0; i < data.length; i++) {
-                    gotit += (data[i]['GotItUser'] + ' GOT IT - ' + data[i]['CreateDate']) + '\r\n';
+                    gotit += (data[i]['GotItUser'] + ' ' + data[i]['ActionType'] + ' > ' + data[i]['ForwardToUser'] + ' ' + data[i]['CreateDate']) + '\r\n';
+                }
+                document.getElementById("GotItTracking").innerHTML= gotit; // JSON.stringify(data);
+
+            });
+            return false;
+          });
+        });
+
+        $(function() {
+          $('select#ForwardTo').change(function(e) {
+            e.preventDefault()
+              var ticketNum = document.getElementById("ForwardTo").getAttribute("data-val");
+              var action = document.getElementById("ForwardTo").getAttribute("data-action");
+              var forwardTo = document.getElementById("ForwardTo");
+              var forwardSelection = forwardTo.options[forwardTo.selectedIndex].text;
+              // console.log(forwardSelection)
+
+              var str = "/got_it_update".concat("/", ticketNum).concat("/", action).concat("/", forwardSelection);
+              var gotit = "";
+
+            $.getJSON(str,
+                function(data) {
+                for (let i = 0; i < data.length; i++) {
+                    gotit += (data[i]['GotItUser'] + ' ' + data[i]['ActionType'] + ' > ' + data[i]['ForwardToUser'] + ' ' + data[i]['CreateDate']) + '\r\n';
                 }
                 document.getElementById("GotItTracking").innerHTML= gotit; // JSON.stringify(data);
 
@@ -24,15 +49,14 @@
     <div class="row mb-3 mt-3 text-center">
         <div class="col">
 
-             <a id="GotIt" type="button" class="btn btn-secondary btn-lg fw-bold mt-2" data-val="{{ticket_data[0]['TicketNumber']}}" href=# style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 30px;">Got it! </a>
+            <a id="GotIt" type="button" class="btn btn-secondary btn-lg fw-bold mt-2" data-val="{{ticket_data[0]['TicketNumber']}}" data-action="GOT IT" href=# style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 30px;">Got it! </a>
 
             <div class="mb-3 mt-3">
               <label for="ForwardTo" class="form-label" style="font-size:20px; font-weight:500;">Forward To:</label>
-              <select id="ForwardTo" class="form-select">
-                  <option></option>
-                  <option>option1</option>
-                  <option>option2</option>
-                  <option>option3</option>
+              <select id="ForwardTo" class="form-select" data-val="{{ticket_data[0]['TicketNumber']}}" data-action="FORWARD TO">
+                  {% for user in forward_users %}
+                  <option>{{user}}</option>
+                  {% endfor %}
               </select>
             </div>
 
@@ -41,7 +65,7 @@
 
             <label for="GotItTracking" class="form-label mb-3" style="font-size:20px; font-weight:500;">Got It Tracking:</label>
             <textarea class="form-control text-center" readonly id="GotItTracking" name="GotItTracking" aria-label="GotItTracking" rows="5" aria-describedby="basic-addon1" style="white-space: pre-line;">{% for row in tracking_data %}
-                {{ row['GotItUser'] + ' GOT IT - ' + row['CreateDate'] }}{% endfor %}</textarea>
+                {{ "%s %s > %s %s" % (row['GotItUser'], row['ActionType'], row['ForwardToUser'], row['CreateDate']) }}{% endfor %}</textarea>
 
         </div>
 
