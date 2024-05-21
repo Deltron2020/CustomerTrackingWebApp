@@ -15,11 +15,11 @@
     {% if reloaded_ticket == 1 %}
 
         <!-- Modal -->
-        <div class="modal fade" id="warningModal" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="false">
+        <div class="modal fade" id="reloadModal" tabindex="-1" aria-labelledby="reloadModalLabel" aria-hidden="false">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="warningModalLabel">Warning!</h1>
+                <h1 class="modal-title fs-5" id="reloadModalLabel">Warning!</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -33,10 +33,10 @@
         </div>
 
         <script>
-            const myModal = new bootstrap.Modal('#warningModal');
+            const reloadModal = new bootstrap.Modal('#reloadModal');
 
             window.addEventListener('DOMContentLoaded', () => {
-                myModal.show();
+                reloadModal.show();
             });
         </script>
 
@@ -49,7 +49,6 @@
 
      <form action="/ticket/update_submitted" method="post" autocomplete="off">
 
-         <fieldset disabled>
             <div class="row text-center border-bottom" style="margin-top:42px; margin-bottom:21px;">
 
              <input type="hidden" readonly id="id" value="{{ticket_data[0]['id']}}" name="id">
@@ -57,26 +56,25 @@
 
               <div class="col-md-3">
                   <label for="TicketNumber" class="form-label mb-3" style="font-size:20px; font-weight:500;">Ticket Number</label>
-                  <input type="number" readonly class="form-control text-center mb-4" id="TicketNumber" value="{{ticket_data[0]['TicketNumber']}}" name="TicketNumber" aria-label="TicketNumber" aria-describedby="basic-addon1">
+                  <input type="number" readonly class="form-control text-center mb-4 bg-secondary-subtle" id="TicketNumber" value="{{ticket_data[0]['TicketNumber']}}" name="TicketNumber" aria-label="TicketNumber" aria-describedby="basic-addon1">
               </div>
 
               <div class="col-md-3">
                   <label for="TicketType" class="form-label mb-3" style="font-size:20px; font-weight:500;">Ticket Type</label>
-                  <input type="text" readonly class="form-control text-center mb-4" id="TicketType" value="{{ticket_data[0]['TicketType']}}" name="TicketType" aria-label="TicketType" aria-describedby="basic-addon1">
+                  <input type="text" readonly class="form-control text-center mb-4 bg-secondary-subtle" id="TicketType" value="{{ticket_data[0]['TicketType']}}" name="TicketType" aria-label="TicketType" aria-describedby="basic-addon1">
               </div>
 
               <div class="col-md-3">
                   <label for="CreateUser" class="form-label mb-3" style="font-size:20px; font-weight:500;">Created By</label>
-                  <input type="text" readonly class="form-control text-center mb-4" id="CreateUser" value="{{ticket_data[0]['CreateUser']}}" name="CreateUser" aria-label="CreatedBy" aria-describedby="basic-addon1">
+                  <input type="text" readonly class="form-control text-center mb-4 bg-secondary-subtle" id="CreateUser" value="{{ticket_data[0]['CreateUser']}}" name="CreateUser" aria-label="CreatedBy" aria-describedby="basic-addon1">
               </div>
 
               <div class="col-md-3">
                   <label for="TimeCreated" class="form-label mb-3" style="font-size:20px; font-weight:500;">Time Created</label>
-                  <input type="text" readonly class="form-control text-center mb-4" id="TimeCreated" value="{{ticket_data[0]['CreateDateTime']}}" name="TimeCreated" aria-label="TimeCreated" aria-describedby="basic-addon1">
+                  <input type="text" readonly class="form-control text-center mb-4 bg-secondary-subtle" id="TimeCreated" value="{{ticket_data[0]['CreateDateTime']}}" name="TimeCreated" aria-label="TimeCreated" aria-describedby="basic-addon1">
               </div>
 
             </div>
-         </fieldset>
 
 
         <div class="row text-center" style="margin-top:0px; margin-bottom:21px;">
@@ -167,27 +165,26 @@
             </div>
        </div>
 
-
          <div class="row text-center" style="margin-top:42px; margin-bottom:42px;">
            <div class="col-md-12">
-               <label for="ReasonForCall" class="form-label mb-3" style="font-size:20px; font-weight:500;">Reason For Call:</label>
-               <textarea class="form-control text-center" id="ReasonForCall" name="CallReason" aria-label="CallReason" rows="5" aria-describedby="basic-addon1">
+               <label for="ReasonForCall" class="form-label mb-2" style="font-size:20px; font-weight:500;">Reason For Call:</label>
+               <textarea class="form-control text-center" id="ReasonForCall" name="CallReason" aria-label="CallReason" rows="6" aria-describedby="basic-addon1">
                    {{ticket_data[0]['ReasonForCall']}}
                </textarea>
 
           </div>
          </div>
 
-         {% include 'CT_TicketCorrespondence.html' %}
-
         <div class ="row text-center">
-             <div class="d-grid gap-5 col-4 mx-auto mt-2">
-                 <button class="btn btn-primary btn-lg fw-bold" type="submit" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 50px;">
+             <div class="d-grid gap-5 col-4 mx-auto mb-4">
+                 <button id="formSubmit" class="btn btn-primary btn-lg fw-bold" type="submit" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 50px;">
                     Save Ticket</button>
              </div>
         </div>
 
      </form>
+
+        {% include 'CT_TicketCorrespondence.html' %}
 
     </div>
 

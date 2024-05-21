@@ -1,5 +1,5 @@
 from flask import render_template, request, session, redirect, url_for, jsonify
-from app.ct_update_ticket.sql import (load_tickets_from_db, update_ticket_in_db, version_id_check, got_it_db_insert, got_it_ticket_tracking, forward_to_options)
+from app.ct_update_ticket.sql import (load_tickets_from_db, update_ticket_in_db, version_id_check, got_it_db_insert, got_it_ticket_tracking, forward_to_options, insert_correspondence_notes, load_correspondence_notes)
 from app import app
 
 
@@ -44,11 +44,13 @@ def view_searched_ticket(ticketNumber):
         ticket = load_tickets_from_db(ticket_filter)
         tracking = got_it_ticket_tracking(ticketNumber)
         forwards = forward_to_options()
+        notes = load_correspondence_notes(ticketNumber)
 
         return render_template('CT_UpdateTicket.Html',
                                ticket_data=ticket,
                                tracking_data=tracking,
-                               forward_users=forwards)
+                               forward_users=forwards,
+                               correspondence_notes=notes)
     else:
         return redirect(url_for('customer_tracking_login'))
 
@@ -58,13 +60,11 @@ def view_searched_ticket(ticketNumber):
 def update_ticket():
     if 'username' in session:
         data = request.form
-
         version = version_id_check(data)
 
         if int(version['id']) != int(data['id']):
-            ticket_filter = f"WHERE TicketNumber = {data['TicketNumber']}"
-            ticket = load_tickets_from_db(ticket_filter)
-            return render_template('CT_UpdateTicket.Html', ticket_data=ticket, reloaded_ticket=1)
+            return (
+                redirect(url_for('view_searched_ticket', ticketNumber=data['TicketNumber'],  reloaded_ticket=1)))
 
         else:
             update_ticket_in_db(data, session['username'])
@@ -74,7 +74,7 @@ def update_ticket():
         return redirect(url_for('customer_tracking_login'))
 
 
-#background process happening without any refreshing
+## background process happening without any refreshing for got it/forward tracking ##
 @app.route('/got_it_update/<ticketNumber>/<action>/<forward>')
 def got_it_update(ticketNumber, action, forward):
     if 'username' in session:
@@ -83,5 +83,19 @@ def got_it_update(ticketNumber, action, forward):
         json = jsonify(tracking).data
 
         return json
+    else:
+        return redirect(url_for('customer_tracking_login'))
+
+
+## background process happening without any refreshing for correspondence notes ##
+@app.route('/got_it_update/notes_submitted/<ticketNumber>', methods=['POST'])
+def correspondence_notes_update(ticketNumber):
+    if 'username' in session:
+        data = request.form
+        #print(data['CorrespondenceNotes'])
+        insert_correspondence_notes(ticketNumber, data['CorrespondenceNotes'], session['username'])
+        return (
+            redirect(url_for('view_searched_ticket', ticketNumber=ticketNumber)))
+
     else:
         return redirect(url_for('customer_tracking_login'))

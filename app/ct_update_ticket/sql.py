@@ -75,6 +75,8 @@ def got_it_ticket_tracking(data):
             history.append(dict(gotit._mapping))
         return history
 
+
+## forward to user ticket tracking ##
 def forward_to_options():
     with coxn.connect() as connection:
         query = text("SELECT [EmployeeDepartment] FROM [app].[view_CT_UserDepts]")
@@ -83,6 +85,37 @@ def forward_to_options():
         forwards = []
         for user in results.all():
             forwards.append(user[0])
-
         #print(forwards)
         return forwards
+
+
+## correspondence notes database read ##
+def load_correspondence_notes(data):
+    with coxn.connect() as connection:
+        query = text("SELECT Notes, FORMAT(CreateDate,   'MM-dd-yyyy hh:mm:ss tt') AS CreateDate, CreateUser FROM [app].[CT_CorrespondenceNotes] WHERE TicketNumber = :ticketNumber ORDER BY id ASC")
+        results = connection.execute(query, {'ticketNumber': data})
+
+        notes = []
+        for note in results.all():
+            notes.append(dict(note._mapping))
+        return notes
+
+
+### insert correspondence notes table record ###
+def insert_correspondence_notes(data, notes, user):
+    with coxn.connect() as connection:
+        query = text("""
+                INSERT INTO [app].[CT_CorrespondenceNotes]
+                   ([TicketNumber]
+                   ,[Notes]
+                   ,[CreateDate]
+                   ,[CreateUser])
+             VALUES
+                   (:ticketNumber
+                   ,:corNotes
+                   ,GETDATE()
+                   ,:createUser)
+                """)
+
+        connection.execute(query, {'ticketNumber': data, 'corNotes': notes, 'createUser': user})
+        connection.commit()
