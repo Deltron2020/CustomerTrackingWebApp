@@ -18,12 +18,8 @@
         <div class="row text-center">
 
           <div class="d-grid gap-1 col-4 mt-4 mb-3">
-            <label for="TicketStatusSearch" class="form-label" style="font-size:25px;"><b>Ticket Status</b></label>
-            <input class="form-control" list="TicketStatusOptions" id="TicketStatusSearch" name ="Status" type="text" placeholder="">
-            <datalist id="TicketStatusOptions">
-              <option value="Open">
-              <option value="Closed">
-            </datalist>
+            <label for="TicketNumberSearch" class="form-label" style="font-size:25px;"><b>Ticket Number</b></label>
+            <input class="form-control text-center" id="TicketNumberSearch" name ="TicketNumber" type="number">
           </div>
 
           <div class="d-grid gap-1 col-4 mt-4 mb-3">
@@ -41,19 +37,22 @@
         <div class="row text-center">
 
           <div class="d-grid gap-1 col-4 mt-4 mb-3">
-            <label for="CreateUserSearch" class="form-label" style="font-size:25px;"><b>Created By</b></label>
-            <input class="form-control text-center" list="CreateUserOptions" id="CreateUserSearch" name="CreateUser" type="text" aria-describedby="basic-addon1">
-            <datalist id="CreateUserOptions">
-              <option value="{{ current_user }}">
+            <label for="ContactTypeSearch" class="form-label" style="font-size:25px;"><b>Contact Type</b></label>
+            <input class="form-control text-center" list="ContactTypeOptions" id="ContactTypeSearch" name="ContactType" type="text" aria-describedby="basic-addon1">
+            <datalist id="ContactTypeOptions">
+                    <option value="Phone Call">
+                    <option value="Walk In">
             </datalist>
           </div>
 
           <div class="d-grid gap-1 col-4 mt-4 mb-3">
-            <label for="GotItSearch" class="form-label" style="font-size:25px;"><b>Got It Operator</b></label>
-            <input class="form-control text-center" list="GotItOptions" id="GotItSearch" name="GotIt" type="text" aria-describedby="basic-addon1">
-            <datalist id="GotItOptions">
-              <option value="{{ current_user }}">
-            </datalist>
+            <label for="ReturnOperatorSearch" class="form-label" style="font-size:25px;"><b>Return Call Operator</b></label>
+            <input class="form-control text-center" id="ReturnOperatorSearch" name="ReturnOperator" type="text" aria-describedby="basic-addon1">
+          </div>
+
+          <div class="d-grid gap-1 col-4 mt-4 mb-3">
+            <label for="OwnerSearch" class="form-label" style="font-size:25px;"><b>Owner Name</b></label>
+            <input class="form-control text-center" id="OwnerSearch" name="OwnerName" type="text" aria-describedby="basic-addon1">
           </div>
 
         </div>
@@ -64,16 +63,16 @@
             <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
             <label class="btn btn-outline-primary" for="btncheck1">Got It Operator</label>
 
-            <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
-            <label class="btn btn-outline-primary" for="btncheck2">My Tickets</label>
+            <input type="checkbox" class="btn-check" id="MyTicketSearch" value="{{ current_user }}" autocomplete="off">
+            <label class="btn btn-outline-primary" for="MyTicketSearch">My Tickets</label>
           </div>
 
           <div class="d-grid gap-1 col-4 mt-4 mb-3 mx-auto" role="group">
             <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
             <label class="btn btn-outline-primary" for="btncheck3">My Department</label>
 
-            <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off" checked>
-            <label class="btn btn-outline-primary" for="btncheck4">Open Tickets</label>
+            <input type="checkbox" class="btn-check" id="TicketStatusSearch" name="Status" value="Open" checked>
+            <label class="btn btn-outline-primary" for="TicketStatusSearch">Open Tickets</label>
           </div>
 
         </div>
@@ -97,7 +96,7 @@
             <th scope="col">AIN</th>
             <th scope="col">Owner Name</th>
             <th scope="col">Return Operator</th>
-            <th scope="col">Got It Operator</th>
+            <th scope="col">Caller/Visitor</th>
             <th scope="col">Status</th>
           </tr>
           </thead>

@@ -14,20 +14,21 @@ def customer_tracking_search():
                 search = {i: data[i]}
                 ticket.update(search)
 
-        query_filter = ''
-        for e, field in enumerate(ticket):
-            if e == 0:
-                query_filter += (f"WHERE {field} LIKE '%{ticket[field]}%'")
-            elif e >= 1:
-                query_filter += (f" AND {field} LIKE '%{ticket[field]}%'")
+        columns = ' AND '.join(f"{column} LIKE :?" for column in ticket.keys())
+        for i in ticket:
+            columns = columns.replace('?', str(ticket[i]).replace('-','').replace(' ',''), 1)
 
-        if not query_filter:
+        parameters = {}
+        for val in ticket.values():
+            parameters.update({val.replace('-','').replace(' ',''): '%'+val+'%'})
+
+        if not ticket:
             results = []
             return render_template('CT_Search.html',
                                    ticket_data=results,
                                    current_user=session['username'])
         else:
-            results = load_tickets_from_db(query_filter)
+            results = load_tickets_from_db(columns, parameters)
             return render_template('CT_Search.html',
                                    ticket_data=results,
                                    current_user=session['username'])
@@ -40,8 +41,10 @@ def customer_tracking_search():
 @app.route("/search/<ticketNumber>")
 def view_searched_ticket(ticketNumber):
     if 'username' in session:
-        ticket_filter = f"WHERE TicketNumber = {ticketNumber}"
-        ticket = load_tickets_from_db(ticket_filter)
+        ticket_filter = "TicketNumber = :value"
+        ticket_dict = {'value': ticketNumber}
+
+        ticket = load_tickets_from_db(ticket_filter,ticket_dict)
         tracking = got_it_ticket_tracking(ticketNumber)
         forwards = forward_to_options()
         notes = load_correspondence_notes(ticketNumber)

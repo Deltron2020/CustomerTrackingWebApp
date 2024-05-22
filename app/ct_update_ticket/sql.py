@@ -3,14 +3,14 @@ from sqlalchemy import text
 
 
 ### ticket search ###
-def load_tickets_from_db(filter_string):
+def load_tickets_from_db(columns, values):
     with coxn.connect() as connection:
-        result = connection.execute(
-            text(
-                f"SELECT TOP 50 * FROM app.view_CT_Tickets {filter_string} ORDER BY TicketNumber ASC;")
-        )
+        query = text(f"SELECT TOP 50 * FROM app.view_CT_Tickets WHERE {columns} ORDER BY TicketNumber ASC;")
+        #print(query, values)
+        results = connection.execute(query, values)
+
         tickets = []
-        for row in result.all():
+        for row in results.all():
             tickets.append(dict(row._mapping))
         #print(tickets)
         return tickets
