@@ -101,11 +101,15 @@
 
            <div class="col-md-4">
                 <label for="ContactType" class="form-label mb-3" style="font-size:20px; font-weight:500;">Type of Contact:</label>
-                <input type="text" class="form-control text-center" list="ContactTypeOptions" id="ContactType" value="{{ticket_data[0]['ContactType']}}" name="ContactType" aria-label="Type" aria-describedby="basic-addon1" required>
-                <datalist id="ContactTypeOptions">
-                    <option value="Phone Call">
-                    <option value="Walk In">
-                </datalist>
+                <select class="form-select text-center" id="ContactType" name="ContactType" aria-label="Type" aria-describedby="basic-addon1" required>
+                    {% for type in contact_types %}
+                        {% if type == ticket_data[0]['ContactType'] %}
+                            <option selected>{{type}}</option>
+                        {% else %}
+                            <option>{{type}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
           </div>
 
            <div class="col-md-2">
@@ -120,7 +124,15 @@
 
            <div class="col-md-4">
                <label for="ReturnOperator" class="form-label mb-3" style="font-size:20px; font-weight:500;">Return Call Operator:</label>
-               <input type="text" class="form-control text-center" id="ReturnOperator" value="{{ticket_data[0]['ReturnOperator']}}" name="ReturnOperator" aria-label="ReturnOperator" aria-describedby="basic-addon1" required>
+               <select class="form-select text-center" id="ReturnOperator" name="ReturnOperator" aria-label="ReturnOperator" aria-describedby="basic-addon1" required>
+                   {% for user in return_operators %}
+                    {% if user == ticket_data[0]['ReturnOperator'] %}
+                        <option selected>{{user}}</option>
+                    {% else %}
+                        <option>{{user}}</option>
+                    {% endif %}
+                   {% endfor %}
+               </select>
             </div>
 
        </div>
@@ -149,11 +161,15 @@
 
            <div class="col-md-4">
                <label for="Status" class="form-label mb-3" style="font-size:20px; font-weight:500;">Ticket Status:</label>
-               <input type="text" class="form-control text-center" list="TicketStatusOptions" id="Status" value="{{ticket_data[0]['Status']}}" name="Status" aria-label="TicketStatus" aria-describedby="basic-addon1">
-               <datalist id="TicketStatusOptions">
-                <option value="Open">
-                <option value="Closed">
-               </datalist>
+               <select class="form-select text-center" id="Status" name="Status" aria-label="TicketStatus" aria-describedby="basic-addon1">
+                   {% for status in status_options %}
+                    {% if status == ticket_data[0]['Status'] %}
+                        <option selected>{{status}}</option>
+                    {% else %}
+                        <option>{{status}}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
            </div>
 
            <div class="col-md-4 mt-4">

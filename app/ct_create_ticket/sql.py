@@ -39,6 +39,42 @@ def populate_ticket_account_data(account_number):
         return account
 
 
+### populate contact types drop down selection ###
+def populate_type_of_contact_selection():
+    with coxn.connect() as connection:
+        query = text("SELECT ContactDescription FROM app.CT_ListContactTypes ORDER BY ContactDescription ASC;")
+        result = connection.execute(query)
+
+        types = []
+        for data in result.all():
+            types.append(data[0])
+        return types
+
+
+### populate return call operator drop down selection ###
+def populate_return_call_operator_selection():
+    with coxn.connect() as connection:
+        query = text("SELECT EmployeeDepartment FROM [app].[view_CT_UserDepts] ORDER BY EmployeeDepartment ASC;")
+        results = connection.execute(query)
+
+        operators = []
+        for user in results.all():
+            operators.append(user[0])
+        return operators
+
+
+### populate ticket status drop down selection ###
+def populate_ticket_status_selection():
+    with coxn.connect() as connection:
+        query = text("SELECT StatusDescription FROM app.CT_ListTicketStatus ORDER BY StatusDescription ASC;")
+        result = connection.execute(query)
+
+        types = []
+        for data in result.all():
+            types.append(data[0])
+        return types
+
+
 ### insert ticket information into database table ###
 def add_ticket_to_db(data, user):
     with coxn.connect() as connection:
@@ -47,7 +83,7 @@ def add_ticket_to_db(data, user):
         for value in ticketType.all():
             category.update((dict(value._mapping)))
 
-        query = text(f"INSERT INTO app.CT_Tickets (TicketNumber, AccountNumber, TicketType, TicketYear, OwnerName, SitusAddress, ContactType, ContactDate, ContactTime, ReturnOperator, CallerOrVisitor, PhoneNumber, EmailAddress, ReasonForCall, Status, CreateUser) VALUES ( NEXT VALUE FOR app.Seq_TicketNumber, {data['Account']}, '{category['TicketType']}', {category['TicketYear']}, '{data['Owner']}', '{data['Address']}', '{data['ContactType']}', '{data['ContactDate']}', '{data['ContactTime']}', '{data['ReturnOperator']}', '{data['CallerVisitor']}', '{data['Telephone']}', '{data['Email']}', '{data['CallReason']}' + ' - {user} - ' + CAST(GETDATE() AS VARCHAR), 'Open', '{user}' );"
+        query = text(f"INSERT INTO app.CT_Tickets (TicketNumber, AccountNumber, TicketType, TicketYear, OwnerName, SitusAddress, ContactType, ContactDate, ContactTime, ReturnOperator, CallerOrVisitor, PhoneNumber, EmailAddress, ReasonForCall, Status, CreateUser) VALUES ( NEXT VALUE FOR app.Seq_TicketNumber, {data['Account']}, '{category['TicketType']}', {category['TicketYear']}, '{data['Owner']}', '{data['Address']}', '{data['ContactType']}', '{data['ContactDate']}', '{data['ContactTime']}', '{data['ReturnOperator']}', '{data['CallerVisitor']}', '{data['Telephone']}', '{data['Email']}', '{data['CallReason']}' + ' - {user} - ' + CAST(GETDATE() AS VARCHAR), '{data['Status']}', '{user}' );"
                      )
         #print(query)
         connection.execute(query)

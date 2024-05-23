@@ -48,12 +48,25 @@
 
         <div class="row text-center border-bottom" style="margin-top:42px; margin-bottom:42px;">
 
-          <div class="col-md-3">
+            <div class="col-md-2">
+              <label for="TicketStatus" class="form-label mb-3" style="font-size:20px; font-weight:500;">Status</label>
+              <select class="form-select text-center mb-4" id="TicketStatus" name="Status" aria-label="Status" aria-describedby="basic-addon1">
+                  {% for status in status_options %}
+                    {% if status == 'Open' %}
+                        <option selected>{{status}}</option>
+                    {% else %}
+                        <option>{{status}}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+          </div>
+
+          <div class="col-md-2">
               <label for="AccountNumber" class="form-label mb-3" style="font-size:20px; font-weight:500;">Account Number</label>
               <input type="number" class="form-control text-center mb-4" id="AccountNumber" value="{{account['AccountNumber']}}" placeholder="" name="Account" aria-label="Account" aria-describedby="basic-addon1">
           </div>
 
-          <div class="col-md-5">
+          <div class="col-md-4">
               <label for="OwnerName" class="form-label mb-3" style="font-size:20px; font-weight:500;">Owner Name</label>
               <input type="text" class="form-control text-center mb-4" id="OwnerName" value="{{account['OwnerName']}}" placeholder="" name="Owner" aria-label="Owner" aria-describedby="basic-addon1">
           </div>
@@ -70,11 +83,11 @@
 
            <div class="col-md-4">
                 <label for="ContactType" class="form-label mb-3" style="font-size:20px; font-weight:500;">Type of Contact:</label>
-                <input type="text" class="form-control text-center" list="ContactTypeOptions" id="ContactType" name="ContactType" aria-label="Type" aria-describedby="basic-addon1" required>
-                <datalist id="ContactTypeOptions">
-                    <option value="Phone Call">
-                    <option value="Walk In">
-                </datalist>
+                <select class="form-select text-center" id="ContactType" name="ContactType" aria-label="Type" aria-describedby="basic-addon1" required>
+                    {% for type in contact_types %}
+                        <option>{{type}}</option>
+                    {% endfor %}
+                </select>
           </div>
 
            <div class="col-md-2">
@@ -89,7 +102,11 @@
 
            <div class="col-md-4">
                <label for="ReturnOperator" class="form-label mb-3" style="font-size:20px; font-weight:500;">Return Call Operator:</label>
-               <input type="text" class="form-control text-center" id="ReturnOperator" name="ReturnOperator" aria-label="ReturnOperator" aria-describedby="basic-addon1" required>
+               <select class="form-select text-center" id="ReturnOperator" name="ReturnOperator" aria-label="ReturnOperator" aria-describedby="basic-addon1" required>
+                   {% for user in return_operators %}
+                        <option>{{user}}</option>
+                    {% endfor %}
+               </select>
             </div>
 
        </div>
@@ -99,6 +116,7 @@
 
            <div class="col-md-4">
                <label for="CallerVisitor" class="form-label mb-3" style="font-size:20px; font-weight:500;">Caller/Visitor:</label>
+               <button id="SameAsOwnerButton" class="btn" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 20px;">Same As Owner</button>
                <input type="text" class="form-control text-center" id="CallerVisitor" name="CallerVisitor" aria-label="CallerVisitor" aria-describedby="basic-addon1" required>
           </div>
 
@@ -144,6 +162,13 @@
             document.forms[i].reset();
           }
         }
+    </script>
+
+    <script>
+        /* https://stackoverflow.com/questions/47575682/copy-value-from-one-text-field-to-another-when-button-clicked */
+        $(document).on('click', '#SameAsOwnerButton', function() {
+          $('#CallerVisitor').val($('#OwnerName').val());
+        });
     </script>
 
   </body>

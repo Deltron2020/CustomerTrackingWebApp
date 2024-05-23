@@ -1,12 +1,15 @@
 from flask import render_template, request, session, redirect, url_for, jsonify
-from app.ct_update_ticket.sql import (load_tickets_from_db, update_ticket_in_db, version_id_check, got_it_db_insert, got_it_ticket_tracking, forward_to_options, insert_correspondence_notes, load_correspondence_notes)
+from app.ct_update_ticket.sql import (load_tickets_from_db, update_ticket_in_db, version_id_check, got_it_db_insert, got_it_ticket_tracking, forward_to_options, insert_correspondence_notes, load_correspondence_notes, populate_type_of_contact_selection, populate_return_call_operator_selection, populate_ticket_status_selection)
 from app import app
+from datetime import date, timedelta
 
 
 ### ticket search ###
 @app.route("/search", methods=['GET'])
 def customer_tracking_search():
     if 'username' in session:
+        contact_types = populate_type_of_contact_selection()
+        return_operators = populate_return_call_operator_selection()
         data = request.args
         ticket = {}
         for i in data:
@@ -26,12 +29,17 @@ def customer_tracking_search():
             results = []
             return render_template('CT_Search.html',
                                    ticket_data=results,
-                                   current_user=session['username'])
+                                   current_user=session['username'],
+                                   contact_types=contact_types,
+                                   return_operators=return_operators)
         else:
             results = load_tickets_from_db(columns, parameters)
             return render_template('CT_Search.html',
                                    ticket_data=results,
-                                   current_user=session['username'])
+                                   current_user=session['username'],
+                                   current_date=date.today() - timedelta(days=3),
+                                   contact_types=contact_types,
+                                   return_operators=return_operators)
 
     else:
         return redirect(url_for('customer_tracking_login'))
@@ -46,6 +54,9 @@ def view_searched_ticket(ticketNumber):
 
         ticket = load_tickets_from_db(ticket_filter,ticket_dict)
         tracking = got_it_ticket_tracking(ticketNumber)
+        contact_types = populate_type_of_contact_selection()
+        return_operators = populate_return_call_operator_selection()
+        status_options = populate_ticket_status_selection()
         forwards = forward_to_options()
         notes = load_correspondence_notes(ticketNumber)
 
@@ -53,7 +64,10 @@ def view_searched_ticket(ticketNumber):
                                ticket_data=ticket,
                                tracking_data=tracking,
                                forward_users=forwards,
-                               correspondence_notes=notes)
+                               correspondence_notes=notes,
+                               contact_types=contact_types,
+                               return_operators=return_operators,
+                               status_options=status_options)
     else:
         return redirect(url_for('customer_tracking_login'))
 

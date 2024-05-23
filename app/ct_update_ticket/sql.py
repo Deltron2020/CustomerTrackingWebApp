@@ -39,6 +39,42 @@ def version_id_check(data):
         return vid
 
 
+### populate contact types drop down selection ###
+def populate_type_of_contact_selection():
+    with coxn.connect() as connection:
+        query = text("SELECT ContactDescription FROM app.CT_ListContactTypes ORDER BY ContactDescription ASC;")
+        result = connection.execute(query)
+
+        types = []
+        for data in result.all():
+            types.append(data[0])
+        return types
+
+
+### populate return call operator drop down selection ###
+def populate_return_call_operator_selection():
+    with coxn.connect() as connection:
+        query = text("SELECT EmployeeDepartment FROM [app].[view_CT_UserDepts] ORDER BY EmployeeDepartment ASC;")
+        results = connection.execute(query)
+
+        operators = []
+        for user in results.all():
+            operators.append(user[0])
+        return operators
+
+
+### populate ticket status drop down selection ###
+def populate_ticket_status_selection():
+    with coxn.connect() as connection:
+        query = text("SELECT StatusDescription FROM app.CT_ListTicketStatus ORDER BY StatusDescription ASC;")
+        result = connection.execute(query)
+
+        types = []
+        for data in result.all():
+            types.append(data[0])
+        return types
+
+
 ### insert got it table record ###
 def got_it_db_insert(data, action, user, forward):
     if action == 'GOT IT':
@@ -79,7 +115,7 @@ def got_it_ticket_tracking(data):
 ## forward to user ticket tracking ##
 def forward_to_options():
     with coxn.connect() as connection:
-        query = text("SELECT [EmployeeDepartment] FROM [app].[view_CT_UserDepts]")
+        query = text("SELECT EmployeeDepartment FROM [app].[view_CT_UserDepts] ORDER BY EmployeeDepartment ASC;")
         results = connection.execute(query)
 
         forwards = []

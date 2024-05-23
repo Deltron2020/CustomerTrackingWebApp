@@ -5,7 +5,6 @@
     <title> Ticket Search </title>
     {% include 'bootstrap.html' %}
 
-
   </head>
   <body class = "bg-info-subtle">
     {% include 'nav.html' %}
@@ -38,16 +37,20 @@
 
           <div class="d-grid gap-1 col-4 mt-4 mb-3">
             <label for="ContactTypeSearch" class="form-label" style="font-size:25px;"><b>Contact Type</b></label>
-            <input class="form-control text-center" list="ContactTypeOptions" id="ContactTypeSearch" name="ContactType" type="text" aria-describedby="basic-addon1">
-            <datalist id="ContactTypeOptions">
-                    <option value="Phone Call">
-                    <option value="Walk In">
-            </datalist>
+            <select class="form-select text-center" id="ContactTypeSearch" name="ContactType" aria-describedby="basic-addon1">
+              {% for type in contact_types %}
+                <option>{{type}}</option>
+              {% endfor %}
+            </select>
           </div>
 
           <div class="d-grid gap-1 col-4 mt-4 mb-3">
             <label for="ReturnOperatorSearch" class="form-label" style="font-size:25px;"><b>Return Call Operator</b></label>
-            <input class="form-control text-center" id="ReturnOperatorSearch" name="ReturnOperator" type="text" aria-describedby="basic-addon1">
+            <select class="form-select text-center" id="ReturnOperatorSearch" name="ReturnOperator" aria-describedby="basic-addon1">
+              {% for user in return_operators %}
+                <option>{{user}}</option>
+              {% endfor %}
+              </select>
           </div>
 
           <div class="d-grid gap-1 col-4 mt-4 mb-3">
@@ -60,16 +63,16 @@
         <div class="row text-center">
 
           <div class="d-grid gap-1 col-4 mt-4 mb-3 mx-auto" role="group">
-            <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
-            <label class="btn btn-outline-primary" for="btncheck1">Got It Operator</label>
+            <input type="checkbox" class="btn-check" id="GotItSearch" name="GotItUserFlag" value="0" autocomplete="off">
+            <label class="btn btn-outline-primary" for="GotItSearch">No Got It Operator</label>
 
-            <input type="checkbox" class="btn-check" id="MyTicketSearch" value="{{ current_user }}" autocomplete="off">
+            <input type="checkbox" class="btn-check" id="MyTicketSearch" name="CreateUser" value="{{ current_user }}" autocomplete="off">
             <label class="btn btn-outline-primary" for="MyTicketSearch">My Tickets</label>
           </div>
 
           <div class="d-grid gap-1 col-4 mt-4 mb-3 mx-auto" role="group">
             <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
-            <label class="btn btn-outline-primary" for="btncheck3">My Department</label>
+            <label class="btn btn-outline-primary" for="btncheck3">My Department (DNW)</label>
 
             <input type="checkbox" class="btn-check" id="TicketStatusSearch" name="Status" value="Open" checked>
             <label class="btn btn-outline-primary" for="TicketStatusSearch">Open Tickets</label>
@@ -95,23 +98,35 @@
             <th scope="col">Contact Date</th>
             <th scope="col">AIN</th>
             <th scope="col">Owner Name</th>
-            <th scope="col">Return Operator</th>
-            <th scope="col">Caller/Visitor</th>
+            <th scope="col">Return Call Operator</th>
+            <th scope="col">Got It Operator</th>
             <th scope="col">Status</th>
           </tr>
           </thead>
 
           <tbody>
           {% for ticket in ticket_data %}
-              <tr>
+            {% if ticket['ContactDate'] < current_date and ticket['Status'] == 'Open' %}
+                <tr style="font-weight: 500;">
+                  <td><a href="/search/{{ticket['TicketNumber']}}">{{ticket['TicketNumber']}}</a></td>
+                  <td style="color: blue;">{{ticket['ContactDate']}}</td>
+                  <td style="color: blue;">{{ticket['AccountNumber']}}</td>
+                  <td style="color: blue;">{{ticket['OwnerName']}}</td>
+                  <td style="color: blue;">{{ticket['ReturnOperator']}}</td>
+                  <td style="color: blue;">{{ticket['GotItUser']}}</td>
+                  <td style="color: blue;">{{ticket['Status']}}</td>
+                </tr>
+            {% else %}
+                <tr>
                   <td><a href="/search/{{ticket['TicketNumber']}}">{{ticket['TicketNumber']}}</a></td>
                   <td>{{ticket['ContactDate']}}</td>
                   <td>{{ticket['AccountNumber']}}</td>
                   <td>{{ticket['OwnerName']}}</td>
                   <td>{{ticket['ReturnOperator']}}</td>
-                  <td>{{ticket['CallerOrVisitor']}}</td>
+                  <td>{{ticket['GotItUser']}}</td>
                   <td>{{ticket['Status']}}</td>
-              </tr>
+                </tr>
+            {% endif %}
           {% endfor %}
           </tbody>
 
