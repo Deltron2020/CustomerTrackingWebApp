@@ -12,36 +12,21 @@
 
     {% include 'nav.html' %}
 
-    {% if reloaded_ticket == 1 %}
-
-        <!-- Modal -->
-        <div class="modal fade" id="reloadModal" tabindex="-1" aria-labelledby="reloadModalLabel" aria-hidden="false">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="reloadModalLabel">Warning!</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                This ticket has been updated since you originally viewed it, please review the changes and try again.
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        {% if category == 'error' %}
+        <div class="rounded-3 shadow-lg">
+            <div class="alert alert-danger alter-dismissible fade show text-center" role="alert">
+                <h4>{{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </h4>
             </div>
-          </div>
         </div>
-
-        <script>
-            const reloadModal = new bootstrap.Modal('#reloadModal');
-
-            window.addEventListener('DOMContentLoaded', () => {
-                reloadModal.show();
-            });
-        </script>
-
+        {% endif %}
+        {% endfor %}
     {% endif %}
-
+    {% endwith %}
 
     <div class = "container">
 
@@ -65,7 +50,7 @@
               </div>
 
               <div class="col-md-3">
-                  <label for="CreateUser" class="form-label mb-3" style="font-size:20px; font-weight:500;">Created By</label>
+                  <label for="CreateUser" class="form-label mb-3" style="font-size:20px; font-weight:500;">Last Updated By</label>
                   <input type="text" readonly class="form-control text-center mb-4 bg-secondary-subtle" id="CreateUser" value="{{ticket_data[0]['CreateUser']}}" name="CreateUser" aria-label="CreatedBy" aria-describedby="basic-addon1">
               </div>
 
@@ -184,9 +169,7 @@
          <div class="row text-center" style="margin-top:42px; margin-bottom:42px;">
            <div class="col-md-12">
                <label for="ReasonForCall" class="form-label mb-2" style="font-size:20px; font-weight:500;">Reason For Call:</label>
-               <textarea class="form-control text-center" id="ReasonForCall" name="CallReason" aria-label="CallReason" rows="6" aria-describedby="basic-addon1">
-                   {{ticket_data[0]['ReasonForCall']}}
-               </textarea>
+               <textarea class="form-control" id="ReasonForCall" name="CallReason" aria-label="CallReason" rows="6" aria-describedby="basic-addon1" style="white-space: pre-line; text-align: left;">{{ticket_data[0]['ReasonForCall']}}</textarea>
 
           </div>
          </div>

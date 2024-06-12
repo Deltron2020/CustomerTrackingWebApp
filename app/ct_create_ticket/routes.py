@@ -7,26 +7,29 @@ from app import app
 @app.route("/create", methods=['GET'])
 def customer_tracking_create():
     if 'username' in session:
-        data = request.args     # data returned from inputs (4 possible fields)
-        account = {}    # dictionary to hold entered data
-        for i in data:
-            if (len(data[i])) > 0:
-                value = {i: data[i]}
-                account.update(value)
+        account = {}
+        for i in request.args:         # data returned from inputs (4 possible fields)
+            if request.args.get('AccountNumber') != '':
+                account.update({'AccountNumber': request.args.get('AccountNumber')})
+                break
+            if request.args.get('PCN') != '':
+                account.update({'PCN': request.args.get('PCN')})
+                break
+            if request.args.get('SitusAddress') != '':
+                account.update({'SitusAddress': request.args.get('SitusAddress')})
+                break
+            if request.args.get('OwnerName') != '':
+                account.update({'OwnerName': request.args.get('OwnerName')})
+                break
 
-        query_filter = ''
-        for e, field in enumerate(account):
-            if e == 0:
-                query_filter += (f"WHERE {field} LIKE '%{account[field]}%'")
-            elif e >= 1:
-                query_filter += (f" AND {field} LIKE '%{account[field]}%'")
-
-        if not query_filter:
+        if not account:
             results = []
             return render_template('CT_Create.html',
                                account_data=results)
         else:
-            results = load_accounts_from_db(query_filter)
+            field = [key for key in account.keys()][0]
+            value = [val for val in account.values()][0]
+            results = load_accounts_from_db(field, value)
             return render_template('CT_Create.html',
                                account_data=results)
     else:

@@ -19,19 +19,19 @@ def load_tickets_from_db(columns, values):
 ### insert ticket information into database table (but updating an existing ticket) ###
 def update_ticket_in_db(data, user):
     with coxn.connect() as connection:
-            query = text(f"INSERT INTO app.CT_Tickets (TicketNumber, AccountNumber, TicketType, TicketYear, OwnerName, SitusAddress, ContactType, ContactDate, ContactTime, ReturnOperator, CallerOrVisitor, PhoneNumber, EmailAddress, ReasonForCall, Status, CreateUser) VALUES ({data['TicketNumber']}, {data['Account']}, '{data['TicketType']}', {data['TicketYear']}, '{data['Owner']}', '{data['Address']}', '{data['ContactType']}', '{data['ContactDate']}', '{data['ContactTime']}', '{data['ReturnOperator']}', '{data['CallerVisitor']}', '{data['Telephone']}', '{data['Email']}', RTRIM(LTRIM('{data['CallReason']}')) + ' - {user} - ' + CAST(GETDATE() AS VARCHAR), '{data['Status']}', '{data['CreateUser']}');"
+            query = text(f"INSERT INTO app.CT_Tickets (TicketNumber, AccountNumber, TicketType, TicketYear, OwnerName, SitusAddress, ContactType, ContactDate, ContactTime, ReturnOperator, CallerOrVisitor, PhoneNumber, EmailAddress, ReasonForCall, Status, CreateUser) VALUES  (:ticketNumber, :accountNumber, :ticketType, :ticketYear, :ownerName, :situsAddress, :contactType, :contactDate, :contactTime, :returnOperator, :callerVisitor, :phoneNumber, :emailAddress, :reasonForCall, :status, :createUser);"
                          )
             #print(query)
-            connection.execute(query)
+            connection.execute(query, {"ticketNumber": data['TicketNumber'], "accountNumber": data['Account'], "ticketType": data['TicketType'], "ticketYear": data['TicketYear'], "ownerName": data['Owner'], "situsAddress": data['Address'], "contactType": data['ContactType'], "contactDate": data['ContactDate'], "contactTime": data['ContactTime'], "returnOperator": data['ReturnOperator'], "callerVisitor": data['CallerVisitor'], "phoneNumber": data['Telephone'], "emailAddress": data['Email'], "reasonForCall": data['CallReason'], "status": data['Status'], "createUser": user})
+
             connection.commit()
 
 
 ### check version id before ticket update ###
 def version_id_check(data):
     with coxn.connect() as connection:
-        query = text(f"SELECT id FROM app.view_CT_Tickets WHERE TicketNumber = {data['TicketNumber']}")
-        result = connection.execute(query)
-
+        query = text(f"SELECT id FROM app.view_CT_Tickets WHERE TicketNumber = :data")
+        result = connection.execute(query, {'data': data['TicketNumber']})
         vid = {}
         for row in result.all():
             vid.update(dict(row._mapping))
