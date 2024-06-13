@@ -128,7 +128,7 @@ def forward_to_options():
 ## correspondence notes database read ##
 def load_correspondence_notes(data):
     with coxn.connect() as connection:
-        query = text("SELECT Notes, FORMAT(CreateDate,   'MM-dd-yyyy hh:mm:ss tt') AS CreateDate, CreateUser FROM [app].[CT_CorrespondenceNotes] WHERE TicketNumber = :ticketNumber ORDER BY id ASC")
+        query = text("SELECT Notes, FORMAT(CreateDate,   'MM-dd-yyyy hh:mm:ss tt') AS CreateDate, CreateUser FROM [app].[CT_CorrespondenceNotes] WHERE TicketNumber = :ticketNumber ORDER BY id DESC")
         results = connection.execute(query, {'ticketNumber': data})
 
         notes = []

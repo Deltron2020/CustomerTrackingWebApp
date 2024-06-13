@@ -49,21 +49,17 @@
     <div class="row mb-3 mt-3 text-center">
         <div class="col p-2">
 
-            <a id="AddNotes" type="button" class="btn btn-secondary btn-lg fw-bold mt-2" data-val="" data-action="GOT IT" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 30px;">Add/View Notes </a>
+            <a id="AddNotes" type="button" class="btn btn-secondary btn-lg fw-bold mt-2" data-val="" data-action="GOT IT" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 30px;"> Add Correspondence Notes </a>
 
             <div class="modal fade" id="notesModal" tabindex="-1" aria-labelledby="notesModalLabel" aria-hidden="false">
                   <div class="modal-dialog">
+
                     <div class="modal-content">
                       <div class="modal-header">
                         <h1 class="modal-title fs-5" id="notesModalLabel">Correspondence Notes</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
-                          <div class="col-md-12">
-                              <label for="CorrespondenceNotesHistory" class="form-label mb-3" style="font-size:20px; font-weight:500;">View Notes History:</label>
-                              <textarea class="form-control bg-secondary-subtle" id="CorrespondenceNotesHistory" name="CorrespondenceNotesHistory" readonly="readonly" aria-label="CorrespondenceNotesHistory" rows="10" aria-describedby="basic-addon1" style="white-space: pre-line; height:400px; text-align: left;">{% for note in correspondence_notes %}{{ "%s %s > %s" % (note['CreateDate'], note['CreateUser'], note['Notes']) }}
-                                  {% endfor %}</textarea>
-                          </div>
 
                           <form action="/got_it_update/notes_submitted/{{ticket_data[0]['TicketNumber']}}" method="post" autocomplete="off">
                              <div class="row text-center" style="margin-top:10px; margin-bottom:42px;">
@@ -77,8 +73,10 @@
                                  </div>
                              </div>
                           </form>
+
                       </div>
                     </div>
+
                   </div>
             </div>
 
@@ -93,6 +91,20 @@
 
             <a id="GotIt" type="button" class="btn btn-secondary btn-lg fw-bold mt-2" data-val="{{ticket_data[0]['TicketNumber']}}" data-action="GOT IT" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 30px;">Got it! </a>
 
+            <div class="col-md-12 mt-4">
+                <label for="CorrespondenceNotesHistory" class="form-label mb-3" style="font-size:20px; font-weight:500;">View Notes History:</label>
+                <textarea class="form-control bg-secondary-subtle" id="CorrespondenceNotesHistory" name="CorrespondenceNotesHistory" readonly="readonly" aria-label="CorrespondenceNotesHistory" rows="12" aria-describedby="basic-addon1" style="white-space: pre-line; text-align: left;">{% for note in correspondence_notes %}{{ "%s %s > %s" % (note['CreateDate'], note['CreateUser'], note['Notes']) }}
+                    {% endfor %}</textarea>
+            </div>
+
+
+        </div>
+        <div class="col mb-2">
+
+            <label for="GotItTracking" class="form-label mb-3" style="font-size:20px; font-weight:500;">Got It Tracking:</label>
+            <textarea class="form-control text-center" readonly id="GotItTracking" name="GotItTracking" aria-label="GotItTracking" rows="5" aria-describedby="basic-addon1" style="white-space: pre-line;">{% for row in tracking_data %}
+                {{ "%s %s > %s %s" % (row['GotItUser'], row['ActionType'], row['ForwardToUser'], row['CreateDate']) }}{% endfor %}</textarea>
+
             <div class="mb-3 mt-3">
               <label for="ForwardTo" class="form-label" style="font-size:20px; font-weight:500;">Forward To:</label>
               <select id="ForwardTo" class="form-select" data-val="{{ticket_data[0]['TicketNumber']}}" data-action="FORWARD TO">
@@ -103,16 +115,6 @@
             </div>
 
         </div>
-        <div class="col mb-2">
-
-            <label for="GotItTracking" class="form-label mb-3" style="font-size:20px; font-weight:500;">Got It Tracking:</label>
-            <textarea class="form-control text-center" readonly id="GotItTracking" name="GotItTracking" aria-label="GotItTracking" rows="5" aria-describedby="basic-addon1" style="white-space: pre-line;">{% for row in tracking_data %}
-                {{ "%s %s > %s %s" % (row['GotItUser'], row['ActionType'], row['ForwardToUser'], row['CreateDate']) }}{% endfor %}</textarea>
-
-        </div>
-
-
     </div>
-
 
 </div>
