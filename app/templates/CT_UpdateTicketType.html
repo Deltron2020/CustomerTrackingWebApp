@@ -1,0 +1,35 @@
+<div class = "container border-top">
+
+      <h1 class = "p-3 bg-body-secondary border border-info border-start-10 rounded-start rounded-end text-center mt-5 fw-bold mx-auto"> Update Ticket Type </h1>
+
+     <form action="/admin/tickettype/submitted" method="post" autocomplete="off">
+
+       <div class="row text-center mt-5" style="margin-top:0px; margin-bottom:42px;">
+
+           <div class="col-md-2"></div>
+
+           <div class="col-md-4">
+               <label for="TicketType" class="form-label mb-3" style="font-size:20px; font-weight:500;">Ticket Type:</label>
+               <input type="text" class="form-control text-center" id="TicketType" name="TicketType" value="{{ticketInfo['TicketType']}}" aria-label="TicketType" aria-describedby="basic-addon1" required>
+            </div>
+
+           <div class="col-md-4">
+               <label for="TicketYear" class="form-label mb-3" style="font-size:20px; font-weight:500;">Ticket Year:</label>
+               <input type="number" class="form-control text-center" id="TicketYear" name="TicketYear" value="{{ticketInfo['TicketYear']}}" aria-label="TicketYear" aria-describedby="basic-addon1" required>
+            </div>
+
+           <div class="col-md-2"></div>
+
+           <div class="row text-center" style="margin-top:42px; margin-bottom:42px;">
+
+             <div class="d-grid gap-5 col-4 mx-auto mt-4">
+                    <button class="btn btn-primary btn-lg fw-bold" type="submit" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 50px;">
+                    Update</button>
+             </div>
+         </div>
+
+       </div>
+
+     </form>
+
+</div>

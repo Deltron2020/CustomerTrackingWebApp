@@ -1,5 +1,5 @@
 from flask import render_template, request, session, redirect, url_for, jsonify, flash
-from app.ct_update_ticket.sql import (load_tickets_from_db, update_ticket_in_db, version_id_check, got_it_db_insert, got_it_ticket_tracking, forward_to_options, insert_correspondence_notes, load_correspondence_notes, populate_type_of_contact_selection, populate_return_call_operator_selection, populate_ticket_status_selection)
+from app.ct_update_ticket.sql import (load_tickets_from_db, update_ticket_in_db, version_id_check, got_it_db_insert, got_it_ticket_tracking, forward_to_options, insert_correspondence_notes, load_correspondence_notes, populate_type_of_contact_selection, populate_return_call_operator_selection, populate_ticket_status_selection, populate_all_ticket_types)
 from app import app
 from datetime import date, timedelta
 
@@ -10,6 +10,8 @@ def customer_tracking_search():
     if 'username' in session:
         contact_types = populate_type_of_contact_selection()
         return_operators = populate_return_call_operator_selection()
+        status_options = populate_ticket_status_selection()
+        ticketTypes = populate_all_ticket_types()
         data = request.args
         ticket = {}
         for i in data:
@@ -31,7 +33,9 @@ def customer_tracking_search():
                                    ticket_data=results,
                                    current_user=session['username'],
                                    contact_types=contact_types,
-                                   return_operators=return_operators)
+                                   return_operators=return_operators,
+                                   status_options=status_options,
+                                   ticketTypes=ticketTypes)
         else:
             results = load_tickets_from_db(columns, parameters)
             return render_template('CT_Search.html',
@@ -39,7 +43,9 @@ def customer_tracking_search():
                                    current_user=session['username'],
                                    current_date=date.today() - timedelta(days=3),
                                    contact_types=contact_types,
-                                   return_operators=return_operators)
+                                   return_operators=return_operators,
+                                   status_options=status_options,
+                                   ticketTypes=ticketTypes)
 
     else:
         return redirect(url_for('customer_tracking_login'))

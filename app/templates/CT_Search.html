@@ -14,6 +14,42 @@
       <h1 class = "p-3 bg-body-secondary border border-info border-start-10 rounded-start rounded-end text-center mt-5 fw-bold mx-auto"> View Tickets </h1>
 
       <form autocomplete="off">
+
+        <div class="row text-center">
+
+          <div class="d-grid gap-1 col-4 mt-4 mb-3">
+            <label for="TicketStatusSearch" class="form-label" style="font-size:25px;"><b>Ticket Status</b></label>
+            <select class="form-select text-center" id="TicketStatusSearch" name ="Status">
+              {% for status in status_options %}
+                    {% if status == 'Open' %}
+                        <option selected>{{status}}</option>
+                    {% else %}
+                        <option>{{status}}</option>
+                    {% endif %}
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="d-grid gap-1 col-4 mt-4 mb-3">
+            <label for="TicketTypeSearch" class="form-label" style="font-size:25px;"><b>Ticket Type</b></label>
+            <select class="form-select text-center" id="TicketTypeSearch" name="TicketType" aria-describedby="basic-addon1">
+              {% for type, year in ticketTypes %}
+                <option>{{type}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="d-grid gap-1 col-4 mt-4 mb-3">
+            <label for="TicketYearSearch" class="form-label" style="font-size:25px;"><b>Ticket Year</b></label>
+            <select class="form-select text-center" id="TicketYearSearch" name="TicketYear" aria-describedby="basic-addon1">
+              {% for type, year in ticketTypes %}
+                <option>{{year}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+        </div>
+
         <div class="row text-center">
 
           <div class="d-grid gap-1 col-4 mt-4 mb-3">
@@ -68,14 +104,6 @@
 
             <input type="checkbox" class="btn-check" id="MyTicketSearch" name="CreateUser" value="{{ current_user }}" autocomplete="off">
             <label class="btn btn-outline-primary" for="MyTicketSearch">My Tickets</label>
-          </div>
-
-          <div class="d-grid gap-1 col-4 mt-4 mb-3 mx-auto" role="group">
-            <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
-            <label class="btn btn-outline-primary" for="btncheck3">My Department (DNW)</label>
-
-            <input type="checkbox" class="btn-check" id="TicketStatusSearch" name="Status" value="Open" checked>
-            <label class="btn btn-outline-primary" for="TicketStatusSearch">Open Tickets</label>
           </div>
 
         </div>
@@ -136,10 +164,6 @@
     </div>
 
     {% include 'footer.html' %}
-
-    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
 
     <script>
       $(document).ready(function () {

@@ -155,3 +155,15 @@ def insert_correspondence_notes(data, notes, user):
 
         connection.execute(query, {'ticketNumber': data, 'corNotes': notes, 'createUser': user})
         connection.commit()
+
+
+def populate_all_ticket_types():
+    with coxn.connect() as connection:
+        query = text(f"SELECT DISTINCT TicketType, TicketYear FROM app.view_CT_Tickets;")
+        result = connection.execute(query)
+
+        ticketTypes = []
+        for data in result.all():
+            ticketTypes.append(data)
+
+        return ticketTypes

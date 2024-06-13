@@ -14,7 +14,7 @@ def customer_tracking_login():
 
         if userExists == 1:
             session['username'] = username
-            session['admin'] = user_dept_check(username,'1')
+            session['admin'] = user_dept_check(username,1, 2) # 1=IT, 2=Admin
             return redirect('/')
         else:
             return render_template('CT_Login.html',
