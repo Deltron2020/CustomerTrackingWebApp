@@ -63,6 +63,18 @@ def populate_return_call_operator_selection():
         return operators
 
 
+### populate got it operator drop down selection ###
+def populate_got_it_operator_selection():
+    with coxn.connect() as connection:
+        query = text("SELECT EmployeeDepartment FROM [app].[view_CT_UserDepts] ORDER BY EmployeeDepartment ASC;")
+        results = connection.execute(query)
+
+        gotIts = []
+        for user in results.all():
+            gotIts.append(user[0])
+        return gotIts
+
+
 ### populate ticket status drop down selection ###
 def populate_ticket_status_selection():
     with coxn.connect() as connection:

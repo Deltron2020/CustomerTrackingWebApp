@@ -6,25 +6,31 @@ from app import app
 ### login ###
 @app.route("/login", methods=['GET','POST'])
 def customer_tracking_login():
-    if request.method == 'POST':
-        username = request.form.get('Username')
-        password = request.form.get('Password')
+    try:
+        if request.method == 'POST':
+            username = request.form.get('Username')
+            password = request.form.get('Password')
 
-        userExists = user_login_search(username, password)
+            userExists = user_login_search(username, password)
 
-        if userExists == 1:
-            session['username'] = username
-            session['admin'] = user_dept_check(username,1, 2) # 1=IT, 2=Admin
-            return redirect('/')
+            if userExists == 1:
+                session['username'] = username
+                session['admin'] = user_dept_check(username,1, 2) # 1=IT, 2=Admin
+                return redirect('/')
+            else:
+                return render_template('CT_Login.html',
+                               error='Invalid username or password!')
         else:
-            return render_template('CT_Login.html',
-                           error='Invalid username or password!')
-    else:
-        return render_template('CT_Login.html')
+            return render_template('CT_Login.html')
+    except Exception as e:
+        return render_template('CT_Error.html', error=e)
 
 
 ### logoff ###
 @app.route("/logout")
 def customer_tracking_logout():
-    session.pop('username', None)
-    return redirect(url_for('customer_tracking_login')) #render_template('CT_Login.html')
+    try:
+        session.pop('username', None)
+        return redirect(url_for('customer_tracking_login')) #render_template('CT_Login.html')
+    except Exception as e:
+        return render_template('CT_Error.html', error=e)

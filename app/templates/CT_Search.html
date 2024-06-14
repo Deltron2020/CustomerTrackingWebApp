@@ -98,6 +98,15 @@
 
         <div class="row text-center">
 
+          <div class="d-grid gap-1 col-4 mt-4 mb-3 mx-auto">
+            <label for="GotItOperatorSearch" class="form-label" style="font-size:25px;"><b>Got It Operator</b></label>
+            <select class="form-select text-center" id="GotItOperatorSearch" name="GotItUser" aria-describedby="basic-addon1">
+              {% for user in gotit_operators %}
+                <option>{{user}}</option>
+              {% endfor %}
+              </select>
+          </div>
+
           <div class="d-grid gap-1 col-4 mt-4 mb-3 mx-auto" role="group">
             <input type="checkbox" class="btn-check" id="GotItSearch" name="GotItUserFlag" value="0" autocomplete="off">
             <label class="btn btn-outline-primary" for="GotItSearch">No Got It Operator</label>

@@ -32,9 +32,11 @@
 
       <h1 class = "p-3 bg-body-secondary border border-info border-start-10 rounded-start rounded-end text-center mt-5 fw-bold mx-auto"> View/Update Ticket </h1>
 
+        <p class="col text-center"><b>*</b> = Required Field</p>
+
      <form action="/ticket/update_submitted" method="post" autocomplete="off">
 
-            <div class="row text-center border-bottom" style="margin-top:42px; margin-bottom:21px;">
+            <div class="row text-center border-bottom border-black" style="margin-top:42px; margin-bottom:21px;">
 
              <input type="hidden" readonly id="id" value="{{ticket_data[0]['id']}}" name="id">
              <input type="hidden" readonly id="TicketYear" value="{{ticket_data[0]['TicketYear']}}" name="TicketYear">
@@ -85,7 +87,7 @@
        <div class="row text-center" style="margin-top:0px; margin-bottom:42px;">
 
            <div class="col-md-4">
-                <label for="ContactType" class="form-label mb-3" style="font-size:20px; font-weight:500;">Type of Contact:</label>
+                <label for="ContactType" class="form-label mb-3" style="font-size:20px; font-weight:500;">*Type of Contact:</label>
                 <select class="form-select text-center" id="ContactType" name="ContactType" aria-label="Type" aria-describedby="basic-addon1" required>
                     {% for type in contact_types %}
                         {% if type == ticket_data[0]['ContactType'] %}
@@ -98,17 +100,17 @@
           </div>
 
            <div class="col-md-2">
-               <label for="ContactDate" class="form-label mb-3" style="font-size:20px; font-weight:500;">Contact Date:</label>
+               <label for="ContactDate" class="form-label mb-3" style="font-size:20px; font-weight:500;">*Contact Date:</label>
                <input type="date" class="form-control text-center" id ="ContactDate" value="{{ticket_data[0]['ContactDate']}}" name="ContactDate" aria-label="Date" aria-describedby="basic-addon1" required>
           </div>
 
            <div class="col-md-2">
-               <label for="ContactTime" class="form-label mb-3" style="font-size:20px; font-weight:500;">Contact Time:</label>
+               <label for="ContactTime" class="form-label mb-3" style="font-size:20px; font-weight:500;">*Contact Time:</label>
                <input type="time" class="form-control text-center" id="ContactTime" value="{{ticket_data[0]['ContactTime']}}" name="ContactTime" aria-label="Time" aria-describedby="basic-addon1" required>
           </div>
 
            <div class="col-md-4">
-               <label for="ReturnOperator" class="form-label mb-3" style="font-size:20px; font-weight:500;">Return Call Operator:</label>
+               <label for="ReturnOperator" class="form-label mb-3" style="font-size:20px; font-weight:500;">*Return Call Operator:</label>
                <select class="form-select text-center" id="ReturnOperator" name="ReturnOperator" aria-label="ReturnOperator" aria-describedby="basic-addon1" required>
                    {% for user in return_operators %}
                     {% if user == ticket_data[0]['ReturnOperator'] %}
@@ -126,12 +128,12 @@
          <div class="row text-center" style="margin-top:0px; margin-bottom:42px;">
 
            <div class="col-md-4">
-               <label for="CallerVisitor" class="form-label mb-3" style="font-size:20px; font-weight:500;">Caller/Visitor:</label>
+               <label for="CallerVisitor" class="form-label mb-3" style="font-size:20px; font-weight:500;">*Caller/Visitor:</label>
                <input type="text" class="form-control text-center" id="CallerVisitor" value="{{ticket_data[0]['CallerOrVisitor']}}" name="CallerVisitor" aria-label="CallerVisitor" aria-describedby="basic-addon1" required>
           </div>
 
            <div class="col-md-4">
-               <label for="PhoneNumber" class="form-label mb-3" style="font-size:20px; font-weight:500;">Phone Number:</label>
+               <label for="PhoneNumber" class="form-label mb-3" style="font-size:20px; font-weight:500;">*Phone Number:</label>
                <input type="tel" class="form-control text-center" id="PhoneNumber" value="{{ticket_data[0]['PhoneNumber']}}" name="Telephone" aria-label="Telephone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" aria-describedby="basic-addon1" required>
           </div>
 
@@ -145,8 +147,8 @@
          <div class="row text-center" style="margin-top:0px; margin-bottom:42px;">
 
            <div class="col-md-4">
-               <label for="Status" class="form-label mb-3" style="font-size:20px; font-weight:500;">Ticket Status:</label>
-               <select class="form-select text-center" id="Status" name="Status" aria-label="TicketStatus" aria-describedby="basic-addon1">
+               <label for="Status" class="form-label mb-3" style="font-size:20px; font-weight:500;">*Ticket Status:</label>
+               <select class="form-select text-center" id="Status" name="Status" aria-label="TicketStatus" aria-describedby="basic-addon1" required>
                    {% for status in status_options %}
                     {% if status == ticket_data[0]['Status'] %}
                         <option selected>{{status}}</option>
