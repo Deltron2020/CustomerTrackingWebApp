@@ -14,7 +14,7 @@ def customer_tracking_login():
             userExists = user_login_search(username, password)
 
             if userExists == 1:
-                session['username'] = username
+                session['username'] = username.lower()
                 session['admin'] = user_dept_check(username,1, 2) # 1=IT, 2=Admin
                 return redirect('/')
             else:
