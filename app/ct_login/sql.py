@@ -14,10 +14,10 @@ def user_login_search(username, password):
 
 
 ### check if user is Admin dept ###
-def user_dept_check(username, dept1, dept2):
+def user_dept_check(username, dept1):
     with coxn.connect() as connection:
         result = connection.execute(
-            text(f"SELECT COUNT(DISTINCT Username) AS IsDept FROM app.CT_Users WHERE Username LIKE :username AND DeptID IN (:dept1, :dept2);"), {'username': username, 'dept1': dept1, 'dept2': dept2}
+            text(f"SELECT COUNT(DISTINCT Username) AS IsDept FROM app.CT_Users WHERE Username LIKE :username AND DeptID = :dept1;"), {'username': username, 'dept1': dept1}
         )
 
         dept_results = result.all()[0]._mapping
