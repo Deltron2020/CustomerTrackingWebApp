@@ -52,7 +52,13 @@ def populate_type_of_contact_selection():
 ### populate return call operator drop down selection ###
 def populate_return_call_operator_selection():
     with coxn.connect() as connection:
-        query = text("SELECT EmployeeDepartment FROM [app].[view_CT_UserDepts] ORDER BY CASE WHEN EmployeeDepartment = '' THEN 1 WHEN EmployeeDepartment = 'All/General' THEN 2 ELSE 3 END, EmployeeDepartment;")
+        query = text("""
+            SELECT EmployeeDepartment FROM [app].[view_CT_UserDepts] 
+            ORDER BY CASE 
+                WHEN EmployeeDepartment = '' THEN 1 
+                WHEN EmployeeDepartment = 'All/General' THEN 2
+                ELSE 3 END, OrderVal DESC, EmployeeDepartment ASC;
+            """)
         results = connection.execute(query)
 
         operators = []

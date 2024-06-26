@@ -133,6 +133,7 @@
           <tr>
             <th scope="col">Ticket Number</th>
             <th scope="col">Contact Date</th>
+            <th scope="col">Contact Type</th>
             <th scope="col">AIN</th>
             <th scope="col">Owner Name</th>
             <th scope="col">Return Call Operator</th>
@@ -147,6 +148,7 @@
                 <tr style="font-weight: 500;">
                   <td><a href="/search/{{ticket['TicketNumber']}}">{{ticket['TicketNumber']}}</a></td>
                   <td style="color: blue;">{{ticket['ContactDate']}}</td>
+                  <td style="color: blue;">{{ticket['ContactType']}}</td>
                   <td style="color: blue;">{{ticket['AccountNumber']}}</td>
                   <td style="color: blue;">{{ticket['OwnerName']}}</td>
                   <td style="color: blue;">{{ticket['ReturnOperator']}}</td>
@@ -157,6 +159,7 @@
                 <tr>
                   <td><a href="/search/{{ticket['TicketNumber']}}">{{ticket['TicketNumber']}}</a></td>
                   <td>{{ticket['ContactDate']}}</td>
+                  <td>{{ticket['ContactType']}}</td>
                   <td>{{ticket['AccountNumber']}}</td>
                   <td>{{ticket['OwnerName']}}</td>
                   <td>{{ticket['ReturnOperator']}}</td>

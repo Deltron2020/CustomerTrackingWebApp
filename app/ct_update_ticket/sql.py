@@ -54,7 +54,13 @@ def populate_type_of_contact_selection():
 ### populate return call operator drop down selection ###
 def populate_return_call_operator_selection():
     with coxn.connect() as connection:
-        query = text("SELECT EmployeeDepartment FROM [app].[view_CT_UserDepts] ORDER BY EmployeeDepartment ASC;")
+        query = text("""
+            SELECT EmployeeDepartment FROM [app].[view_CT_UserDepts] 
+            ORDER BY CASE 
+                WHEN EmployeeDepartment = '' THEN 1 
+                WHEN EmployeeDepartment = 'All/General' THEN 2
+                ELSE 3 END, OrderVal DESC, EmployeeDepartment ASC;
+            """)
         results = connection.execute(query)
 
         operators = []
@@ -66,7 +72,13 @@ def populate_return_call_operator_selection():
 ### populate got it operator drop down selection ###
 def populate_got_it_operator_selection():
     with coxn.connect() as connection:
-        query = text("SELECT EmployeeDepartment FROM [app].[view_CT_UserDepts] ORDER BY EmployeeDepartment ASC;")
+        query = text("""
+            SELECT EmployeeDepartment FROM [app].[view_CT_UserDepts] 
+            ORDER BY CASE 
+                WHEN EmployeeDepartment = '' THEN 1 
+                WHEN EmployeeDepartment = 'All/General' THEN 2
+                ELSE 3 END, OrderVal DESC, EmployeeDepartment ASC;
+            """)
         results = connection.execute(query)
 
         gotIts = []
@@ -127,7 +139,13 @@ def got_it_ticket_tracking(data):
 ## forward to user ticket tracking ##
 def forward_to_options():
     with coxn.connect() as connection:
-        query = text("SELECT EmployeeDepartment FROM [app].[view_CT_UserDepts] ORDER BY EmployeeDepartment ASC;")
+        query = text("""
+            SELECT EmployeeDepartment FROM [app].[view_CT_UserDepts] 
+            ORDER BY CASE 
+                WHEN EmployeeDepartment = '' THEN 1 
+                WHEN EmployeeDepartment = 'All/General' THEN 2
+                ELSE 3 END, OrderVal DESC, EmployeeDepartment ASC;
+            """)
         results = connection.execute(query)
 
         forwards = []
