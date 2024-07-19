@@ -1,5 +1,5 @@
 from flask import render_template, request, session, redirect, url_for, jsonify, flash
-from app.ct_update_ticket.sql import (load_tickets_from_db, update_ticket_in_db, version_id_check, got_it_db_insert, got_it_ticket_tracking, forward_to_options, insert_correspondence_notes, load_correspondence_notes, populate_type_of_contact_selection, populate_return_call_operator_selection, populate_ticket_status_selection, populate_all_ticket_types, populate_got_it_operator_selection)
+from app.ct_update_ticket.sql import (load_tickets_from_db, update_ticket_in_db, version_id_check, got_it_db_insert, got_it_ticket_tracking, forward_to_options, insert_correspondence_notes, load_correspondence_notes, populate_type_of_contact_selection, populate_return_call_operator_selection, populate_ticket_status_selection, populate_all_ticket_types, populate_got_it_operator_selection, check_last_got_it)
 from app import app
 from datetime import date, timedelta
 
@@ -115,9 +115,19 @@ def update_ticket():
 def got_it_update(ticketNumber, action, forward):
     try:
         if 'username' in session:
-            got_it_db_insert(ticketNumber, action, session['username'], forward)
-            tracking = got_it_ticket_tracking(ticketNumber)
+            # if Got IT action > if prev record was a GOT IT > notify user and do not insert new GOT IT record
+            prevAction = check_last_got_it(ticketNumber)
+            if len(prevAction) == 0:
+                prevAction = {'ActionType': ''}
+
+            if prevAction['ActionType'] == 'GOT IT' and action == 'GOT IT':
+                tracking = got_it_ticket_tracking(ticketNumber)
+            else:
+                got_it_db_insert(ticketNumber, action, session['username'], forward)
+                tracking = got_it_ticket_tracking(ticketNumber)
+
             json = jsonify(tracking).data
+            #print(json)
 
             return json
         else:

@@ -5,7 +5,7 @@ from sqlalchemy import text
 ### ticket search ###
 def load_tickets_from_db(columns, values):
     with coxn.connect() as connection:
-        query = text(f"SELECT TOP 50 * FROM app.view_CT_Tickets WHERE {columns} ORDER BY TicketNumber ASC;")
+        query = text(f"SELECT TOP 1000 * FROM app.view_CT_Tickets WHERE {columns} ORDER BY TicketNumber ASC;")
         #print(query, values)
         results = connection.execute(query, values)
 
@@ -97,6 +97,19 @@ def populate_ticket_status_selection():
         for data in result.all():
             types.append(data[0])
         return types
+
+
+### check last got it record ###
+def check_last_got_it(data):
+    with coxn.connect() as connection:
+        query = text("SELECT ActionType FROM app.CT_GotItTracking WHERE TicketNumber = :ticketNumber ORDER BY id DESC OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY;")
+        result = connection.execute(query, {'ticketNumber': data})
+
+        action = {}
+        for row in result.all():
+            action.update(dict(row._mapping))
+
+        return action
 
 
 ### insert got it table record ###
