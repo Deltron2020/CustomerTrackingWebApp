@@ -6,7 +6,7 @@
     {% include 'bootstrap.html' %}
 
   </head>
-  <body class = "bg-info-subtle" onunload="clearForms()">
+  <body class = "bg" onunload="clearForms()">
     {% include 'nav.html' %}
 
         {% if existingTicket %}
@@ -42,17 +42,17 @@
 
     <div class = "container">
 
-      <h1 class = "p-3 bg-body-secondary border border-info border-start-10 rounded-start rounded-end text-center mt-5 fw-bold mx-auto"> Create Ticket </h1>
+      <h1 class = "header p-3 border border-start-10 rounded-start rounded-end text-center mx-auto"> Create Ticket </h1>
 
         <p class="col text-center"><b>*</b> = Required Field</p>
 
      <form action="/ticket/submitted" method="post" autocomplete="off">
 
-        <div class="row text-center border-bottom" style="margin-top:42px; margin-bottom:42px;">
+        <div class="row text-center mb-5">
 
             <div class="col-md-2">
-              <label for="TicketStatus" class="form-label mb-3" style="font-size:20px; font-weight:500;">*Status</label>
-              <select class="form-select text-center mb-4" id="TicketStatus" name="Status" aria-label="Status" aria-describedby="basic-addon1" required>
+              <label for="TicketStatus" class="form-label account_search_labels">*Status</label>
+              <select class="form-select text-center" id="TicketStatus" name="Status" aria-label="Status" aria-describedby="basic-addon1" required>
                   {% for status in status_options %}
                     {% if status == 'Open' %}
                         <option selected>{{status}}</option>
@@ -64,27 +64,28 @@
           </div>
 
           <div class="col-md-2">
-              <label for="AccountNumber" class="form-label mb-3" style="font-size:20px; font-weight:500;">Account Number</label>
-              <input type="number" class="form-control text-center mb-4" id="AccountNumber" value="{{account['AccountNumber']}}" placeholder="" name="Account" aria-label="Account" aria-describedby="basic-addon1">
+              <label for="AccountNumber" class="form-label account_search_labels">Account Number</label>
+              <input type="number" class="form-control text-center" id="AccountNumber" value="{{account['AccountNumber']}}" placeholder="" name="Account" aria-label="Account" aria-describedby="basic-addon1">
           </div>
 
           <div class="col-md-4">
-              <label for="OwnerName" class="form-label mb-3" style="font-size:20px; font-weight:500;">Owner Name</label>
-              <input type="text" class="form-control text-center mb-4" id="OwnerName" value="{{account['OwnerName']}}" placeholder="" name="Owner" aria-label="Owner" aria-describedby="basic-addon1">
+              <label for="OwnerName" class="form-label account_search_labels">Owner Name</label>
+              <input type="text" class="form-control text-center" id="OwnerName" value="{{account['OwnerName']}}" placeholder="" name="Owner" aria-label="Owner" aria-describedby="basic-addon1">
           </div>
 
           <div class="col-md-4">
-              <label for="SitusAddress" class="form-label mb-3" style="font-size:20px; font-weight:500;">Situs Address</label>
-              <input type="text" class="form-control text-center mb-4" id="SitusAddress" value="{{account['SitusAddress']}}" placeholder="" name="Address" aria-label="Address" aria-describedby="basic-addon1">
+              <label for="SitusAddress" class="form-label account_search_labels">Situs Address</label>
+              <input type="text" class="form-control text-center" id="SitusAddress" value="{{account['SitusAddress']}}" placeholder="" name="Address" aria-label="Address" aria-describedby="basic-addon1">
           </div>
 
         </div>
 
+         <div class="row border-bottom border-black mb-5"></div>
 
-       <div class="row text-center" style="margin-top:0px; margin-bottom:42px;">
+       <div class="row text-center mb-5">
 
            <div class="col-md-4">
-                <label for="ContactType" class="form-label mb-3" style="font-size:20px; font-weight:500;">*Type of Contact:</label>
+                <label for="ContactType" class="form-label account_search_labels">*Type of Contact:</label>
                 <select class="form-select text-center" id="ContactType" name="ContactType" aria-label="Type" aria-describedby="basic-addon1" required>
                     {% for type in contact_types %}
                         <option>{{type}}</option>
@@ -93,17 +94,17 @@
           </div>
 
            <div class="col-md-2">
-               <label for="ContactDate" class="form-label mb-3" style="font-size:20px; font-weight:500;">*Contact Date:</label>
+               <label for="ContactDate" class="form-label account_search_labels">*Contact Date:</label>
                <input type="date" class="form-control text-center" id ="ContactDate" name="ContactDate" aria-label="Date" aria-describedby="basic-addon1" required>
           </div>
 
            <div class="col-md-2">
-               <label for="ContactTime" class="form-label mb-3" style="font-size:20px; font-weight:500;">*Contact Time:</label>
+               <label for="ContactTime" class="form-label account_search_labels">*Contact Time:</label>
                <input type="time" class="form-control text-center" id="ContactTime" name="ContactTime" aria-label="Time" aria-describedby="basic-addon1" required>
           </div>
 
            <div class="col-md-4">
-               <label for="ReturnOperator" class="form-label mb-3" style="font-size:20px; font-weight:500;">*Return Call Operator:</label>
+               <label for="ReturnOperator" class="form-label account_search_labels">*Return Call Operator:</label>
                <select class="form-select text-center" id="ReturnOperator" name="ReturnOperator" aria-label="ReturnOperator" aria-describedby="basic-addon1" required>
                    {% for user in return_operators %}
                         <option>{{user}}</option>
@@ -114,38 +115,37 @@
        </div>
 
 
-         <div class="row text-center" style="margin-top:0px; margin-bottom:42px;">
+         <div class="row text-center mb-5">
 
            <div class="col-md-4">
-               <label for="CallerVisitor" class="form-label mb-3" style="font-size:20px; font-weight:500;">*Caller/Visitor:</label>
+               <label for="CallerVisitor" class="form-label account_search_labels">*Caller/Visitor:</label>
                <button id="SameAsOwnerButton" class="btn" type="button" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 20px;">Same As Owner</button>
                <input type="text" class="form-control text-center" id="CallerVisitor" name="CallerVisitor" aria-label="CallerVisitor" aria-describedby="basic-addon1" required>
           </div>
 
            <div class="col-md-4">
-               <label for="PhoneNumber" class="form-label mb-3" style="font-size:20px; font-weight:500;">*Phone Number:</label>
+               <label for="PhoneNumber" class="form-label account_search_labels">*Phone Number:</label>
                <input type="tel" class="form-control text-center" id="PhoneNumber" name="Telephone" aria-label="Telephone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"  placeholder="Ex. 772-123-4567" aria-describedby="basic-addon1" required>
           </div>
 
            <div class="col-md-4">
-               <label for="EmailAddress" class="form-label mb-3" style="font-size:20px; font-weight:500;">Email Address:</label>
+               <label for="EmailAddress" class="form-label account_search_labels">Email Address:</label>
                <input type="email" class="form-control text-center" id="EmailAddress" name="Email" aria-label="Email" placeholder="Ex. janedoe@gmail.com" aria-describedby="basic-addon1">
           </div>
        </div>
 
 
-         <div class="row text-center" style="margin-top:42px; margin-bottom:42px;">
+         <div class="row text-center mb-5">
 
            <div class="col-md-12">
-               <label for="ReasonForCall" class="form-label mb-3" style="font-size:20px; font-weight:500;">Reason For Call:</label>
+               <label for="ReasonForCall" class="form-label account_search_labels">Reason For Call:</label>
                <textarea class="form-control" id="ReasonForCall" name="CallReason" aria-label="CallReason" rows="3" aria-describedby="basic-addon1" style="white-space: pre-line; text-align: left;"></textarea>
-
           </div>
          </div>
 
 
-         <div class="d-grid gap-5 col-4 mx-auto mt-4">
-                <button class="btn btn-primary btn-lg fw-bold" type="submit" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 50px;">
+         <div class="d-grid gap-5 col-4 mx-auto">
+                <button class="btn btn-primary" type="submit">
                 Save Ticket</button>
          </div>
 

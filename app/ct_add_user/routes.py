@@ -1,5 +1,5 @@
 from flask import render_template, request, session, redirect, url_for
-from app.ct_add_user.sql import (add_newuser_to_db, update_dept_name_to_id, populate_return_departments, populate_ticket_type, update_ticket_info)
+from app.ct_add_user.sql import (add_newuser_to_db, update_dept_name_to_id, populate_return_departments, populate_ticket_type, update_ticket_info, populate_ticket_year)
 from app import app
 
 ### add a new user ###
@@ -8,9 +8,10 @@ def add_new_user():
     try:
         if 'username' in session and session['admin'] == 1:
             departments = populate_return_departments()
-            currentTicket = populate_ticket_type()
+            ticketTypes = populate_ticket_type()
+            ticketYears = populate_ticket_year()
 
-            return render_template('CT_AdminPage.html', deptList=departments, ticketInfo=currentTicket)
+            return render_template('CT_AdminPage.html', deptList=departments, ticketTypes=ticketTypes, ticketYears=ticketYears)
         else:
             return redirect(url_for('customer_tracking_login'))
     except Exception as e:

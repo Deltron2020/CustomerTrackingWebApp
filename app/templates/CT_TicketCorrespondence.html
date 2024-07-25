@@ -65,14 +65,14 @@
                       <div class="modal-body">
 
                           <form id="notesForm" action="/got_it_update/notes_submitted/{{ticket_data[0]['TicketNumber']}}" method="post" autocomplete="off">
-                             <div class="row text-center" style="margin-top:10px; margin-bottom:42px;">
+                             <div class="row text-center">
                                <div class="col-md-12">
-                                   <label for="CorrespondenceNotes" class="form-label mb-3" style="font-size:20px; font-weight:500;">Add Notes:</label>
+                                   <label for="CorrespondenceNotes" class="form-label account_search_labels">Add Notes:</label>
                                    <textarea class="form-control" id="CorrespondenceNotes" name="CorrespondenceNotes" aria-label="CorrespondenceNotes" rows="10" aria-describedby="basic-addon1" style="white-space: pre-line; height:400px; text-align: left;"></textarea>
                               </div>
                                  <div class="modal-footer">
                                       <button type="submit" id="modalSubmit" class="btn btn-primary">Submit</button>
-                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
                                  </div>
                              </div>
 
@@ -99,7 +99,7 @@
 
         <div class="col p-2">
 
-            <label for="ForwardTo" class="form-label" style="font-size:20px; font-weight:500;">Forward To:</label>
+            <label for="ForwardTo" class="form-label account_search_labels">Forward To:</label>
               <select id="ForwardTo" class="form-select" data-val="{{ticket_data[0]['TicketNumber']}}" data-action="FORWARD TO">
                   {% for user in forward_users %}
                   <option>{{user}}</option>
@@ -110,13 +110,13 @@
     <div class="row mb-3 mt-3 text-center">
 
         <div class="col-6">
-            <label for="CorrespondenceNotesHistory" class="form-label" style="font-size:20px; font-weight:500;">View Notes History:</label>
+            <label for="CorrespondenceNotesHistory" class="form-label account_search_labels">View Notes History:</label>
             <textarea class="form-control bg-secondary-subtle" id="CorrespondenceNotesHistory" name="CorrespondenceNotesHistory" readonly="readonly" aria-label="CorrespondenceNotesHistory" rows="12" aria-describedby="basic-addon1" style="white-space: pre-line; text-align: left;">{% for note in correspondence_notes %}{{ "%s %s > %s" % (note['CreateDate'], note['CreateUser'], note['Notes']) }}
                 {% endfor %}</textarea>
         </div>
 
         <div class="col-6">
-            <label for="GotItTracking" class="form-label" style="font-size:20px; font-weight:500;">Got It Tracking:</label>
+            <label for="GotItTracking" class="form-label account_search_labels">Got It Tracking:</label>
             <textarea class="form-control" readonly id="GotItTracking" name="GotItTracking" aria-label="GotItTracking" rows="12" aria-describedby="basic-addon1" style="white-space: pre-line;">{% for row in tracking_data %}
                 {% if row['ForwardToUser'] == None %}{{ "%s %s > %s" % (row['GotItUser'], row['ActionType'], row['CreateDate']) }}{% else %}{{ "%s %s > %s %s" % (row['GotItUser'], row['ActionType'], row['ForwardToUser'], row['CreateDate']) }}{% endif %}{% endfor %}</textarea>
         </div>

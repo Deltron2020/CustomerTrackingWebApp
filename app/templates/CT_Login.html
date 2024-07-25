@@ -22,24 +22,24 @@
     {% endif %}
 
   </head>
-  <body class = "bg-info-subtle">
+  <body class = "bg">
     {% include 'nav.html' %}
 
     <div class = "container">
 
-      <h1 class = "p-3 bg-body-secondary border border-info border-start-10 rounded-start rounded-end text-center mt-5 fw-bold mx-auto"> Customer Tracking Login </h1>
+      <h1 class = "header p-3 border border-start-10 rounded-start rounded-end text-center mx-auto"> Customer Tracking Login </h1>
 
       <form method="post" autocomplete="off">
 
-        <div class="row text-center" style="margin-top:40px;">
+        <div class="row text-center">
 
           <div class="col-md-3"></div>
 
           <div class="col-md-6">
-            <label for="Username" class="form-label mb-3" id="username_field" style="font-size:20px; font-weight:500;">User Name {% if error %} >> {{ error }} {% endif %}</label>
+            <label for="Username" class="form-label account_search_labels" id="username_field">User Name {% if error %} >> {{ error }} {% endif %}</label>
             <input type="text" class="form-control text-center mb-3" placeholder="" id="Username" name = "Username" aria-label="Username" aria-describedby="basic-addon1">
 
-            <label for="Password" class="form-label mb-3" id="password_field" style="font-size:20px; font-weight:500;">Password {% if error %} >> {{ error }} {% endif %}</label>
+            <label for="Password" class="form-label account_search_labels" id="password_field">Password {% if error %} >> {{ error }} {% endif %}</label>
             <input type="password" class="form-control text-center" placeholder="" id="Password" name = "Password" aria-label="Password" aria-describedby="basic-addon1">
           </div>
 
@@ -47,13 +47,13 @@
 
         </div>
 
-        <div class="row text-center" style="margin-bottom:42px;">
+        <div class="row text-center">
 
           <div class="col-md-3"></div>
 
           <div class="col-md-6">
               <div class="d-grid gap-5 col-6 mx-auto mt-5">
-                    <input class="btn btn-primary btn-lg fw-bold" type="submit" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 50px;">
+                    <input class="btn btn-primary" type="submit">
                     </input>
               </div>
           </div>

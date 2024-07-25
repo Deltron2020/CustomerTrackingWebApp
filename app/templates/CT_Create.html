@@ -6,40 +6,40 @@
     {% include 'bootstrap.html' %}
 
   </head>
-  <body class = "bg-info-subtle">
+  <body class = "bg">
 
     {% include 'nav.html' %}
 
     <div class = "container">
 
-      <h1 class = "p-3 bg-body-secondary border border-info border-start-10 rounded-start rounded-end text-center mt-5 fw-bold mx-auto"> Account Search </h1>
+      <h1 class = "header p-3 border border-start-10 rounded-start rounded-end text-center mx-auto"> Account Search </h1>
 
       <form autocomplete="off">
 
-        <div class="row text-center" style="margin-top:40px; margin-bottom:42px;">
+        <div class="row text-center">
 
           <div class="col-md-3">
-            <label for="AccountNumber" class="form-label mb-3" style="font-size:20px; font-weight:500;">Account Number</label>
+            <label for="AccountNumber" class="form-label account_search_labels">Account Number</label>
             <input type="number" class="form-control text-center" placeholder="Ex. 777" id="AccountNumber" name = "AccountNumber" aria-label="AccountSearch" aria-describedby="basic-addon1">
           </div>
 
           <div class="col-md-3">
-            <label for="ParcelID" class="form-label mb-3" style="font-size:20px; font-weight:500;">PCN (Parcel ID)</label>
+            <label for="ParcelID" class="form-label account_search_labels">PCN (Parcel ID)</label>
             <input type="text" class="form-control text-center" placeholder="Ex. 15-37-41-009-000-00030-9" id="ParcelID" name = "PCN" aria-label="ParcelSearch" aria-describedby="basic-addon1">
           </div>
 
           <div class="col-md-3">
-            <label for="SitusAddress" class="form-label mb-3" style="font-size:20px; font-weight:500;">Situs Address</label>
+            <label for="SitusAddress" class="form-label account_search_labels">Situs Address</label>
             <input type="text" class="form-control text-center" placeholder="Ex. 4096 NE HYLINE DR" id="SitusAddress" name = "SitusAddress" aria-label="AddressSearch" aria-describedby="basic-addon1">
           </div>
 
           <div class="col-md-3">
-            <label for="OwnerName" class="form-label mb-3" style="font-size:20px; font-weight:500;">Owner Name</label>
+            <label for="OwnerName" class="form-label account_search_labels">Owner Name</label>
             <input type="text" class="form-control text-center" placeholder="Ex. ANDERSSON" id="OwnerName" name = "OwnerName" aria-label="NameSearch" aria-describedby="basic-addon1">
           </div>
 
           <div class="d-grid gap-5 col-4 mx-auto mt-5">
-                <input class="btn btn-primary btn-lg fw-bold" type="submit" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 50px;">
+                <input class="btn btn-primary" type="submit">
                 </input>
           </div>
 
@@ -74,7 +74,7 @@
       </div>
 
       <div class="d-grid gap-5 col-4 mx-auto mt-5">
-        <a class="btn btn-primary btn-lg fw-bold" href="/ticket" type="button" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 50px;">
+        <a class="btn btn-primary" href="/ticket" type="button">
           Use Blank Ticket</a>
       </div>
 

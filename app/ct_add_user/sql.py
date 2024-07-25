@@ -36,15 +36,26 @@ def populate_return_departments():
 
 def populate_ticket_type():
     with coxn.connect() as connection:
-        query = text("SELECT TicketType, TicketYear FROM app.CT_TicketType;")
+        query = text("SELECT TicketType FROM app.CT_ListTicketTypes ORDER BY TicketType ASC;")
         results = connection.execute(query)
 
-        ticket = {}
+        ticketType = []
         for row in results.all():
-            ticket.update(dict(row._mapping))\
+            ticketType.append(row[0])
 
-        print(ticket)
-        return ticket
+        return ticketType
+
+
+def populate_ticket_year():
+    with coxn.connect() as connection:
+        query = text("SELECT TicketYear FROM app.CT_ListTicketYears ORDER BY TicketYear DESC;")
+        results = connection.execute(query)
+
+        ticketYear = []
+        for row in results.all():
+            ticketYear.append(row[0])
+
+        return ticketYear
 
 
 def update_ticket_info(tickettype, ticketyear):

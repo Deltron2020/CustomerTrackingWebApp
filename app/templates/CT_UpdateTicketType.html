@@ -1,29 +1,38 @@
-<div class = "container border-top">
+<div class = "container">
 
-      <h1 class = "p-3 bg-body-secondary border border-info border-start-10 rounded-start rounded-end text-center mt-5 fw-bold mx-auto"> Update Ticket Type </h1>
+      <h1 class = "header p-3 border border-start-10 rounded-start rounded-end text-center mx-auto"> Update Ticket Type </h1>
 
      <form action="/admin/tickettype/submitted" method="post" autocomplete="off">
 
-       <div class="row text-center mt-5" style="margin-top:0px; margin-bottom:42px;">
+       <div class="row text-center mt-5">
 
            <div class="col-md-2"></div>
 
            <div class="col-md-4">
-               <label for="TicketType" class="form-label mb-3" style="font-size:20px; font-weight:500;">Ticket Type:</label>
-               <input type="text" class="form-control text-center" id="TicketType" name="TicketType" value="{{ticketInfo['TicketType']}}" aria-label="TicketType" aria-describedby="basic-addon1" required>
-            </div>
+               <label for="TicketType" class="form-label account_search_labels">Ticket Type:</label>
+               <select class="form-select text-center" id="TicketType" name="TicketType" aria-label="TicketType" aria-describedby="basic-addon1" required>
+                   {% for type in ticketTypes %}
+                        <option>{{type}}</option>
+                    {% endfor %}
+               </select>
+           </div>
 
            <div class="col-md-4">
-               <label for="TicketYear" class="form-label mb-3" style="font-size:20px; font-weight:500;">Ticket Year:</label>
-               <input type="number" class="form-control text-center" id="TicketYear" name="TicketYear" value="{{ticketInfo['TicketYear']}}" aria-label="TicketYear" aria-describedby="basic-addon1" required>
-            </div>
+               <label for="TicketYear" class="form-label account_search_labels">Ticket Year:</label>
+               <select class="form-select text-center" id="TicketYear" name="TicketYear" aria-label="TicketYear" aria-describedby="basic-addon1" required>
+                   {% for year in ticketYears %}
+                        <option>{{year}}</option>
+                    {% endfor %}
+               </select>
+
+           </div>
 
            <div class="col-md-2"></div>
 
-           <div class="row text-center" style="margin-top:42px; margin-bottom:42px;">
+           <div class="row text-center">
 
-             <div class="d-grid gap-5 col-4 mx-auto mt-4">
-                    <button class="btn btn-primary btn-lg fw-bold" type="submit" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 50px;">
+             <div class="d-grid gap-5 col-4 mx-auto mt-5">
+                    <button class="btn btn-primary" type="submit">
                     Update</button>
              </div>
          </div>

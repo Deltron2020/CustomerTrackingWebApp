@@ -1,0 +1,35 @@
+ .bg {
+     background-color: #cedcf2;
+ }
+
+ .header {
+     background-color: #eeeeee;
+     font-weight: 700;
+     margin-top: 50px;
+     margin-bottom: 50px;
+ }
+
+ .border:nth-child(1) {
+     border-color: #000 !important;
+ }
+
+ .btn-primary {
+     --bs-btn-bg: #eee !important;
+     --bs-btn-color: #000 !important;
+     --bs-btn-border-color: #738fff !important;
+     --bs-btn-hover-color: #000 !important;
+     --bs-btn-hover-bg: #7BCCEE !important;
+     --bs-btn-line-height: 50px !important;
+     --bs-btn-font-size: 20px !important;
+     --bs-btn-font-weight: 700 !important;
+ }
+
+ .btn-secondary {
+     --bs-btn-border-color: #738fff !important;
+ }
+
+ .account_search_labels {
+     font-size:20px;
+     font-weight:500;
+     padding-bottom:8px;
+ }

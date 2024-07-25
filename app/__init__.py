@@ -31,3 +31,4 @@ from app.ct_update_ticket import routes
 from app.ct_home import routes
 from app.ct_login import routes
 from app.ct_add_user import routes
+from app.ct_dashboard import routes

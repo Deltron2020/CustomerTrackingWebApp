@@ -6,19 +6,19 @@
     {% include 'bootstrap.html' %}
 
   </head>
-  <body class = "bg-info-subtle">
+  <body class = "bg">
     {% include 'nav.html' %}
 
     <div class = "container">
 
-      <h1 class = "p-3 bg-body-secondary border border-info border-start-10 rounded-start rounded-end text-center mt-5 fw-bold mx-auto"> View Tickets </h1>
+      <h1 class = "header p-3 border border-start-10 rounded-start rounded-end text-center mx-auto"> View Tickets </h1>
 
       <form autocomplete="off">
 
         <div class="row text-center">
 
           <div class="d-grid gap-1 col-4 mt-4 mb-3">
-            <label for="TicketStatusSearch" class="form-label" style="font-size:25px;"><b>Ticket Status</b></label>
+            <label for="TicketStatusSearch" class="form-label account_search_labels">Ticket Status</label>
             <select class="form-select text-center" id="TicketStatusSearch" name ="Status">
               {% for status in status_options %}
                     {% if status == 'Open' %}
@@ -31,7 +31,7 @@
           </div>
 
           <div class="d-grid gap-1 col-4 mt-4 mb-3">
-            <label for="TicketTypeSearch" class="form-label" style="font-size:25px;"><b>Ticket Type</b></label>
+            <label for="TicketTypeSearch" class="form-label account_search_labels">Ticket Type</label>
             <select class="form-select text-center" id="TicketTypeSearch" name="TicketType" aria-describedby="basic-addon1">
               {% for type, year in ticketTypes %}
                 <option>{{type}}</option>
@@ -40,7 +40,7 @@
           </div>
 
           <div class="d-grid gap-1 col-4 mt-4 mb-3">
-            <label for="TicketYearSearch" class="form-label" style="font-size:25px;"><b>Ticket Year</b></label>
+            <label for="TicketYearSearch" class="form-label account_search_labels">Ticket Year</label>
             <select class="form-select text-center" id="TicketYearSearch" name="TicketYear" aria-describedby="basic-addon1">
               {% for type, year in ticketTypes %}
                 <option>{{year}}</option>
@@ -53,17 +53,17 @@
         <div class="row text-center">
 
           <div class="d-grid gap-1 col-4 mt-4 mb-3">
-            <label for="TicketNumberSearch" class="form-label" style="font-size:25px;"><b>Ticket Number</b></label>
+            <label for="TicketNumberSearch" class="form-label account_search_labels">Ticket Number</label>
             <input class="form-control text-center" id="TicketNumberSearch" name ="TicketNumber" type="number">
           </div>
 
           <div class="d-grid gap-1 col-4 mt-4 mb-3">
-            <label for="AccountNumberSearch" class="form-label" style="font-size:25px;"><b>Account Number</b></label>
+            <label for="AccountNumberSearch" class="form-label account_search_labels">Account Number</label>
             <input class="form-control text-center" id="AccountNumberSearch" name="AccountNumber" type="number" aria-describedby="basic-addon1">
           </div>
 
           <div class="d-grid gap-1 col-4 mt-4 mb-3">
-            <label for="ContactDateSearch" class="form-label" style="font-size:25px;"><b>Contacted On</b></label>
+            <label for="ContactDateSearch" class="form-label account_search_labels">Contacted On</label>
             <input class="form-control text-center" id="ContactDateSearch" name="ContactDate" type="date" aria-describedby="basic-addon1">
           </div>
 
@@ -72,7 +72,7 @@
         <div class="row text-center">
 
           <div class="d-grid gap-1 col-4 mt-4 mb-3">
-            <label for="ContactTypeSearch" class="form-label" style="font-size:25px;"><b>Contact Type</b></label>
+            <label for="ContactTypeSearch" class="form-label account_search_labels">Contact Type</label>
             <select class="form-select text-center" id="ContactTypeSearch" name="ContactType" aria-describedby="basic-addon1">
               {% for type in contact_types %}
                 <option>{{type}}</option>
@@ -81,7 +81,7 @@
           </div>
 
           <div class="d-grid gap-1 col-4 mt-4 mb-3">
-            <label for="ReturnOperatorSearch" class="form-label" style="font-size:25px;"><b>Return Call Operator</b></label>
+            <label for="ReturnOperatorSearch" class="form-label account_search_labels">Return Call Operator</label>
             <select class="form-select text-center" id="ReturnOperatorSearch" name="ReturnOperator" aria-describedby="basic-addon1">
               {% for user in return_operators %}
                 <option>{{user}}</option>
@@ -90,7 +90,7 @@
           </div>
 
           <div class="d-grid gap-1 col-4 mt-4 mb-3">
-            <label for="OwnerSearch" class="form-label" style="font-size:25px;"><b>Owner Name</b></label>
+            <label for="OwnerSearch" class="form-label account_search_labels">Owner Name</label>
             <input class="form-control text-center" id="OwnerSearch" name="OwnerName" type="text" aria-describedby="basic-addon1">
           </div>
 
@@ -99,7 +99,7 @@
         <div class="row text-center">
 
           <div class="d-grid gap-1 col-4 mt-4 mb-3 mx-auto">
-            <label for="GotItOperatorSearch" class="form-label" style="font-size:25px;"><b>Got It Operator</b></label>
+            <label for="GotItOperatorSearch" class="form-label account_search_labels">Got It Operator</label>
             <select class="form-select text-center" id="GotItOperatorSearch" name="GotItUser" aria-describedby="basic-addon1">
               {% for user in gotit_operators %}
                 <option>{{user}}</option>
@@ -119,8 +119,8 @@
 
         <div class="row text-center">
 
-          <div class="d-grid gap-5 col-4 mx-auto mt-4">
-            <input class="btn btn-primary btn-lg fw-bold" type="submit" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 50px;">
+          <div class="d-grid gap-5 col-4 mx-auto mt-5">
+            <input class="btn btn-primary" type="submit">
             </input>
           </div>
 

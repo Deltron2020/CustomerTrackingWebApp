@@ -1,21 +1,21 @@
 
     <div class = "container">
 
-      <h1 class = "p-3 bg-body-secondary border border-info border-start-10 rounded-start rounded-end text-center mt-5 fw-bold mx-auto"> Add New User </h1>
+      <h1 class = "header p-3 border border-start-10 rounded-start rounded-end text-center mx-auto"> Add New User </h1>
 
      <form action="/admin/adduser/submitted" method="post" autocomplete="off">
 
-       <div class="row text-center mt-5" style="margin-top:0px; margin-bottom:42px;">
+       <div class="row text-center mt-5">
 
            <div class="col-md-2"></div>
 
            <div class="col-md-4">
-               <label for="Username" class="form-label mb-3" style="font-size:20px; font-weight:500;">User Name:</label>
+               <label for="Username" class="form-label account_search_labels" >User Name:</label>
                <input type="text" class="form-control text-center" id="Username" name="UserName" aria-label="Username" aria-describedby="basic-addon1" required>
             </div>
 
            <div class="col-md-4">
-               <label for="Password" class="form-label mb-3" style="font-size:20px; font-weight:500;">Password:</label>
+               <label for="Password" class="form-label account_search_labels" >Password:</label>
                <input type="text" class="form-control text-center" id="Password" name="Password" aria-label="Password" aria-describedby="basic-addon1" required>
             </div>
 
@@ -24,12 +24,12 @@
        </div>
 
 
-         <div class="row text-center" style="margin-top:0px; margin-bottom:42px;">
+         <div class="row text-center mt-4">
 
              <div class="col-md-2"></div>
 
              <div class="col-md-4">
-                 <label for="Department" class="form-label mb-3" style="font-size:20px; font-weight:500;">Department:</label>
+                 <label for="Department" class="form-label account_search_labels">Department:</label>
                  <select class="form-select text-center" id="Department" name="Department" aria-label="Department" aria-describedby="basic-addon1" required>
                      {% for dept in deptList %}
                         <option>{{dept}}</option>
@@ -39,7 +39,7 @@
              </div>
 
              <div class="col-md-4">
-                 <label for="EmailAddress" class="form-label mb-3" style="font-size:20px; font-weight:500;">Email Address:</label>
+                 <label for="EmailAddress" class="form-label account_search_labels">Email Address:</label>
                  <input type="email" class="form-control text-center" id="EmailAddress" name="Email" aria-label="Email" aria-describedby="basic-addon1">
              </div>
 
@@ -47,10 +47,10 @@
        </div>
 
 
-         <div class="row text-center" style="margin-top:42px; margin-bottom:42px;">
+         <div class="row text-center">
 
-             <div class="d-grid gap-5 col-4 mx-auto mt-4">
-                    <button class="btn btn-primary btn-lg fw-bold" type="submit" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 50px;">
+             <div class="d-grid gap-5 col-4 mx-auto mt-5">
+                    <button class="btn btn-primary" type="submit">
                     Save User</button>
              </div>
          </div>

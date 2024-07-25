@@ -6,19 +6,19 @@
     {% include 'bootstrap.html' %}
 
   </head>
-  <body class = "bg-info-subtle">
+  <body class = "bg">
     {% include 'nav.html' %}
 
     <div class = "container">
 
       {% if newUser %}
-        <h1 class = "p-3 bg-body-secondary border border-info border-start-10 rounded-start rounded-end text-center mt-5 fw-bold mx-auto"> User {{ newUser }} Created! </h1>
+        <h1 class = "header p-3 border border-start-10 rounded-start rounded-end text-center mx-auto"> User {{ newUser }} Created! </h1>
       {% else %}
-        <h1 class = "p-3 bg-body-secondary border border-info border-start-10 rounded-start rounded-end text-center mt-5 fw-bold mx-auto"> Ticket Submitted! </h1>
+        <h1 class = "header p-3 border border-start-10 rounded-start rounded-end text-center mx-auto"> Ticket Submitted! </h1>
       {% endif %}
 
       <div class="d-grid gap-5 col-6 mx-auto mt-5">
-        <a class="btn btn-primary btn-lg fw-bold" href="/" type="button" style="--bs-btn-bg: #eee; --bs-btn-color: #000; --bs-btn-border-color: #000; --bs-btn-hover-color: #000; --bs-btn-hover-bg: #7BCCEE; --bs-btn-line-height: 50px;">
+        <a class="btn btn-primary" href="/" type="button">
           Home</a>
       </div>
 
