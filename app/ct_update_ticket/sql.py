@@ -202,11 +202,23 @@ def insert_correspondence_notes(data, notes, user):
 
 def populate_all_ticket_types():
     with coxn.connect() as connection:
-        query = text(f"SELECT DISTINCT TicketType, TicketYear FROM app.view_CT_Tickets;")
+        query = text(f"SELECT TicketType FROM app.view_CT_Tickets GROUP BY TicketType;")
         result = connection.execute(query)
 
         ticketTypes = []
         for data in result.all():
-            ticketTypes.append(data)
+            ticketTypes.append(data[0])
 
         return ticketTypes
+
+
+def populate_all_ticket_years():
+    with coxn.connect() as connection:
+        query = text(f"SELECT TicketYear FROM app.view_CT_Tickets GROUP BY TicketYear;")
+        result = connection.execute(query)
+
+        ticketYears = []
+        for data in result.all():
+            ticketYears.append(data[0])
+
+        return ticketYears

@@ -1,0 +1,131 @@
+<div class="row mb-4 justify-content-evenly mx-auto grid">
+
+    <div class="col-lg-6 col-md-6 col-sm-12 text-center">
+        <label class="fw-bold fs-3"> Ticket Status Counts </label>
+        <div class="bg-box chart-container p-4 text-center">
+            <div>
+                <canvas id="ticketStatusChart"></canvas>
+
+                <script>
+                    var ctx_TicketStatus = document.getElementById("ticketStatusChart");
+                    const statuses_TicketStatus = {{ statusNames | safe }};
+                    var vals_TicketStatus = {{ statusNamesValuesList | safe }};
+
+                    const pieData_TicketStatus = {
+                        labels: statuses_TicketStatus,
+                        datasets: [{
+                            label: 'Status Count',
+                            data: vals_TicketStatus,
+                            backgroundColor: [
+                                '#DA8B7F',
+                                '#CECF9E',
+                                '#BECBD5'
+                            ],
+                            hoverOffset: 3,
+                            radius: '75%'
+                        }]
+                    };
+
+                    var pieChart_TicketStatus = new Chart(ctx_TicketStatus, {
+                        type: 'pie',
+                        data: pieData_TicketStatus,
+                        options: {
+                            layout: {
+                                padding: {
+                                    bottom: 0,
+                                    top: 0
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    labels: {
+                                        font:
+                                            {
+                                                size: 18
+                                            }
+                                    },
+                                    display: true,
+                                    align: 'start'
+                                }
+                            }
+                        }
+                    });
+
+
+                    /*Function to update the bar chart*/
+                    function updatePieGraphs(chart, label, color, data) {
+                        chart.data.datasets.pop();
+                        chart.data.datasets.push({
+                            label: label,
+                            backgroundColor: color,
+                            data: data,
+                            radius: '75%'
+                        });
+                        chart.update();
+                    }
+
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-sm-12 text-center">
+        <label class="fw-bold fs-3"> Contact Type Counts </label>
+        <div class="bg-box chart-container p-4 text-center">
+            <div>
+                <canvas id="contactTypeChart"></canvas>
+
+                <script>
+                    var ctx_ContactType = document.getElementById("contactTypeChart");
+                    const statuses_ContactType = {{ contactTypes | safe }};
+                    var vals_ContactType = {{ contactTypeValuesList | safe }};
+
+                    const pieData_ContactType = {
+                        labels: statuses_ContactType,
+                        datasets: [{
+                            label: 'Type Count',
+                            data: vals_ContactType,
+                            backgroundColor: [
+                                '#DA8B7F',
+                                '#CECF9E',
+                                '#BECBD5',
+                                '#EDEAE6'
+                            ],
+                            hoverOffset: 3,
+                            radius: '75%'
+                        }]
+                    };
+
+                    var pieChart_ContactType = new Chart(ctx_ContactType, {
+                        type: 'pie',
+                        data: pieData_ContactType,
+                        options: {
+                            layout: {
+                                padding: {
+                                    bottom: 0,
+                                    top: 0
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    labels: {
+                                        font:
+                                            {
+                                                size: 18
+                                            }
+                                    },
+                                    display: true,
+                                    align: 'start'
+                                }
+                            }
+                        }
+                    });
+
+
+                </script>
+            </div>
+        </div>
+    </div>
+
+
+</div>

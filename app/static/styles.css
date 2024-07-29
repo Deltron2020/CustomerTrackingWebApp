@@ -26,6 +26,13 @@
 
  .btn-secondary {
      --bs-btn-border-color: #738fff !important;
+     --bs-btn-bg: #eee !important;
+     --bs-btn-color: #000 !important;
+     --bs-btn-hover-color: #000 !important;
+     --bs-btn-hover-bg: #7BCCEE !important;
+     --bs-btn-line-height: 30px !important;
+     --bs-btn-font-size: 18px !important;
+     --bs-btn-font-weight: 700 !important;
  }
 
  .account_search_labels {

@@ -1,5 +1,5 @@
 from flask import render_template, request, session, redirect, url_for, jsonify, flash
-from app.ct_update_ticket.sql import (load_tickets_from_db, update_ticket_in_db, version_id_check, got_it_db_insert, got_it_ticket_tracking, forward_to_options, insert_correspondence_notes, load_correspondence_notes, populate_type_of_contact_selection, populate_return_call_operator_selection, populate_ticket_status_selection, populate_all_ticket_types, populate_got_it_operator_selection, check_last_got_it)
+from app.ct_update_ticket.sql import (load_tickets_from_db, update_ticket_in_db, version_id_check, got_it_db_insert, got_it_ticket_tracking, forward_to_options, insert_correspondence_notes, load_correspondence_notes, populate_type_of_contact_selection, populate_return_call_operator_selection, populate_ticket_status_selection, populate_all_ticket_types, populate_got_it_operator_selection, check_last_got_it, populate_all_ticket_years)
 from app import app
 from datetime import date, timedelta
 
@@ -14,6 +14,7 @@ def customer_tracking_search():
             gotit_operators = populate_got_it_operator_selection()
             status_options = populate_ticket_status_selection()
             ticketTypes = populate_all_ticket_types()
+            ticketYears = populate_all_ticket_years()
             data = request.args
             ticket = {}
             for i in data:
@@ -38,7 +39,8 @@ def customer_tracking_search():
                                        return_operators=return_operators,
                                        gotit_operators=gotit_operators,
                                        status_options=status_options,
-                                       ticketTypes=ticketTypes)
+                                       ticketTypes=ticketTypes,
+                                       ticketYears=ticketYears)
             else:
                 results = load_tickets_from_db(columns, parameters)
                 return render_template('CT_Search.html',
@@ -49,7 +51,8 @@ def customer_tracking_search():
                                        return_operators=return_operators,
                                        gotit_operators=gotit_operators,
                                        status_options=status_options,
-                                       ticketTypes=ticketTypes)
+                                       ticketTypes=ticketTypes,
+                                       ticketYears=ticketYears)
 
         else:
             return redirect(url_for('customer_tracking_login'))

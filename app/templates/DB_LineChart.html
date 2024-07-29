@@ -1,0 +1,41 @@
+<div class="row mb-4 justify-content-evenly mx-auto grid">
+
+    <label class="text-center fw-bold fs-3">Tickets Created Timeline</label>
+            <div class="bg-box col-12 mx-auto p-3 text-center">
+                <div>
+                  <canvas id="ticketsCreatedChart"></canvas>
+                </div>
+
+                <script>
+                  const ctx_TicketsCreated = document.getElementById('ticketsCreatedChart');
+                  var dates_TicketsCreated = {{ datesCreated | safe }};
+                  var vals_TicketsCreated = {{ datesCreatedValuesList | safe }};
+
+                  var lineChart_TicketsCreated = new Chart(ctx_TicketsCreated, {
+                    type: 'line',
+                    data: {
+                      labels: dates_TicketsCreated,
+                      datasets: [{
+                        label: 'Tickets Created Count',
+                        data: vals_TicketsCreated,
+                          fill: false,
+                        borderWidth: 1,
+                          borderColor: '#DA8B7F',
+                          backgroundColor: '#F3CC7A',
+                          pointStyle: 'circle',
+                          pointRadius: 10,
+                          pointHoverRadius: 15
+                      }]
+                    },
+                    options: {
+                      scales: {
+                        y: {
+                          beginAtZero: true
+                        }
+                      }
+                    }
+                  });
+                </script>
+            </div>
+
+        </div>

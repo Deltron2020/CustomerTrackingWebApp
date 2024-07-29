@@ -9,9 +9,67 @@
   <body class = "bg">
     {% include 'nav.html' %}
 
+    <script type=text/javascript>
+      $(function() {
+          $('a#filter').on('click', function(e) {
+            e.preventDefault()
+              var year = document.getElementById("TicketYear");
+              var type = document.getElementById("TicketType");
+              var selectedType = type.options[type.selectedIndex].text;
+              var selectedYear = year.options[year.selectedIndex].text;
+
+              var str = "/dashboard".concat("/", selectedYear).concat("/", selectedType);
+
+            $.getJSON(str,
+                function(data) {
+
+                  updatePieGraphs(pieChart_ContactType, ['Type Count'], ['#DA8B7F', '#CECF9E', '#BECBD5', '#EDEAE6'], [data["ContactTypeCounts"]["Email"], data["ContactTypeCounts"]["Phone Call"], data["ContactTypeCounts"]["Walk In"], data["ContactTypeCounts"]["Web Chat"]])
+                  updatePieGraphs(pieChart_TicketStatus, ['Status Count'], ['#DA8B7F', '#CECF9E', '#BECBD5'], [data["TicketStatusCounts"]["Closed"], data["TicketStatusCounts"]["Open"], data["TicketStatusCounts"]["Pending"]])
+                  /* need a new function here custom for line graph */
+                  updatePieGraphs(lineChart_TicketsCreated, ['Tickets Created Count'], ['#DA8B7F'], [data["TicketsCreatedCounts"]["Counts"]])
+                });
+            return false;
+          });
+        });
+    </script>
+
     <div class = "container">
 
       <h1 class = "header p-3 border border-start-10 rounded-start rounded-end text-center mx-auto"> Ticket Data Dashboard </h1>
+
+      <div class="row text-center border-bottom border-black mb-5">
+
+        <div class="col-md-4 mt-4 mb-4">
+
+          <a id="filter" type="button" class="btn btn-primary mt-2" data-val="" data-action="">Filter </a>
+
+        </div>
+
+        <div class="col-md-4">
+          <label for="TicketType" class="form-label account_search_labels">Ticket Type:</label>
+          <select class="form-select text-center" id="TicketType" name="TicketType" aria-label="TicketType" aria-describedby="basic-addon1" required>
+            {% for type in ticketTypes %}
+            <option>{{type}}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label for="TicketYear" class="form-label account_search_labels">Ticket Year:</label>
+          <select class="form-select text-center" id="TicketYear" name="TicketYear" aria-label="TicketYear" aria-describedby="basic-addon1" required>
+            {% for year in ticketYears %}
+            <option>{{year}}</option>
+            {% endfor %}
+          </select>
+
+        </div>
+
+      </div>
+
+      {% include 'DB_PieCharts.html' %}
+
+      {% include 'DB_LineChart.html' %}
+
 
     </div>
 

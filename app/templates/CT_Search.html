@@ -33,7 +33,7 @@
           <div class="d-grid gap-1 col-4 mt-4 mb-3">
             <label for="TicketTypeSearch" class="form-label account_search_labels">Ticket Type</label>
             <select class="form-select text-center" id="TicketTypeSearch" name="TicketType" aria-describedby="basic-addon1">
-              {% for type, year in ticketTypes %}
+              {% for type in ticketTypes %}
                 <option>{{type}}</option>
               {% endfor %}
             </select>
@@ -42,7 +42,7 @@
           <div class="d-grid gap-1 col-4 mt-4 mb-3">
             <label for="TicketYearSearch" class="form-label account_search_labels">Ticket Year</label>
             <select class="form-select text-center" id="TicketYearSearch" name="TicketYear" aria-describedby="basic-addon1">
-              {% for type, year in ticketTypes %}
+              {% for year in ticketYears %}
                 <option>{{year}}</option>
               {% endfor %}
             </select>
