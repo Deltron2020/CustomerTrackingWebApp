@@ -22,11 +22,9 @@
 
             $.getJSON(str,
                 function(data) {
-
                   updatePieGraphs(pieChart_ContactType, ['Type Count'], ['#DA8B7F', '#CECF9E', '#BECBD5', '#EDEAE6'], [data["ContactTypeCounts"]["Email"], data["ContactTypeCounts"]["Phone Call"], data["ContactTypeCounts"]["Walk In"], data["ContactTypeCounts"]["Web Chat"]])
                   updatePieGraphs(pieChart_TicketStatus, ['Status Count'], ['#DA8B7F', '#CECF9E', '#BECBD5'], [data["TicketStatusCounts"]["Closed"], data["TicketStatusCounts"]["Open"], data["TicketStatusCounts"]["Pending"]])
-                  /* need a new function here custom for line graph */
-                  updatePieGraphs(lineChart_TicketsCreated, ['Tickets Created Count'], ['#DA8B7F'], [data["TicketsCreatedCounts"]["Counts"]])
+                  updateLineGraphs(lineChart_TicketsCreated, ['Tickets Created Count'], ['#DA8B7F'],[data["TicketsCreatedCounts"]["Counts"]], [data["TicketsCreatedCounts"]["Dates"]])
                 });
             return false;
           });

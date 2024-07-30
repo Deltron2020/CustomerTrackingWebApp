@@ -51,7 +51,7 @@ def get_ticket_status_counts(type, year):
 			AND
 				TicketYear LIKE '%' + :ticketYear + '%'
             GROUP BY
-                [Status]
+                [Status];
         """)
         results = connection.execute(query, {'ticketType': type, 'ticketYear': year})
 
@@ -79,7 +79,7 @@ def get_contact_type_counts(type, year):
 			AND
 				TicketYear LIKE '%' + :ticketYear + '%'
             GROUP BY
-                [ContactType]
+                [ContactType];
         """)
         results = connection.execute(query, {'ticketType': type, 'ticketYear': year})
 
@@ -102,12 +102,16 @@ def get_ticket_created_counts(type, year):
                 COUNT(TicketNumber) AS [TicketCount]
             FROM 
                 app.CT_Tickets
+            WHERE
+				TicketType LIKE '%' + :ticketType + '%'
+			AND
+				TicketYear LIKE '%' + :ticketYear + '%'
             GROUP BY
                 CAST(CreateDateTime AS DATE)
             ORDER BY 
-                CAST(CreateDateTime AS DATE) ASC
+                CAST(CreateDateTime AS DATE) ASC;
         """)
-        results = connection.execute(query)#, {'ticketType': type, 'ticketYear': year})
+        results = connection.execute(query, {'ticketType': type, 'ticketYear': year})
 
         datesList = []
         countsList = []

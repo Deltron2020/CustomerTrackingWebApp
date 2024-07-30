@@ -22,7 +22,6 @@ def populate_dashboard():
             contactTypeValuesList = list(contactTypes["ContactTypeCounts"].values())
 
             ticketsCreated = get_ticket_created_counts(current[0]['TicketType'], current[0]['TicketYear'])
-            print(ticketsCreated)
 
             return render_template('CT_Dashboard.html', ticketTypes=types, ticketYears=years, statusNames=statusLabelsList, statusNamesValuesList=statusValuesList, contactTypes=contactTypeLabelsList, contactTypeValuesList=contactTypeValuesList,
                                    datesCreated=ticketsCreated['TicketsCreatedCounts']['Dates'], datesCreatedValuesList=ticketsCreated['TicketsCreatedCounts']['Counts'])
@@ -40,6 +39,7 @@ def filter_results(ticketType, ticketYear):
             statusTotals = get_ticket_status_counts(ticketType, ticketYear)
             contactTotals = get_contact_type_counts(ticketType, ticketYear)
             ticketsCreated = get_ticket_created_counts(ticketType, ticketYear)
+            print(ticketsCreated)
 
 
             dashboardResults = statusTotals | contactTotals | ticketsCreated

@@ -35,6 +35,26 @@
                       }
                     }
                   });
+
+
+                  /*Function to update the line chart*/
+                    function updateLineGraphs(chart, label, color, data, labels) {
+                        chart.data.datasets.pop();
+                        chart.data.labels = labels[0] = labels[0];
+                        /*chart.config.data.labels = labels;*/
+                        /*chart.data.labels.length = 0;
+                        chart.data.labels = labels;*/
+                        /* chart.data.labels.push.apply(chart.data.labels, labels);*/
+                        /*chart.data.labels.splice(0, chart.data.labels.length, labels);*/
+                        /*chart.data.labels.push(labels);*/
+                        chart.data.datasets.push({
+                            label: label,
+                            backgroundColor: color,
+                            data: data[0]
+                        });
+                        chart.update();
+                    }
+
                 </script>
             </div>
 
