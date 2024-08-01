@@ -1,0 +1,39 @@
+<div class="row mb-5 justify-content-evenly mx-auto grid border-bottom border-black">
+
+    <label class="text-center fw-bold fs-3">Return Operators By Department </label>
+            <div class="bg-box col-12 mx-auto p-3 text-center">
+                <div>
+                  <canvas id="ticketsByDeptChart"></canvas>
+                </div>
+
+                <script>
+                  const ctx_TicketsByDept = document.getElementById('ticketsByDeptChart');
+                  var labels_ReturnOperators = {{ returnOperators | safe }};
+                  var vals_ReturnOperators = {{ returnOperatorsValuesList | safe }};
+
+                  var barChart_TicketsByDept = new Chart(ctx_TicketsByDept, {
+                    type: 'bar',
+                    data: {
+                      labels: labels_ReturnOperators,
+                      datasets: [{
+                        label: 'Tickets Created Count',
+                        data: vals_ReturnOperators,
+                          fill: false,
+                        borderWidth: 1,
+                          borderColor: '#DA8B7F',
+                          backgroundColor: ['#F3CC7A','#DA8B7F','#CECF9E','#58595B','#BECBD5','#8D8D88','#7B7561','#EDEAE6']
+                      }]
+                    },
+                    options: {
+                      scales: {
+                        y: {
+                          beginAtZero: true
+                        }
+                      }
+                    }
+                  });
+
+                </script>
+            </div>
+
+        </div>

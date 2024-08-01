@@ -1,4 +1,4 @@
-<div class="row mb-4 justify-content-evenly mx-auto grid">
+<div class="row mb-5 justify-content-evenly mx-auto grid border-bottom border-black">
 
     <label class="text-center fw-bold fs-3">Tickets Created Timeline</label>
             <div class="bg-box col-12 mx-auto p-3 text-center">
@@ -19,11 +19,11 @@
                         label: 'Tickets Created Count',
                         data: vals_TicketsCreated,
                           fill: false,
-                        borderWidth: 1,
+                          borderWidth: 1,
                           borderColor: '#DA8B7F',
                           backgroundColor: '#F3CC7A',
                           pointStyle: 'circle',
-                          pointRadius: 10,
+                          pointRadius: 5,
                           pointHoverRadius: 15
                       }]
                     },
@@ -40,16 +40,14 @@
                   /*Function to update the line chart*/
                     function updateLineGraphs(chart, label, color, data, labels) {
                         chart.data.datasets.pop();
-                        chart.data.labels = labels[0] = labels[0];
-                        /*chart.config.data.labels = labels;*/
-                        /*chart.data.labels.length = 0;
-                        chart.data.labels = labels;*/
-                        /* chart.data.labels.push.apply(chart.data.labels, labels);*/
-                        /*chart.data.labels.splice(0, chart.data.labels.length, labels);*/
-                        /*chart.data.labels.push(labels);*/
+                        chart.data.labels = labels[0];
                         chart.data.datasets.push({
                             label: label,
                             backgroundColor: color,
+                            borderWidth: 1,
+                            borderColor: '#DA8B7F',
+                            pointRadius: 5,
+                            pointHoverRadius: 15,
                             data: data[0]
                         });
                         chart.update();

@@ -97,15 +97,28 @@ def get_contact_type_counts(type, year):
 def get_ticket_created_counts(type, year):
     with coxn.connect() as connection:
         query = text("""
+            ;WITH min_id_cte AS
+            (
+                SELECT
+                    TicketNumber,
+                    MIN(id) AS [mID]
+                FROM
+                    app.CT_Tickets
+                WHERE
+				    TicketType LIKE '%' + :ticketType + '%'
+			    AND
+				    TicketYear LIKE '%' + :ticketYear + '%'
+                GROUP BY 
+                    TicketNumber
+            )
+
             SELECT
                 FORMAT(CAST(CreateDateTime AS DATE), 'MM-dd') AS CreateDate, 
-                COUNT(TicketNumber) AS [TicketCount]
+                COUNT(t.TicketNumber) AS [TicketCount]
             FROM 
-                app.CT_Tickets
-            WHERE
-				TicketType LIKE '%' + :ticketType + '%'
-			AND
-				TicketYear LIKE '%' + :ticketYear + '%'
+                app.CT_Tickets t
+			JOIN
+				min_id_cte ON min_id_cte.TicketNumber = t.TicketNumber AND min_id_cte.mID = t.id
             GROUP BY
                 CAST(CreateDateTime AS DATE)
             ORDER BY 
@@ -120,5 +133,50 @@ def get_ticket_created_counts(type, year):
             countsList.append(row[1])
 
         dict = {'TicketsCreatedCounts': {'Dates': datesList, 'Counts': countsList}}
+
+        return dict
+
+
+### query for tickets by Return Operator Dept ###
+def get_return_operator_counts(type, year):
+    with coxn.connect() as connection:
+        query = text("""
+        ;WITH dept_counts_cte AS
+        (
+        SELECT
+            TicketNumber,
+            IIF(ReturnOperator IN (SELECT EmployeeDepartment FROM app.CT_Departments), ReturnOperator, ud.EmployeeDepartment) AS [ReturnOperator]
+        FROM
+            app.view_CT_Tickets t
+        LEFT JOIN
+        (
+            SELECT UserName, d.EmployeeDepartment FROM app.CT_Users u
+            JOIN app.CT_Departments d ON d.DeptID = u.DeptID
+        ) ud ON ud.Username = t.ReturnOperator
+        WHERE
+				TicketType LIKE '%' + :ticketType + '%'
+		AND
+				TicketYear LIKE '%' + :ticketYear + '%'
+        )
+        
+        SELECT
+            ReturnOperator,
+            COUNT(TicketNumber) AS [DeptCount]
+        FROM
+            dept_counts_cte
+        WHERE 
+            ReturnOperator IS NOT NULL
+        GROUP BY 
+            ReturnOperator;
+        """)
+        results = connection.execute(query, {'ticketType': type, 'ticketYear': year})
+
+        roList = []
+        countsList = []
+        for row in results.all():
+            roList.append(row[0])
+            countsList.append(row[1])
+
+        dict = {'ReturnOperatorCounts': {'ReturnOperators': roList, 'Counts': countsList}}
 
         return dict
