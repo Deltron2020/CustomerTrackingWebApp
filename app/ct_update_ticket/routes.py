@@ -1,5 +1,5 @@
 from flask import render_template, request, session, redirect, url_for, jsonify, flash
-from app.ct_update_ticket.sql import (load_tickets_from_db, update_ticket_in_db, version_id_check, got_it_db_insert, got_it_ticket_tracking, forward_to_options, insert_correspondence_notes, load_correspondence_notes, populate_type_of_contact_selection, populate_return_call_operator_selection, populate_ticket_status_selection, populate_all_ticket_types, populate_got_it_operator_selection, check_last_got_it, populate_all_ticket_years)
+from app.ct_update_ticket.sql import (load_tickets_from_db, update_ticket_in_db, version_id_check, got_it_db_insert, got_it_ticket_tracking, forward_to_options, insert_correspondence_notes, load_correspondence_notes, populate_type_of_contact_selection, populate_return_call_operator_selection, populate_ticket_status_selection, populate_all_ticket_types, populate_got_it_operator_selection, check_last_got_it, populate_all_ticket_years, is_personal_property)
 from app import app
 from datetime import date, timedelta
 
@@ -75,6 +75,7 @@ def view_searched_ticket(ticketNumber):
             status_options = populate_ticket_status_selection()
             forwards = forward_to_options()
             notes = load_correspondence_notes(ticketNumber)
+            personal_property_flag = is_personal_property(ticket[0]['AccountNumber'])
 
             return render_template('CT_UpdateTicket.Html',
                                    ticket_data=ticket,
@@ -83,7 +84,8 @@ def view_searched_ticket(ticketNumber):
                                    correspondence_notes=notes,
                                    contact_types=contact_types,
                                    return_operators=return_operators,
-                                   status_options=status_options)
+                                   status_options=status_options,
+                                   personal_property=personal_property_flag)
         else:
             return redirect(url_for('customer_tracking_login'))
     except Exception as e:

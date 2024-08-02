@@ -159,7 +159,11 @@
            </div>
 
            <div class="col-md-4 mt-4">
-               <h5><a href="https://www.pa.martin.fl.us/app/search/view/{{ticket_data[0]['AccountNumber']}}" target="_blank">Real Property Card</a></h5>
+               {% if personal_property == False %}
+                <h5><a href="https://www.pa.martin.fl.us/app/search/view/{{ticket_data[0]['AccountNumber']}}" target="_blank">Real Property Card</a></h5>
+               {% else %}
+                <h5><a href="https://www.pa.martin.fl.us/app/search/personal-property?direction=asc&limit=20&offset=0&orderBy=pin&searchField=all" target="_blank">Personal Property Search</a></h5>
+               {% endif %}
             </div>
 
            <div class="col-md-4 mt-4">

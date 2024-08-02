@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title> Account History </title>
+    {% include 'bootstrap.html' %}
+
+  </head>
+  <body class = "bg">
+
+    {% include 'nav.html' %}
+
+    <div class = "container">
+
+      <h1 class = "header p-3 border border-start-10 rounded-start rounded-end text-center mx-auto"> Account Ticket History </h1>
+
+        <div class="row text-center">
+
+          <div class="col-md-3">
+            <label for="AccountNumber" class="form-label account_search_labels">Account Number</label>
+            <input type="number" class="form-control text-center" value="{{account_data[0]['AccountNumber']}}" id="AccountNumber" name = "AccountNumber" aria-label="Account" aria-describedby="basic-addon1" readonly>
+          </div>
+
+          <div class="col-md-3">
+            <label for="ParcelID" class="form-label account_search_labels">PCN (Parcel ID)</label>
+            <input type="text" class="form-control text-center" value="{{account_data[0]['PCN']}}" id="ParcelID" name = "PCN" aria-label="Parcel" aria-describedby="basic-addon1" readonly>
+          </div>
+
+          <div class="col-md-3">
+            <label for="SitusAddress" class="form-label account_search_labels">Situs Address</label>
+            <input type="text" class="form-control text-center" value="{{account_data[0]['SitusAddress']}}" id="SitusAddress" name = "SitusAddress" aria-label="Address" aria-describedby="basic-addon1" readonly>
+          </div>
+
+          <div class="col-md-3">
+            <label for="OwnerName" class="form-label account_search_labels">Owner Name</label>
+            <input type="text" class="form-control text-center" value="{{account_data[0]['OwnerName']}}" id="OwnerName" name = "OwnerName" aria-label="Name" aria-describedby="basic-addon1" readonly>
+          </div>
+
+        </div>
+
+      <div class="col-12 mx-auto mt-5 table_outer">
+        <table class="table table-default table-striped table-hover" id="ticket_history_table">
+          <thead>
+          <tr>
+            <th onclick="" scope="col" style="cursor:pointer;">Ticket Number</th>
+            <th onclick="" scope="col" style="cursor:pointer;">Ticket Type</th>
+            <th onclick="" scope="col" style="cursor:pointer;">Ticket Year</th>
+            <th onclick="" scope="col" style="cursor:pointer;">Contact Date</th>
+            <th onclick="" scope="col" style="cursor:pointer;">Contact Type</th>
+            <th onclick="" scope="col" style="cursor:pointer;">Status</th>
+            <th onclick="" scope="col" style="cursor:pointer;">Last Modified</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          {% for ticket in ticket_history %}
+
+              <tr>
+                  <td><a href="/search/{{ticket['TicketNumber']}}">{{ticket['TicketNumber']}}</a></td>
+                  <td>{{ticket['TicketType']}}</td>
+                  <td>{{ticket['TicketYear']}}</td>
+                  <td>{{ticket['ContactDate']}}</td>
+                  <td>{{ticket['ContactType']}}</td>
+                  <td>{{ticket['Status']}}</td>
+                  <td>{{ticket['CreateDateTime']}}</td>
+              </tr>
+
+          {% endfor %}
+          </tbody>
+
+        </table>
+      </div>
+
+    </div>
+
+    {% include 'footer.html' %}
+
+    <script>
+      $(document).ready(function () {
+        $('#ticket_history_table').DataTable();
+      });
+    </script>
+
+  </body>
+</html>

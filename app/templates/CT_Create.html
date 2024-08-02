@@ -54,6 +54,7 @@
             <th onclick="" scope="col" style="cursor:pointer;">PCN</th>
             <th onclick="" scope="col" style="cursor:pointer;">Situs</th>
             <th onclick="" scope="col" style="cursor:pointer;">Owner Name</th>
+            <th onclick="" scope="col" style="cursor:pointer;">History</th>
           </tr>
           </thead>
 
@@ -65,6 +66,7 @@
                   <td>{{account['PCN']}}</td>
                   <td>{{account['SitusAddress']}}</td>
                   <td>{{account['OwnerName']}}</td>
+                  <td><a href="/account/{{account['AccountNumber']}}"><img src="../static/ticket_history_icon.png" alt="icon" height="30" width="30"/></a></td>
               </tr>
 
           {% endfor %}
