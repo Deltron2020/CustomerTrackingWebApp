@@ -42,16 +42,21 @@ def get_ticket_status_counts(type, year):
     with coxn.connect() as connection:
         query = text("""
             SELECT
-                [Status],
-				COUNT(Status) AS [TicketStatusCounts]
+                s.StatusDescription,
+                COUNT(t.TicketNumber) AS [TicketStatusCounts]
             FROM
-                app.view_CT_Tickets
-			WHERE
-				TicketType LIKE '%' + :ticketType + '%'
-			AND
-				TicketYear LIKE '%' + :ticketYear + '%'
+                app.CT_ListTicketStatus s
+            LEFT JOIN
+                (SELECT ticketNumber, Status 
+                FROM app.view_CT_Tickets 
+                WHERE
+                TicketType LIKE '%' + :ticketType + '%'
+                AND
+                TicketYear LIKE '%' + :ticketYear + '%') t ON t.Status = s.StatusDescription
+            WHERE
+                s.StatusDescription <> ''
             GROUP BY
-                [Status];
+                s.StatusDescription;
         """)
         results = connection.execute(query, {'ticketType': type, 'ticketYear': year})
 
@@ -70,16 +75,21 @@ def get_contact_type_counts(type, year):
     with coxn.connect() as connection:
         query = text("""
             SELECT
-                [ContactType],
-				COUNT(ContactType) AS [ContactTypeStatusCounts]
+                c.ContactDescription,
+                COUNT(t.TicketNumber) AS [TicketStatusCounts]
             FROM
-                app.view_CT_Tickets
-			WHERE
-				TicketType LIKE '%' + :ticketType + '%'
-			AND
-				TicketYear LIKE '%' + :ticketYear + '%'
+                app.CT_ListContactTypes c
+            LEFT JOIN
+                (SELECT ticketNumber, ContactType 
+                FROM app.view_CT_Tickets 
+                WHERE
+                TicketType LIKE '%' + :ticketType + '%'
+                AND
+                TicketYear LIKE '%' + :ticketYear + '%') t ON t.ContactType = c.ContactDescription
+            WHERE
+                c.ContactDescription <> ''
             GROUP BY
-                [ContactType];
+                c.ContactDescription;
         """)
         results = connection.execute(query, {'ticketType': type, 'ticketYear': year})
 

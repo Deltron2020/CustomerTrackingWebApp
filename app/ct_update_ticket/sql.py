@@ -202,7 +202,7 @@ def insert_correspondence_notes(data, notes, user):
 
 def populate_all_ticket_types():
     with coxn.connect() as connection:
-        query = text(f"SELECT TicketType FROM app.view_CT_Tickets GROUP BY TicketType;")
+        query = text(f"SELECT TicketType FROM app.view_CT_Tickets GROUP BY TicketType ORDER BY CASE WHEN TicketType = (SELECT TicketType FROM app.CT_TicketType) THEN 1 ELSE 2 END;")
         result = connection.execute(query)
 
         ticketTypes = []
@@ -214,7 +214,7 @@ def populate_all_ticket_types():
 
 def populate_all_ticket_years():
     with coxn.connect() as connection:
-        query = text(f"SELECT TicketYear FROM app.view_CT_Tickets GROUP BY TicketYear;")
+        query = text(f"SELECT TicketYear FROM app.view_CT_Tickets GROUP BY TicketYear ORDER BY CASE WHEN TicketYear = (SELECT TicketYear FROM app.CT_TicketType) THEN 1 ELSE 2 END;")
         result = connection.execute(query)
 
         ticketYears = []
