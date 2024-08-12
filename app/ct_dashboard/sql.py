@@ -3,7 +3,7 @@ from sqlalchemy import text
 
 def populate_ticket_type():
     with coxn.connect() as connection:
-        query = text("SELECT TicketType FROM app.CT_ListTicketTypes ORDER BY TicketType ASC;")
+        query = text("SELECT TicketType FROM app.CT_ListTicketTypes ORDER BY CASE WHEN TicketType = (SELECT TicketType FROM app.CT_TicketType) THEN 1 ELSE 2 END;")
         results = connection.execute(query)
 
         ticketType = []
@@ -15,7 +15,7 @@ def populate_ticket_type():
 
 def populate_ticket_year():
     with coxn.connect() as connection:
-        query = text("SELECT TicketYear FROM app.CT_ListTicketYears ORDER BY TicketYear DESC;")
+        query = text("SELECT TicketYear FROM app.CT_ListTicketYears ORDER BY CASE WHEN TicketYear = (SELECT TicketYear FROM app.CT_TicketType) THEN 1 ELSE 2 END;")
         results = connection.execute(query)
 
         ticketYear = []
@@ -188,5 +188,43 @@ def get_return_operator_counts(type, year):
             countsList.append(row[1])
 
         dict = {'ReturnOperatorCounts': {'ReturnOperators': roList, 'Counts': countsList}}
+
+        return dict
+
+
+### query for got it operator counts ###
+def get_user_got_it_counts(type, year):
+    with coxn.connect() as connection:
+        query = text("""
+        SELECT TOP 15
+            u.Username, 
+            ISNULL(g.GotItCount,0) AS GotItCount 
+        FROM 
+            app.CT_Users u
+        LEFT JOIN 
+            (SELECT 
+                GotItUser, 
+                COUNT(GotItUser) AS [GotItCount] 
+            FROM 
+                app.view_CT_Tickets 
+            WHERE
+                TicketType LIKE '%' + :ticketType + '%'
+            AND
+                TicketYear LIKE '%' + :ticketYear + '%'
+            GROUP BY 
+                GotItUser) g ON g.GotItUser = u.Username AND u.Username <> 'test'
+        ORDER BY 
+            g.GotItCount DESC,
+            u.Username ASC;
+        """)
+        results = connection.execute(query, {'ticketType': type, 'ticketYear': year})
+
+        usersList = []
+        gotItCountsList = []
+        for row in results.all():
+            usersList.append(row[0])
+            gotItCountsList.append(row[1])
+
+        dict = {'UserGotItCounts': {'Usernames': usersList, 'GotItCounts': gotItCountsList}}
 
         return dict
