@@ -58,7 +58,7 @@ def populate_return_call_operator_selection():
             SELECT EmployeeDepartment FROM [app].[view_CT_UserDepts] 
             ORDER BY CASE 
                 WHEN EmployeeDepartment = '' THEN 1 
-                WHEN EmployeeDepartment = 'All/General' THEN 2
+                WHEN EmployeeDepartment = 'All-General' THEN 2
                 ELSE 3 END, OrderVal DESC, EmployeeDepartment ASC;
             """)
         results = connection.execute(query)
@@ -76,7 +76,7 @@ def populate_got_it_operator_selection():
             SELECT EmployeeDepartment FROM [app].[view_CT_UserDepts] 
             ORDER BY CASE 
                 WHEN EmployeeDepartment = '' THEN 1 
-                WHEN EmployeeDepartment = 'All/General' THEN 2
+                WHEN EmployeeDepartment = 'All-General' THEN 2
                 ELSE 3 END, OrderVal DESC, EmployeeDepartment ASC;
             """)
         results = connection.execute(query)
@@ -156,7 +156,7 @@ def forward_to_options():
             SELECT EmployeeDepartment FROM [app].[view_CT_UserDepts] 
             ORDER BY CASE 
                 WHEN EmployeeDepartment = '' THEN 1 
-                WHEN EmployeeDepartment = 'All/General' THEN 2
+                WHEN EmployeeDepartment = 'All-General' THEN 2
                 ELSE 3 END, OrderVal DESC, EmployeeDepartment ASC;
             """)
         results = connection.execute(query)
@@ -228,7 +228,9 @@ def is_personal_property(account):
     with coxn.connect() as connection:
         query = text("SELECT IsPersonalProperty FROM app.CT_Accounts WHERE AccountNumber = :accountNumber;")
         result = connection.execute(query, {'accountNumber': account})
-
-        flag = result.all()[0][0]
+        if len(result.all()) == 0:
+            flag = False
+        else:
+            flag = result.all()[0][0]
 
         return flag
