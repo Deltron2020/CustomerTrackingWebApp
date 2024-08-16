@@ -226,11 +226,18 @@ def populate_all_ticket_years():
 
 def is_personal_property(account):
     with coxn.connect() as connection:
-        query = text("SELECT IsPersonalProperty FROM app.CT_Accounts WHERE AccountNumber = :accountNumber;")
+        query = text("""
+        IF EXISTS (SELECT IsPersonalProperty FROM app.CT_Accounts WHERE AccountNumber = :accountNumber)
+        BEGIN
+            SELECT IsPersonalProperty FROM app.CT_Accounts WHERE AccountNumber = :accountNumber;
+        END
+        ELSE
+        BEGIN
+            SELECT 0 AS [IsPersonalProperty];
+        END
+        """)
         result = connection.execute(query, {'accountNumber': account})
-        if len(result.all()) == 0:
-            flag = False
-        else:
-            flag = result.all()[0][0]
+
+        flag = result.all()[0][0]
 
         return flag
