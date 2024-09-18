@@ -13,24 +13,18 @@
 
       <h1 class = "header p-3 border border-start-10 rounded-start rounded-end text-center mx-auto"> View Tickets </h1>
 
-      <form autocomplete="off">
+        <div class="row text-center mt-5">
 
-        <div class="row text-center">
-
-          <div class="d-grid gap-1 col-4 mt-4 mb-3">
+          <div class="d-grid col-4">
             <label for="TicketStatusSearch" class="form-label account_search_labels">Ticket Status</label>
             <select class="form-select text-center" id="TicketStatusSearch" name ="Status">
               {% for status in status_options %}
-                    {% if status == 'Open' %}
-                        <option selected>{{status}}</option>
-                    {% else %}
-                        <option>{{status}}</option>
-                    {% endif %}
+                <option>{{status}}</option>
               {% endfor %}
             </select>
           </div>
 
-          <div class="d-grid gap-1 col-4 mt-4 mb-3">
+          <div class="d-grid col-4">
             <label for="TicketTypeSearch" class="form-label account_search_labels">Ticket Type</label>
             <select class="form-select text-center" id="TicketTypeSearch" name="TicketType" aria-describedby="basic-addon1">
               {% for type in ticketTypes %}
@@ -39,7 +33,7 @@
             </select>
           </div>
 
-          <div class="d-grid gap-1 col-4 mt-4 mb-3">
+          <div class="d-grid col-4">
             <label for="TicketYearSearch" class="form-label account_search_labels">Ticket Year</label>
             <select class="form-select text-center" id="TicketYearSearch" name="TicketYear" aria-describedby="basic-addon1">
               {% for year in ticketYears %}
@@ -50,28 +44,28 @@
 
         </div>
 
-        <div class="row text-center">
+        <div class="row text-center mt-5">
 
-          <div class="d-grid gap-1 col-4 mt-4 mb-3">
+          <div class="d-grid col-4">
             <label for="TicketNumberSearch" class="form-label account_search_labels">Ticket Number</label>
             <input class="form-control text-center" id="TicketNumberSearch" name ="TicketNumber" type="number">
           </div>
 
-          <div class="d-grid gap-1 col-4 mt-4 mb-3">
+          <div class="d-grid col-4">
             <label for="AccountNumberSearch" class="form-label account_search_labels">Account Number</label>
             <input class="form-control text-center" id="AccountNumberSearch" name="AccountNumber" type="number" aria-describedby="basic-addon1">
           </div>
 
-          <div class="d-grid gap-1 col-4 mt-4 mb-3">
+          <div class="d-grid col-4">
             <label for="ContactDateSearch" class="form-label account_search_labels">Contacted On</label>
             <input class="form-control text-center" id="ContactDateSearch" name="ContactDate" type="date" aria-describedby="basic-addon1">
           </div>
 
         </div>
 
-        <div class="row text-center">
+        <div class="row text-center justify-content-around mt-5">
 
-          <div class="d-grid gap-1 col-4 mt-4 mb-3">
+          <div class="col-4">
             <label for="ContactTypeSearch" class="form-label account_search_labels">Contact Type</label>
             <select class="form-select text-center" id="ContactTypeSearch" name="ContactType" aria-describedby="basic-addon1">
               {% for type in contact_types %}
@@ -79,8 +73,8 @@
               {% endfor %}
             </select>
           </div>
-
-          <div class="d-grid gap-1 col-4 mt-4 mb-3">
+          <!--
+          <div class="d-grid col-4">
             <label for="ReturnOperatorSearch" class="form-label account_search_labels">Return Call Operator</label>
             <select class="form-select text-center" id="ReturnOperatorSearch" name="ReturnOperator" aria-describedby="basic-addon1">
               {% for user in return_operators %}
@@ -88,17 +82,17 @@
               {% endfor %}
               </select>
           </div>
-
-          <div class="d-grid gap-1 col-4 mt-4 mb-3">
+          -->
+          <div class="col-4">
             <label for="OwnerSearch" class="form-label account_search_labels">Owner Name</label>
             <input class="form-control text-center" id="OwnerSearch" name="OwnerName" type="text" aria-describedby="basic-addon1">
           </div>
 
         </div>
 
-        <div class="row text-center">
+        <div class="row text-center mt-5">
 
-          <div class="d-grid gap-1 col-4 mt-4 mb-3 mx-auto">
+          <div class="d-grid col-4">
             <label for="GotItOperatorSearch" class="form-label account_search_labels">Got It Operator</label>
             <select class="form-select text-center" id="GotItOperatorSearch" name="GotItUser" aria-describedby="basic-addon1">
               {% for user in gotit_operators %}
@@ -107,27 +101,42 @@
               </select>
           </div>
 
-          <div class="d-grid gap-1 col-4 mt-4 mb-3 mx-auto" role="group">
-            <input type="checkbox" class="btn-check" id="GotItSearch" name="GotItUserFlag" value="0" autocomplete="off" checked>
-            <label class="btn btn-outline-primary" for="GotItSearch">No Got It Operator</label>
+          <div class="d-grid col-4">
+            <label for="CreatedBySearch" class="form-label account_search_labels">Created By</label>
+            <select class="form-select text-center" id="CreatedBySearch" name="OriginalCreator" aria-describedby="basic-addon1">
+              {% for user in create_users %}
+                <option>{{user}}</option>
+              {% endfor %}
+              </select>
+          </div>
 
-            <input type="checkbox" class="btn-check" id="MyTicketSearch" name="CreateUser" value="{{ current_user }}" autocomplete="off">
-            <label class="btn btn-outline-primary" for="MyTicketSearch">My Tickets</label>
+          <div class="d-grid col-4">
+            <label for="DepartmentSearch" class="form-label account_search_labels">Department</label>
+            <select class="form-select text-center" id="DepartmentSearch" name="Department" aria-describedby="basic-addon1">
+              {% for dept in employee_depts %}
+                <option>{{dept}}</option>
+              {% endfor %}
+              </select>
           </div>
 
         </div>
 
-        <div class="row text-center">
+        <div class="row text-center justify-content-around mt-5">
 
-          <div class="d-grid gap-5 col-4 mx-auto mt-5">
-            <input class="btn btn-primary" type="submit">
-            </input>
+          <div class="d-grid col-4">
+                <a class="btn btn-primary" type="button" id="search_button">
+                Search</a>
+          </div>
+
+          <div class="d-grid col-4">
+                <a class="btn btn-primary" type="button" id="clear_button">
+                Clear</a>
           </div>
 
         </div>
-      </form>
 
-      <div class="col-12 mx-auto mt-5 table_outer">
+
+      <div class="col-12 mt-5 table_outer">
         <table class="table table-default table-striped table-hover display" id="ticket_table">
           <thead>
           <tr>
@@ -141,44 +150,14 @@
             <th scope="col">Status</th>
           </tr>
           </thead>
-
-          <tbody>
-          {% for ticket in ticket_data %}
-            {% if ticket['ContactDate'] < current_date and ticket['Status'] == 'Open' %}
-                <tr style="font-weight: 500;">
-                  <td><a href="/search/{{ticket['TicketNumber']}}">{{ticket['TicketNumber']}}</a></td>
-                  <td style="color: blue;">{{ticket['ContactDate']}}</td>
-                  <td style="color: blue;">{{ticket['ContactType']}}</td>
-                  <td style="color: blue;">{{ticket['AccountNumber']}}</td>
-                  <td style="color: blue;">{{ticket['OwnerName']}}</td>
-                  <td style="color: blue;">{{ticket['ReturnOperator']}}</td>
-                  <td style="color: blue;">{{ticket['GotItUser']}}</td>
-                  <td style="color: blue;">{{ticket['Status']}}</td>
-                </tr>
-            {% else %}
-                <tr>
-                  <td><a href="/search/{{ticket['TicketNumber']}}">{{ticket['TicketNumber']}}</a></td>
-                  <td>{{ticket['ContactDate']}}</td>
-                  <td>{{ticket['ContactType']}}</td>
-                  <td>{{ticket['AccountNumber']}}</td>
-                  <td>{{ticket['OwnerName']}}</td>
-                  <td>{{ticket['ReturnOperator']}}</td>
-                  <td>{{ticket['GotItUser']}}</td>
-                  <td>{{ticket['Status']}}</td>
-                </tr>
-            {% endif %}
-          {% endfor %}
-          </tbody>
-
         </table>
       </div>
 
     </div>
 
-    <a class="btn btn-primary" type="button" id="test_box">
-                Ticket</a>
 
     {% include 'footer.html' %}
+
 
     <script>
       table = new DataTable('#ticket_table', {
@@ -188,13 +167,33 @@
 
     <script type=text/javascript>
           $(function() {
-            $('a#test_box').on('click', function(e) {
+            $('a#search_button').on('click', function(e) {
               e.preventDefault()
                 var ticketStatus = document.getElementById("TicketStatusSearch").value;
                 var ticketType = document.getElementById("TicketTypeSearch").value;
+                var ticketYear = document.getElementById("TicketYearSearch").value;
+                var ticketNumber = document.getElementById("TicketNumberSearch").value;
+                var ticketAccount = document.getElementById("AccountNumberSearch").value;
+                var ticketDate = document.getElementById("ContactDateSearch").value;
+                var ticketContact = document.getElementById("ContactTypeSearch").value;
+                //var ticketReturnOperator = document.getElementById("ReturnOperatorSearch").value;
+                var ticketOwner = document.getElementById("OwnerSearch").value;
+                var ticketGotItOperator = document.getElementById("GotItOperatorSearch").value;
+                var ticketCreator = document.getElementById("CreatedBySearch").value;
+                var ticketDept = document.getElementById("DepartmentSearch").value;
 
-                searchCriteria = { Status : ticketStatus,
-                          TicketType : ticketType
+                var searchCriteria = { Status : ticketStatus,
+                          TicketType : ticketType,
+                          TicketYear : ticketYear,
+                          TicketNumber : ticketNumber,
+                          AccountNumber : ticketAccount,
+                          ContactDate : ticketDate,
+                          ContactType : ticketContact,
+                          //ReturnOperator : ticketReturnOperator,
+                          OwnerName : ticketOwner,
+                          GotItUser : ticketGotItOperator,
+                          OriginalCreator : ticketCreator,
+                          Department : ticketDept
                   }
 
                $.ajax({
@@ -203,7 +202,7 @@
                  dataType:"json",
                   data: searchCriteria,
                  success: function(data){
-                    //console.log(data); // this is your response obj that you can work with
+                    //console.log(searchCriteria); // this is your response obj that you can work with
 
                    table.clear();
                    table.destroy();
@@ -241,6 +240,21 @@
               });
               return false;
             });
+    </script>
+
+      <script>
+        $(document).on('click', '#clear_button', function() {
+          document.getElementById("DepartmentSearch").value = "";
+          document.getElementById("TicketNumberSearch").value = "";
+          document.getElementById("AccountNumberSearch").value = "";
+          document.getElementById("ContactDateSearch").value = "";
+          document.getElementById("ContactTypeSearch").value = "";
+          //document.getElementById("ReturnOperatorSearch").value = "";
+          document.getElementById("OwnerSearch").value = "";
+          document.getElementById("GotItOperatorSearch").value = "";
+          document.getElementById("CreatedBySearch").value = "";
+          document.getElementById("DepartmentSearch").value = "";
+        });
     </script>
 
   </body>

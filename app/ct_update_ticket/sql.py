@@ -73,7 +73,8 @@ def populate_return_call_operator_selection():
 def populate_got_it_operator_selection():
     with coxn.connect() as connection:
         query = text("""
-            SELECT EmployeeDepartment FROM [app].[view_CT_UserDepts] 
+            SELECT EmployeeDepartment FROM [app].[view_CT_UserDepts]
+            WHERE EmployeeDepartment NOT LIKE 'test'
             ORDER BY CASE 
                 WHEN EmployeeDepartment = '' THEN 1 
                 WHEN EmployeeDepartment = 'All-General' THEN 2
@@ -241,3 +242,32 @@ def is_personal_property(account):
         flag = result.all()[0][0]
 
         return flag
+
+
+def populate_employee_departments():
+    with coxn.connect() as connection:
+        query = text("SELECT EmployeeDepartment FROM app.CT_Departments ORDER BY EmployeeDepartment ASC;")
+        result = connection.execute(query)
+
+        depts = []
+        for data in result.all():
+            depts.append(data[0])
+
+        return depts
+
+
+def populate_created_by():
+    with coxn.connect() as connection:
+        query = text("""
+        SELECT Username FROM app.CT_Users WHERE Username NOT LIKE 'test'
+        UNION
+        SELECT ''
+        ORDER BY Username ASC;
+        """)
+        result = connection.execute(query)
+
+        users = []
+        for data in result.all():
+            users.append(data[0])
+
+        return users
