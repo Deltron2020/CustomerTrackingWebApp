@@ -5,7 +5,7 @@ from sqlalchemy import text
 ### account search for new ticket ###
 def load_accounts_from_db(field, value):
     with coxn.connect() as connection:
-        query = text(f"SELECT TOP 1000 AccountNumber, PCN, SitusAddress, OwnerName FROM app.CT_Accounts WHERE {field} LIKE '%' + :dataValue + '%' ORDER BY AccountNumber ASC;")
+        query = text(f"SELECT TOP 1000 AccountNumber, PCN, SitusAddress, OwnerName, LandUseCodeDescription FROM app.CT_Accounts WHERE {field} LIKE '%' + :dataValue + '%' ORDER BY AccountNumber ASC;")
         result = connection.execute(query, {"dataValue": value})
         accounts = []
         for row in result.all():
