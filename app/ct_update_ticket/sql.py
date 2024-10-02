@@ -73,12 +73,21 @@ def populate_return_call_operator_selection():
 def populate_got_it_operator_selection():
     with coxn.connect() as connection:
         query = text("""
-            SELECT EmployeeDepartment FROM [app].[view_CT_UserDepts]
+        SELECT ed.EmployeeDepartment FROM (
+
+            SELECT EmployeeDepartment, OrderVal FROM [app].[view_CT_UserDepts]
             WHERE EmployeeDepartment NOT LIKE 'test'
+
+			UNION
+
+			SELECT 'None', 0
+		) AS ed
+
             ORDER BY CASE 
-                WHEN EmployeeDepartment = '' THEN 1 
-                WHEN EmployeeDepartment = 'All-General' THEN 2
-                ELSE 3 END, OrderVal DESC, EmployeeDepartment ASC;
+                WHEN EmployeeDepartment = '' THEN 1
+				WHEN EmployeeDepartment = 'None' THEN 2
+                WHEN EmployeeDepartment = 'All-General' THEN 3
+                ELSE 4 END, OrderVal DESC, EmployeeDepartment ASC;
             """)
         results = connection.execute(query)
 

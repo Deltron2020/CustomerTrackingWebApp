@@ -33,7 +33,7 @@ $(function() {
         }
 
         $.ajax({
-            url: "/searchtestjson",
+            url: "/searchjson",
             type: "GET",
             dataType:"json",
             data: searchCriteria,
