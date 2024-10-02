@@ -133,7 +133,7 @@
 
            <div class="col-md-4">
                <label for="PhoneNumber" class="form-label account_search_labels">*Phone Number:</label>
-               <input type="tel" class="form-control text-center" id="PhoneNumber" value="{{ticket_data[0]['PhoneNumber']}}" name="Telephone" aria-label="Telephone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" aria-describedby="basic-addon1" required>
+               <input type="tel" class="form-control text-center" id="PhoneNumber" value="{{ticket_data[0]['PhoneNumber']}}" name="Telephone" aria-label="Telephone" pattern="(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}" aria-describedby="basic-addon1" required>
           </div>
 
            <div class="col-md-4">
