@@ -147,37 +147,21 @@ def get_ticket_created_counts(type, year):
         return dict
 
 
-### query for tickets by Return Operator Dept ###
+### changed to query for department count on 10/3/2024 but left the return_operator verbage ###
 def get_return_operator_counts(type, year):
     with coxn.connect() as connection:
         query = text("""
-        ;WITH dept_counts_cte AS
-        (
-        SELECT
-            TicketNumber,
-            IIF(ReturnOperator IN (SELECT EmployeeDepartment FROM app.CT_Departments), ReturnOperator, ud.EmployeeDepartment) AS [ReturnOperator]
-        FROM
-            app.view_CT_Tickets t
-        LEFT JOIN
-        (
-            SELECT UserName, d.EmployeeDepartment FROM app.CT_Users u
-            JOIN app.CT_Departments d ON d.DeptID = u.DeptID
-        ) ud ON ud.Username = t.ReturnOperator
-        WHERE
-				TicketType LIKE '%' + :ticketType + '%'
-		AND
-				TicketYear LIKE '%' + :ticketYear + '%'
-        )
-        
-        SELECT
-            ReturnOperator,
-            COUNT(TicketNumber) AS [DeptCount]
-        FROM
-            dept_counts_cte
-        WHERE 
-            ReturnOperator IS NOT NULL
-        GROUP BY 
-            ReturnOperator;
+            SELECT 
+                Department, 
+                COUNT(Department)  AS [DepartmentCount]
+            FROM 
+                app.view_CT_Tickets 
+            WHERE
+                TicketType LIKE '%' + :ticketType + '%'
+            AND
+                TicketYear LIKE '%' + :ticketYear + '%'
+            GROUP BY 
+                Department;
         """)
         results = connection.execute(query, {'ticketType': type, 'ticketYear': year})
 
@@ -196,26 +180,26 @@ def get_return_operator_counts(type, year):
 def get_user_got_it_counts(type, year):
     with coxn.connect() as connection:
         query = text("""
-        SELECT TOP 15
-            u.Username, 
-            ISNULL(g.GotItCount,0) AS GotItCount 
-        FROM 
-            app.CT_Users u
-        LEFT JOIN 
-            (SELECT 
-                GotItUser, 
-                COUNT(GotItUser) AS [GotItCount] 
+            SELECT TOP 20
+                u.Username, 
+                ISNULL(g.GotItCount,0) AS GotItCount 
             FROM 
-                app.view_CT_Tickets 
-            WHERE
-                TicketType LIKE '%' + :ticketType + '%'
-            AND
-                TicketYear LIKE '%' + :ticketYear + '%'
-            GROUP BY 
-                GotItUser) g ON g.GotItUser = u.Username AND u.Username <> 'test'
-        ORDER BY 
-            g.GotItCount DESC,
-            u.Username ASC;
+                app.CT_Users u
+            LEFT JOIN 
+                (SELECT 
+                    GotItUser, 
+                    COUNT(GotItUser) AS [GotItCount] 
+                FROM 
+                    app.view_CT_Tickets 
+                WHERE
+                    TicketType LIKE '%' + :ticketType + '%'
+                AND
+                    TicketYear LIKE '%' + :ticketYear + '%'
+                GROUP BY 
+                    GotItUser) g ON g.GotItUser = u.Username AND u.Username <> 'test'
+            ORDER BY 
+                g.GotItCount DESC,
+                u.Username ASC;
         """)
         results = connection.execute(query, {'ticketType': type, 'ticketYear': year})
 

@@ -25,7 +25,7 @@
                   updatePieGraphs(pieChart_ContactType, ['Type Count'], ['#DA8B7F', '#CECF9E', '#BECBD5', '#EDEAE6'], [data["ContactTypeCounts"]["Email"], data["ContactTypeCounts"]["Phone Call"], data["ContactTypeCounts"]["Walk In"], data["ContactTypeCounts"]["Web Chat"]]);
                   updatePieGraphs(pieChart_TicketStatus, ['Status Count'], ['#DA8B7F', '#CECF9E', '#BECBD5'], [data["TicketStatusCounts"]["Closed"], data["TicketStatusCounts"]["Open"], data["TicketStatusCounts"]["Pending"]]);
                   updateLineGraphs(lineChart_TicketsCreated, ['Tickets Created Count'], ['#F3CC7A'],[data["TicketsCreatedCounts"]["Counts"]], [data["TicketsCreatedCounts"]["Dates"]]);
-                  updateLineGraphs(barChart_TicketsByDept, ['Return Operator Count'], ['#F3CC7A','#DA8B7F','#CECF9E','#58595B','#BECBD5','#8D8D88','#7B7561','#EDEAE6'],[data["ReturnOperatorCounts"]["Counts"]], [data["ReturnOperatorCounts"]["ReturnOperators"]]);
+                  updateLineGraphs(barChart_TicketsByDept, ['Tickets Worked Count'], ['#F3CC7A','#DA8B7F','#CECF9E','#58595B','#BECBD5','#8D8D88','#7B7561','#EDEAE6'],[data["ReturnOperatorCounts"]["Counts"]], [data["ReturnOperatorCounts"]["ReturnOperators"]]);
                   updateLineGraphs(barChart_userGotItCounts, ['Got It Count'], ['#F3CC7A'],[data["UserGotItCounts"]["GotItCounts"]], [data["UserGotItCounts"]["Usernames"]]);
                 });
             return false;
