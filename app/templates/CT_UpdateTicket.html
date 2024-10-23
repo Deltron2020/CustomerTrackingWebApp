@@ -172,11 +172,16 @@
        </div>
 
          <div class="row text-center mb-5">
-           <div class="col-md-12">
+           <div class="col-md-8">
                <label for="ReasonForCall" class="form-label account_search_labels">Reason For Call:</label>
                <textarea readonly class="form-control bg-secondary-subtle" id="ReasonForCall" name="CallReason" aria-label="CallReason" rows="6" aria-describedby="basic-addon1" style="white-space: pre-line; text-align: left;">{{ticket_data[0]['ReasonForCall']}}</textarea>
 
           </div>
+
+             <div class="col-md-4">
+                 <label for="Hurricane" class="form-label account_search_labels px-3 mt-1">Hurricane Call:</label>
+                 <input type="text" class="form-control text-center" id="Hurricane" name="Hurricane" value="{{ticket_data[0]['Hurricane']}}" aria-label="Hurricane" aria-describedby="basic-addon1" readonly>
+             </div>
          </div>
 
         <div class ="row text-center">

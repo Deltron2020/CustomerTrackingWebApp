@@ -17,6 +17,9 @@ $(function() {
         var ticketGotItOperator = document.getElementById("GotItOperatorSearch").value;
         var ticketCreator = document.getElementById("CreatedBySearch").value;
         var ticketDept = document.getElementById("DepartmentSearch").value;
+        if (document.getElementById("Hurricane").checked) {
+            var hurricaneCheckbox = document.getElementById("Hurricane").value;
+        }
 
         var searchCriteria = { Status : ticketStatus,
             TicketType : ticketType,
@@ -29,7 +32,8 @@ $(function() {
             OwnerName : ticketOwner,
             GotItUser : ticketGotItOperator,
             OriginalCreator : ticketCreator,
-            Department : ticketDept
+            Department : ticketDept,
+            Hurricane : hurricaneCheckbox
         }
 
         $.ajax({
@@ -91,6 +95,7 @@ $(function() {
         document.getElementById("GotItOperatorSearch").value = "";
         document.getElementById("CreatedBySearch").value = "";
         document.getElementById("DepartmentSearch").value = "";
+        document.getElementById("Hurricane").checked = false;
     });
     return false;
 });

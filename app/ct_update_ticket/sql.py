@@ -19,12 +19,18 @@ def load_tickets_from_db(columns, values):
 ### insert ticket information into database table (but updating an existing ticket) ###
 def update_ticket_in_db(data, user):
     with coxn.connect() as connection:
-            query = text(f"INSERT INTO app.CT_Tickets (TicketNumber, AccountNumber, TicketType, TicketYear, OwnerName, SitusAddress, ContactType, ContactDate, ContactTime, ReturnOperator, CallerOrVisitor, PhoneNumber, EmailAddress, ReasonForCall, Status, CreateUser) VALUES  (:ticketNumber, :accountNumber, :ticketType, :ticketYear, :ownerName, :situsAddress, :contactType, :contactDate, :contactTime, :returnOperator, :callerVisitor, :phoneNumber, :emailAddress, :reasonForCall, :status, :createUser);"
-                         )
-            #print(query)
-            connection.execute(query, {"ticketNumber": data['TicketNumber'], "accountNumber": data['Account'], "ticketType": data['TicketType'], "ticketYear": data['TicketYear'], "ownerName": data['Owner'], "situsAddress": data['Address'], "contactType": data['ContactType'], "contactDate": data['ContactDate'], "contactTime": data['ContactTime'], "returnOperator": data['ReturnOperator'], "callerVisitor": data['CallerVisitor'], "phoneNumber": data['Telephone'], "emailAddress": data['Email'], "reasonForCall": data['CallReason'], "status": data['Status'], "createUser": user})
+        checkbox = {}
+        # when reading old tickets where the hurricane value is NULL set to 0 on update
+        if data['Hurricane'] == 'None':
+            checkbox.update({'Hurricane': '0'})
+        else:
+            checkbox.update({'Hurricane': data['Hurricane']})
 
-            connection.commit()
+        query = text(f"INSERT INTO app.CT_Tickets (TicketNumber, AccountNumber, TicketType, TicketYear, OwnerName, SitusAddress, ContactType, ContactDate, ContactTime, ReturnOperator, CallerOrVisitor, PhoneNumber, EmailAddress, ReasonForCall, Status, CreateUser, Hurricane) VALUES  (:ticketNumber, :accountNumber, :ticketType, :ticketYear, :ownerName, :situsAddress, :contactType, :contactDate, :contactTime, :returnOperator, :callerVisitor, :phoneNumber, :emailAddress, :reasonForCall, :status, :createUser, :hurricane);"
+                     )
+        #print(query)
+        connection.execute(query, {"ticketNumber": data['TicketNumber'], "accountNumber": data['Account'], "ticketType": data['TicketType'], "ticketYear": data['TicketYear'], "ownerName": data['Owner'], "situsAddress": data['Address'], "contactType": data['ContactType'], "contactDate": data['ContactDate'], "contactTime": data['ContactTime'], "returnOperator": data['ReturnOperator'], "callerVisitor": data['CallerVisitor'], "phoneNumber": data['Telephone'], "emailAddress": data['Email'], "reasonForCall": data['CallReason'], "status": data['Status'], "createUser": user, "hurricane": checkbox['Hurricane']})
+        connection.commit()
 
 
 ### check version id before ticket update ###

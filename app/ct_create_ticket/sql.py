@@ -84,11 +84,19 @@ def add_ticket_to_db(data, user):
     with coxn.connect() as connection:
         ticketType = connection.execute(text("SELECT TicketType, TicketYear FROM app.CT_TicketType"))
         category = {}
+        checkbox = {}
+
+        if 'Hurricane' in data:
+            checkbox.update({'Hurricane': '1'})
+        else:
+            checkbox.update({'Hurricane': '0'})
+
+
         for value in ticketType.all():
             category.update((dict(value._mapping)))
 
-        query = text(f"INSERT INTO app.CT_Tickets (TicketNumber, AccountNumber, TicketType, TicketYear, OwnerName, SitusAddress, ContactType, ContactDate, ContactTime, ReturnOperator, CallerOrVisitor, PhoneNumber, EmailAddress, ReasonForCall, Status, CreateUser) VALUES ( NEXT VALUE FOR app.Seq_TicketNumber, :account, :ticketType, :ticketYear, :owner, :address, :contactType, :contactDate, :contactTime, :returnOperator, :callerVisitor, :telephone, :email, :reasonForCall, :status, :createUser );"
+        query = text(f"INSERT INTO app.CT_Tickets (TicketNumber, AccountNumber, TicketType, TicketYear, OwnerName, SitusAddress, ContactType, ContactDate, ContactTime, ReturnOperator, CallerOrVisitor, PhoneNumber, EmailAddress, ReasonForCall, Status, CreateUser, Hurricane) VALUES ( NEXT VALUE FOR app.Seq_TicketNumber, :account, :ticketType, :ticketYear, :owner, :address, :contactType, :contactDate, :contactTime, :returnOperator, :callerVisitor, :telephone, :email, :reasonForCall, :status, :createUser, :hurricane);"
                      )
         #print(query)
-        connection.execute(query, {"account": data['Account'], "ticketType": category['TicketType'], "ticketYear": category['TicketYear'], "owner": data['Owner'], "address": data['Address'], "contactType": data['ContactType'], "contactDate": data['ContactDate'], "contactTime": data['ContactTime'], "returnOperator": data['ReturnOperator'], "callerVisitor": data['CallerVisitor'], "telephone": data['Telephone'], "email": data['Email'], "reasonForCall": data['CallReason'], "status": data['Status'], "createUser": user})
+        connection.execute(query, {"account": data['Account'], "ticketType": category['TicketType'], "ticketYear": category['TicketYear'], "owner": data['Owner'], "address": data['Address'], "contactType": data['ContactType'], "contactDate": data['ContactDate'], "contactTime": data['ContactTime'], "returnOperator": data['ReturnOperator'], "callerVisitor": data['CallerVisitor'], "telephone": data['Telephone'], "email": data['Email'], "reasonForCall": data['CallReason'], "status": data['Status'], "createUser": user, "hurricane": checkbox['Hurricane']})
         connection.commit()
