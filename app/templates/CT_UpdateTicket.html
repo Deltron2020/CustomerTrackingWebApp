@@ -180,7 +180,15 @@
 
              <div class="col-md-4">
                  <label for="Hurricane" class="form-label account_search_labels px-3 mt-1">Hurricane Call:</label>
-                 <input type="text" class="form-control text-center" id="Hurricane" name="Hurricane" value="{{ticket_data[0]['Hurricane']}}" aria-label="Hurricane" aria-describedby="basic-addon1" readonly>
+                 <select class="form-select text-center" id="Hurricane" name="Hurricane" value="{{ticket_data[0]['Hurricane']}}" aria-label="Hurricane" aria-describedby="basic-addon1">
+                     <option selected>{{ticket_data[0]['Hurricane']}}</option>
+                     {% if ticket_data[0]['Hurricane'] == 'True' %}
+                     <option value="0">False</option>
+                     {% else %}
+                     <option value="1">True</option>
+                     {% endif %}
+                 </select>
+
              </div>
          </div>
 

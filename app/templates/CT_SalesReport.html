@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <title> Sales Report </title>
+    {% include 'bootstrap.html' %}
+
+  </head>
+  <body class = "bg">
+    {% include 'nav.html' %}
+
+    <script type="text/javascript" src="../static/sales_report/js.js"></script>
+
+    <div class = "container">
+
+      <h1 class = "header p-3 border border-start-10 rounded-start rounded-end text-center mx-auto"> View Sales </h1>
+
+      <h3> *** THIS REPORT IS A DEMO - PERFORMANCE IS SLOW DUE TO A CROSS SERVER QUERY. WILL IMPROVE ONCE DATA IS MOVED INTO THE CT DATABASE ***</h3>
+
+        <div class="row text-center mt-5 justify-content-around">
+
+          <div class="d-grid col-4">
+            <label for="BeginDateSearch" class="form-label account_search_labels">Begin Date</label>
+            <input class="form-control text-center" id="BeginDateSearch" name="BeginDate" type="date" aria-describedby="basic-addon1">
+          </div>
+
+          <div class="d-grid col-4">
+            <label for="EndDateSearch" class="form-label account_search_labels">End Date</label>
+            <input class="form-control text-center" id="EndDateSearch" name="EndDate" type="date" aria-describedby="basic-addon1">
+          </div>
+
+        </div>
+
+
+        <div class="row text-center justify-content-around mt-5">
+
+          <div class="d-grid col-4">
+                <a class="btn btn-primary" type="button" id="search_button">
+                Search</a>
+          </div>
+
+          <div class="d-grid col-4">
+                <a class="btn btn-primary" type="button" id="clear_button">
+                Clear</a>
+          </div>
+
+        </div>
+
+      <div class="col-12 mt-5 table-responsive">
+          <table class="table table-default table-striped table-hover display" id="sales_table">
+            <thead>
+            <tr>
+              <th scope="col">PropertyID</th>
+              <th scope="col">SalesValidity</th>
+              <th scope="col">SalesValidityDesc</th>
+              <th scope="col">ExemptionCode</th>
+              <th scope="col">ExemptionDesc</th>
+              <th scope="col">YearID</th>
+              <th scope="col">GrantYear</th>
+              <th scope="col">Tenancy</th>
+              <th scope="col">SaleDate</th>
+              <th scope="col">SalePrice</th>
+              <th scope="col">FullBookPage</th>
+              <th scope="col">RetainCapFlag</th>
+              <th scope="col">Grantor</th>
+              <th scope="col">Grantee</th>
+            </tr>
+            </thead>
+          </table>
+      </div>
+
+    </div>
+
+
+    {% include 'footer.html' %}
+
+  </body>
+</html>
