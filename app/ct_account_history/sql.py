@@ -5,7 +5,7 @@ from sqlalchemy import text
 ### ticket history for account query ###
 def load_account_ticket_history_from_db(account):
     with coxn.connect() as connection:
-        query = text(f"""
+        query = text("""
         SELECT
             t.TicketNumber,
             t.TicketType,
@@ -20,6 +20,8 @@ def load_account_ticket_history_from_db(account):
             app.CT_Accounts a ON a.AccountNumber = t.AccountNumber
         WHERE 
             t.AccountNumber = :accountNumber
+        AND
+            t.TicketType <> 'Testing'
         ORDER BY
             t.TicketNumber ASC;
         """)

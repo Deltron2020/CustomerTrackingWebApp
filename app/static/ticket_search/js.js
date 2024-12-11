@@ -17,6 +17,7 @@ $(function() {
         var ticketGotItOperator = document.getElementById("GotItOperatorSearch").value;
         var ticketCreator = document.getElementById("CreatedBySearch").value;
         var ticketDept = document.getElementById("DepartmentSearch").value;
+        var phoneNumber = document.getElementById("PhoneNumberSearch").value;
         if (document.getElementById("Hurricane").checked) {
             var hurricaneCheckbox = document.getElementById("Hurricane").value;
         }
@@ -33,6 +34,7 @@ $(function() {
             GotItUser : ticketGotItOperator,
             OriginalCreator : ticketCreator,
             Department : ticketDept,
+            PhoneNumber : phoneNumber,
             Hurricane : hurricaneCheckbox
         }
 
@@ -95,6 +97,7 @@ $(function() {
         document.getElementById("GotItOperatorSearch").value = "";
         document.getElementById("CreatedBySearch").value = "";
         document.getElementById("DepartmentSearch").value = "";
+        document.getElementById("PhoneNumberSearch").value = "";
         document.getElementById("Hurricane").checked = false;
     });
     return false;

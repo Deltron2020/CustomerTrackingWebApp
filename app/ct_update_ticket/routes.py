@@ -153,6 +153,9 @@ def customer_tracking_search_test_json():
             for val in ticket.values():
                 parameters.update({val.replace('-','').replace(' ',''): '%'+val+'%'})
 
+            if 'PhoneNumber' in columns:
+                columns = columns.replace('PhoneNumber', r"TRIM(REPLACE(REPLACE(REPLACE(REPLACE(PhoneNumber,' ',''),')',''),'(',''),'-',''))")
+
             results = load_tickets_from_db(columns, parameters)
 
             json_data = json.dumps(results, indent=4, sort_keys=True, default=str)

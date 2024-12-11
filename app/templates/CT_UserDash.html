@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <title> User Dashboard </title>
+    {% include 'bootstrap.html' %}
+
+  </head>
+  <body class = "bg">
+
+    {% include 'nav.html' %}
+
+    <div class = "container">
+
+      <h1 class = "header p-3 border border-start-10 rounded-start rounded-end text-center mx-auto"> User Dashboard </h1>
+
+      <div class="row text-center justify-content-around">
+
+          <div class="col">
+            <label for="Username" class="form-label account_search_labels">Username</label>
+            <input type="text" class="form-control text-center" value="{{user_info['Username']}}" id="Username" name = "Username" aria-label="Username" aria-describedby="basic-addon1" readonly>
+          </div>
+
+          <div class="col">
+            <label for="Department" class="form-label account_search_labels">Department</label>
+            <input type="text" class="form-control text-center" value="{{user_info['EmployeeDepartment']}}" id="Department" name = "Department" aria-label="Department" aria-describedby="basic-addon1" readonly>
+          </div>
+
+        <div class="col">
+            <label for="Email" class="form-label account_search_labels">Email</label>
+            <input type="text" class="form-control text-center" value="{{user_info['Email']}}" id="Email" name = "Email" aria-label="Email" aria-describedby="basic-addon1" readonly>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-around">
+            <div class="list-group">
+              <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                <img src="https://www.pa.martin.fl.us/images/list.png" alt="" width="32" height="32" class="rounded-circle flex-shrink-0">
+                <div class="d-flex gap-2 w-100 justify-content-between">
+                  <div>
+                    <p class="mb-0 opacity-75">Current Ticket Type & Ticket Year</p>
+                    <h6 class="mb-0">{{ticket_info['TicketType']}} - {{ticket_info['TicketYear']}}</h6>
+                  </div>
+                  <small class="opacity-50 text-nowrap">Ticket Info</small>
+                </div>
+              </a>
+              <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                <img src="https://www.pa.martin.fl.us/images/list.png" alt="" width="32" height="32" class="rounded-circle flex-shrink-0">
+                <div class="d-flex gap-2 w-100 justify-content-between">
+                  <div>
+                    <p class="mb-0 opacity-75">Current Number of Tickets Created</p>
+                    <h6 class="mb-0">{{created_count['TicketsCreatedCount']}}</h6>
+                  </div>
+                  <small class="opacity-50 text-nowrap">Ticket Info</small>
+                </div>
+              </a>
+              <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                <img src="https://www.pa.martin.fl.us/images/list.png" alt="" width="32" height="32" class="rounded-circle flex-shrink-0">
+                <div class="d-flex gap-2 w-100 justify-content-between">
+                  <div>
+                    <p class="mb-0 opacity-75">Current Number of Tickets Worked</p>
+                    <h6 class="mb-0">{{worked_count['TicketsWorkedCount']}}</h6>
+                  </div>
+                  <small class="opacity-50 text-nowrap">Ticket Info</small>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+    </div>
+
+    <div class="container">
+
+      <div>
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item" role="presentation"><button class="nav-link border active" href="#tab-table1" data-bs-toggle="tab" data-bs-target="#tab-table1">Open Assigned</button></li>
+            <li><button class="nav-link border" href="#tab-table2" data-bs-toggle="tab" data-bs-target="#tab-table2">Open Dept</button></li>
+            <li><button class="nav-link border" href="#tab-table3" data-bs-toggle="tab" data-bs-target="#tab-table3">Pending Assigned</button></li>
+            <li><button class="nav-link border" href="#tab-table4" data-bs-toggle="tab" data-bs-target="#tab-table4">Pending Dept</button></li>
+            <li><button class="nav-link border" href="#tab-table5" data-bs-toggle="tab" data-bs-target="#tab-table5">Closed Assigned</button></li>
+            <li><button class="nav-link border" href="#tab-table6" data-bs-toggle="tab" data-bs-target="#tab-table6">Closed Dept</button></li>
+        </ul>
+        <div class="tab-content pt-2">
+            <div class="tab-pane show active" id="tab-table1">
+                <table id="myTable1" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                        <th scope="col">Ticket Number</th>
+                        <th scope="col">Contact Date</th>
+                        <th scope="col">Contact Type</th>
+                        <th scope="col">AIN</th>
+                        <th scope="col">Return Operator</th>
+                        <th scope="col">Department</th>
+                        <th scope="col">Got It Operator</th>
+                        <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for ticket in user_tickets %}
+
+                          <tr>
+                              <td><a href="/search/{{ticket['TicketNumber']}}">{{ticket['TicketNumber']}}</a></td>
+                              <td>{{ticket['ContactDate']}}</td>
+                              <td>{{ticket['ContactType']}}</td>
+                              <td>{{ticket['AccountNumber']}}</td>
+                              <td>{{ticket['ReturnOperator']}}</td>
+                              <td>{{ticket['Department']}}</td>
+                              <td>{{ticket['GotItUser']}}</td>
+                              <td>{{ticket['Status']}}</td>
+                          </tr>
+
+                      {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane" id="tab-table2">
+                <table id="myTable2" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                        <th scope="col">Ticket Number</th>
+                        <th scope="col">Contact Date</th>
+                        <th scope="col">Contact Type</th>
+                        <th scope="col">AIN</th>
+                        <th scope="col">Return Operator</th>
+                        <th scope="col">Department</th>
+                        <th scope="col">Got It Operator</th>
+                        <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for ticket in dept_tickets %}
+
+                          <tr>
+                              <td><a href="/search/{{ticket['TicketNumber']}}">{{ticket['TicketNumber']}}</a></td>
+                              <td>{{ticket['ContactDate']}}</td>
+                              <td>{{ticket['ContactType']}}</td>
+                              <td>{{ticket['AccountNumber']}}</td>
+                              <td>{{ticket['ReturnOperator']}}</td>
+                              <td>{{ticket['Department']}}</td>
+                              <td>{{ticket['GotItUser']}}</td>
+                              <td>{{ticket['Status']}}</td>
+                          </tr>
+
+                      {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane" id="tab-table3">
+                <table id="myTable3" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                        <th scope="col">Ticket Number</th>
+                        <th scope="col">Contact Date</th>
+                        <th scope="col">Contact Type</th>
+                        <th scope="col">AIN</th>
+                        <th scope="col">Return Operator</th>
+                        <th scope="col">Department</th>
+                        <th scope="col">Got It Operator</th>
+                        <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for ticket in user_tickets %}
+
+                          <tr>
+                              <td><a href="/search/{{ticket['TicketNumber']}}">{{ticket['TicketNumber']}}</a></td>
+                              <td>{{ticket['ContactDate']}}</td>
+                              <td>{{ticket['ContactType']}}</td>
+                              <td>{{ticket['AccountNumber']}}</td>
+                              <td>{{ticket['ReturnOperator']}}</td>
+                              <td>{{ticket['Department']}}</td>
+                              <td>{{ticket['GotItUser']}}</td>
+                              <td>{{ticket['Status']}}</td>
+                          </tr>
+
+                      {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane" id="tab-table4">
+                <table id="myTable4" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                        <th scope="col">Ticket Number</th>
+                        <th scope="col">Contact Date</th>
+                        <th scope="col">Contact Type</th>
+                        <th scope="col">AIN</th>
+                        <th scope="col">Return Operator</th>
+                        <th scope="col">Department</th>
+                        <th scope="col">Got It Operator</th>
+                        <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for ticket in dept_tickets %}
+
+                          <tr>
+                              <td><a href="/search/{{ticket['TicketNumber']}}">{{ticket['TicketNumber']}}</a></td>
+                              <td>{{ticket['ContactDate']}}</td>
+                              <td>{{ticket['ContactType']}}</td>
+                              <td>{{ticket['AccountNumber']}}</td>
+                              <td>{{ticket['ReturnOperator']}}</td>
+                              <td>{{ticket['Department']}}</td>
+                              <td>{{ticket['GotItUser']}}</td>
+                              <td>{{ticket['Status']}}</td>
+                          </tr>
+
+                      {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane" id="tab-table5">
+                <table id="myTable5" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                        <th scope="col">Ticket Number</th>
+                        <th scope="col">Contact Date</th>
+                        <th scope="col">Contact Type</th>
+                        <th scope="col">AIN</th>
+                        <th scope="col">Return Operator</th>
+                        <th scope="col">Department</th>
+                        <th scope="col">Got It Operator</th>
+                        <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for ticket in user_tickets %}
+
+                          <tr>
+                              <td><a href="/search/{{ticket['TicketNumber']}}">{{ticket['TicketNumber']}}</a></td>
+                              <td>{{ticket['ContactDate']}}</td>
+                              <td>{{ticket['ContactType']}}</td>
+                              <td>{{ticket['AccountNumber']}}</td>
+                              <td>{{ticket['ReturnOperator']}}</td>
+                              <td>{{ticket['Department']}}</td>
+                              <td>{{ticket['GotItUser']}}</td>
+                              <td>{{ticket['Status']}}</td>
+                          </tr>
+
+                      {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane" id="tab-table6">
+                <table id="myTable6" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                        <th scope="col">Ticket Number</th>
+                        <th scope="col">Contact Date</th>
+                        <th scope="col">Contact Type</th>
+                        <th scope="col">AIN</th>
+                        <th scope="col">Return Operator</th>
+                        <th scope="col">Department</th>
+                        <th scope="col">Got It Operator</th>
+                        <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for ticket in dept_tickets %}
+
+                          <tr>
+                              <td><a href="/search/{{ticket['TicketNumber']}}">{{ticket['TicketNumber']}}</a></td>
+                              <td>{{ticket['ContactDate']}}</td>
+                              <td>{{ticket['ContactType']}}</td>
+                              <td>{{ticket['AccountNumber']}}</td>
+                              <td>{{ticket['ReturnOperator']}}</td>
+                              <td>{{ticket['Department']}}</td>
+                              <td>{{ticket['GotItUser']}}</td>
+                              <td>{{ticket['Status']}}</td>
+                          </tr>
+
+                      {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+        <div class="row mt-5 mb-5 justify-content-evenly mx-auto grid">
+
+            <div class="col-12 text-center">
+                <label class="fw-bold fs-3"> User Ticket Data </label>
+                <div class="bg-box chart-container">
+                    <div>
+                        <canvas id="stackedTicketCountsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    {% include 'footer.html' %}
+
+    <script>
+      // Listen for Bootstrap tab change
+      document.querySelectorAll('button[data-bs-toggle="tab"]').forEach((el) => {
+          el.addEventListener('shown.bs.tab', () => {
+              DataTable.tables({ visible: true, api: true }).columns.adjust();
+          });
+      });
+
+      new DataTable('table.table', {
+          //ajax: '../ajax/data/arrays.txt',
+          paging: false,
+          scrollCollapse: true,
+          scrollY: 250
+      });
+
+      // Apply a search to the second table for the demo
+      new DataTable.Api('#myTable1').search('Open').draw();
+      new DataTable.Api('#myTable2').search('Open').draw();
+      new DataTable.Api('#myTable3').search('Pending').draw();
+      new DataTable.Api('#myTable4').search('Pending').draw();
+      new DataTable.Api('#myTable5').search('Closed').draw();
+      new DataTable.Api('#myTable6').search('Closed').draw();
+    </script>
+
+
+  <script>
+
+      const ctx_stackedTicketCounts = document.getElementById("stackedTicketCountsChart");
+      var labels_Categories = {{ categories | safe }};
+      var vals_CreatedCounts = {{ created_counts | safe }};
+      var vals_WorkedCounts = {{ worked_counts | safe }};
+
+                const stackedTicketCountsData = {
+                  labels: labels_Categories,
+                  datasets: [
+                              {
+                              label: 'Tickets Created',
+                              backgroundColor: '#EDEAE6',
+                              data: vals_CreatedCounts,
+                              borderWidth: 1
+                            }, {
+                                label: 'Tickets Worked',
+                                backgroundColor: '#BECBD5',
+                                data: vals_WorkedCounts,
+                                  borderWidth: 1
+                            }
+                              ],
+
+                };
+
+                new Chart(ctx_stackedTicketCounts, {
+                type: 'bar',
+                data: stackedTicketCountsData,
+                options: {
+                    scales: {
+                        x: {
+                            stacked: true
+                        },
+                        y: {
+                            stacked: true
+                        },
+                    },
+                    plugins: {
+                        legend: {
+                            display: true
+                        }
+                    },
+                    responsive: true,
+                    indexAxis: 'x'
+                }
+            });
+
+  </script>
+
+  </body>
+</html>
